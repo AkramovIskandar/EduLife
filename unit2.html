@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 2 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .section-note {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        .sheet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .sheet-grid .question-block {
+            margin-bottom: 0;
+        }
+
+        .tiny-input {
+            width: 120px !important;
+            display: inline-block !important;
+            margin-left: 0.35rem;
+            vertical-align: middle;
+        }
+
+        .small-input {
+            width: 90px !important;
+            display: inline-block !important;
+            margin-left: 0.35rem;
+            vertical-align: middle;
+        }
+
+        .word-bank {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            border: 1px solid #94A3B8;
+            padding: 0.45rem 0.6rem;
+            margin-bottom: 0.8rem;
+            background: #fff;
+            color: #0F172A;
+            font-size: 0.9rem;
+        }
+
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .hotel-box {
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .hotel-box p {
+            margin-bottom: 0.6rem;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            padding-bottom: 0.3rem;
+        }
+
+        body.dark-theme .hotel-box p {
+            border-bottom-color: rgba(255,255,255,0.1);
+        }
+
+        .hotel-box p:last-child {
+            border-bottom: none;
+        }
+
+        .hotel-box strong {
+            color: var(--primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 1rem;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        body.dark-theme .hotel-box strong {
+            color: var(--primary-light);
+            border-bottom-color: var(--primary-light);
+        }
+
+        .question-line {
+            margin-bottom: 1.2rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .question-line:hover {
+            background: rgba(var(--primary-rgb), 0.05);
+        }
+
+        body.dark-theme .question-line:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .question-line p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .inline-answer {
+            width: 100% !important;
+            max-width: 250px;
+            padding: 0.5rem 0.8rem !important;
+            border-radius: 6px !important;
+            border: 1px solid #cbd5e1 !important;
+            background: #f8fafc !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .inline-answer:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1) !important;
+            background: #fff !important;
+        }
+
+        body.dark-theme .inline-answer {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+            color: #f1f5f9 !important;
+        }
+
+        body.dark-theme .inline-answer:focus {
+            background: #1e293b !important;
+            border-color: var(--primary-light) !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+        }
+
+        .word-bank {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            border: 1px solid #94A3B8;
+            padding: 0.45rem 0.6rem;
+            margin-bottom: 0.8rem;
+            background: #fff;
+            color: #0F172A;
+            font-size: 0.9rem;
+            border-radius: 6px;
+        }
+
+        body.dark-theme .word-bank {
+            background: #1e293b;
+            color: #f1f5f9;
+            border-color: #334155;
+        }
+
+        .tiny-input, .small-input {
+            border: 1px solid #cbd5e1 !important;
+            padding: 0.3rem 0.6rem !important;
+            border-radius: 4px !important;
+            background: #f8fafc !important;
+            transition: all 0.3s ease !important;
+        }
+
+        body.dark-theme .tiny-input, 
+        body.dark-theme .small-input {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+            color: #f1f5f9 !important;
+        }
+
+        body.dark-theme .tiny-input:focus, 
+        body.dark-theme .small-input:focus {
+            background: #1e293b !important;
+            border-color: var(--primary-light) !important;
+        }
+
+        .points-badge {
+            background: linear-gradient(135deg, var(--accent), #fbbf24);
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 4</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 2</h1>
+            <p>Follow all instructions and complete each section carefully.</p>
+        </div>
+
+        <form id="unit2Form">
+            <section class="test-section active" id="u2-gvp">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+                <p class="section-note">Based on the worksheet format you sent.</p>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>1. Complete the questions.</h3>
+                            <div class="q-item">
+                                <p>Example: <u>Where</u> are you from?</p>
+                                <p>1) <input type="text" name="u2g0_1" class="small-input" placeholder="word"> you students?</p>
+                                <p>2) <input type="text" name="u2g0_2" class="small-input" placeholder="word"> old are they?</p>
+                                <p>3) A <input type="text" name="u2g0_3" class="small-input" placeholder="word"> are you? B Fine, thanks.</p>
+                                <p>4) A <input type="text" name="u2g0_4" class="small-input" placeholder="word"> is Marco? B He's my friend.</p>
+                                <p>5) <input type="text" name="u2g0_5" class="small-input" placeholder="word"> your phone number?</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>2. Tick the correct word(s).</h3>
+                            <div class="q-item compact-options">
+                                <p>1) Are <label><input type="radio" name="u2g1" value="A"> he</label> / <label><input type="radio" name="u2g1" value="B"> they</label> Italian?</p>
+                                <p>2) <label><input type="radio" name="u2g2" value="A"> Are you</label> / <label><input type="radio" name="u2g2" value="B"> You are</label> from Canada?</p>
+                                <p>3) <label><input type="radio" name="u2g3" value="A"> You</label> / <label><input type="radio" name="u2g3" value="B"> They</label> aren't English. Tom is from the USA, and Patricia is from Mexico.</p>
+                                <p>4) A Are you Turkish? B No, we <label><input type="radio" name="u2g4" value="A"> isn't</label> / <label><input type="radio" name="u2g4" value="B"> aren't</label>.</p>
+                                <p>5) They are from Japan. <label><input type="radio" name="u2g5" value="A"> It's</label> / <label><input type="radio" name="u2g5" value="B"> They're</label> Japanese.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>3. Write the words.</h3>
+                            <div class="q-item">
+                                <p>Example: 60 = sixty</p>
+                                <p>1) 75 <input type="text" name="u2v0_1" class="tiny-input"></p>
+                                <p>2) 16 <input type="text" name="u2v0_2" class="tiny-input"></p>
+                                <p>3) 42 <input type="text" name="u2v0_3" class="tiny-input"></p>
+                                <p>4) 13 <input type="text" name="u2v0_4" class="tiny-input"></p>
+                                <p>5) 30 <input type="text" name="u2v0_5" class="tiny-input"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <h3>4. Tick (A or B) to complete the answer.</h3>
+                            <div class="q-item">
+                                <p>1) What's your phone number?</p>
+                                <label><input type="radio" name="u2v1" value="A"> A K14 PX</label>
+                                <label><input type="radio" name="u2v1" value="B"> B 0141 496 0435</label>
+                                <p>2) What's your address?</p>
+                                <label><input type="radio" name="u2v2" value="A"> A It's 18 Park Avenue</label>
+                                <label><input type="radio" name="u2v2" value="B"> B room 18</label>
+                                <p>3) What's your postcode?</p>
+                                <label><input type="radio" name="u2v3" value="A"> A 07700 904867</label>
+                                <label><input type="radio" name="u2v3" value="B"> B M11 4XC</label>
+                                <p>4) What nationality are you?</p>
+                                <label><input type="radio" name="u2v4" value="A"> A China</label>
+                                <label><input type="radio" name="u2v4" value="B"> B Chinese</label>
+                                <p>5) What's your email?</p>
+                                <label><input type="radio" name="u2v5" value="A"> A molly28@mail.com</label>
+                                <label><input type="radio" name="u2v5" value="B"> B 03069 093467</label>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>5. Which is the stressed syllable? Tick 1 or 2.</h3>
+                            <div class="q-item">
+                                <p>1) English <label><input type="radio" name="u2p1" value="1">1</label> <label><input type="radio" name="u2p1" value="2">2</label></p>
+                                <p>2) address <label><input type="radio" name="u2p2" value="1">1</label> <label><input type="radio" name="u2p2" value="2">2</label></p>
+                                <p>3) sixteen <label><input type="radio" name="u2p3" value="1">1</label> <label><input type="radio" name="u2p3" value="2">2</label></p>
+                                <p>4) business <label><input type="radio" name="u2p4" value="1">1</label> <label><input type="radio" name="u2p4" value="2">2</label></p>
+                                <p>5) sixty <label><input type="radio" name="u2p5" value="1">1</label> <label><input type="radio" name="u2p5" value="2">2</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>6. Match the words with the same sound.</h3>
+                            <div class="q-item">
+                                <div class="word-bank">city house jazz no shower teacher</div>
+                                <p>1) French <input type="text" name="u2p6_1" class="tiny-input"></p>
+                                <p>2) Germany <input type="text" name="u2p6_2" class="tiny-input"></p>
+                                <p>3) he <input type="text" name="u2p6_3" class="tiny-input"></p>
+                                <p>4) Egyptian <input type="text" name="u2p6_4" class="tiny-input"></p>
+                                <p>5) zero <input type="text" name="u2p6_5" class="tiny-input"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU2(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u2-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>Reading: hotel booking form</h3>
+                            <div class="reading-panel hotel-box">
+                                <p><strong>Hotel Booking Form</strong></p>
+                                <p>Hotel: Ambassador Hotel</p>
+                                <p>Address: 14 Park Avenue, Bristol BS1 2RW</p>
+                                <p>Phone: 0117 496-0298</p>
+                                <p>Email: ambassador@mail.co.uk</p>
+                                <hr style="margin: 1rem 0; border: none; border-top: 1px dashed rgba(0,0,0,0.1);">
+                                <p>First name: Alex</p>
+                                <p>Surname: Sanchez</p>
+                                <p>Email: a.sanchez@gcom.es</p>
+                                <p>Phone: 07700 900672</p>
+                                <p>Address: Flat 4, Av Panama, Madrid, Spain</p>
+                                <p>Nationality: Spanish</p>
+                                <p>Passport number: AA000000</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <h3>1. Match items 1-7.</h3>
+                            <div class="q-item">
+                                <p>1) 14 Park Avenue, Bristol <input type="text" name="u2r1_1" class="inline-answer"></p>
+                                <p>2) a.sanchez@gcom.es <input type="text" name="u2r1_2" class="inline-answer"></p>
+                                <p>3) Spanish <input type="text" name="u2r1_3" class="inline-answer"></p>
+                                <p>4) 07700 900672 <input type="text" name="u2r1_4" class="inline-answer"></p>
+                                <p>5) 0117 496-0298 <input type="text" name="u2r1_5" class="inline-answer"></p>
+                                <p>6) AA000000 <input type="text" name="u2r1_6" class="inline-answer"></p>
+                                <p>7) BS1 2RW <input type="text" name="u2r1_7" class="inline-answer"></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>2. Complete the answers.</h3>
+                            <div class="q-item">
+                                <p class="question-line">1) What is the name of the hotel? It's <input type="text" name="u2r2_1" class="inline-answer"></p>
+                                <p class="question-line">2) What street is the hotel on? It's on <input type="text" name="u2r2_2" class="inline-answer"></p>
+                                <p class="question-line">3) What is the hotel phone number? It's <input type="text" name="u2r2_3" class="inline-answer"></p>
+                                <p class="question-line">4) What is Alex's nationality? He's <input type="text" name="u2r2_4" class="inline-answer"></p>
+                                <p class="question-line">5) What is Alex's email address? It's <input type="text" name="u2r2_5" class="inline-answer"></p>
+                                <p class="question-line">6) What is the hotel postcode? It's <input type="text" name="u2r2_6" class="inline-answer"></p>
+                                <p class="question-line">7) What is Alex's passport number? It's <input type="text" name="u2r2_7" class="inline-answer"></p>
+                                <p class="question-line">8) What is the hotel email address? It's <input type="text" name="u2r2_8" class="inline-answer"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU2(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU2(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u2-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>Writing 1: Answer about yourself.</h3>
+                            <div class="q-item">
+                                <p>1) How old are you?</p><input type="text" class="full-input">
+                                <p>2) Where are you from?</p><input type="text" class="full-input">
+                                <p>3) What's your phone number?</p><input type="text" class="full-input">
+                                <p>4) What's your postcode?</p><input type="text" class="full-input">
+                                <p>5) What's your email address?</p><input type="text" class="full-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                         <div class="question-block">
+                            <h3>Writing 2: Answer about a friend or family member.</h3>
+                            <div class="q-item">
+                                <p>1) What's his/her name?</p><input type="text" class="full-input">
+                                <p>2) Where is he/she from?</p><input type="text" class="full-input">
+                                <p>3) How old is he/she?</p><input type="text" class="full-input">
+                                <p>4) Is he/she married?</p><input type="text" class="full-input">
+                                <p>5) What's his/her nationality?</p><input type="text" class="full-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU2(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU2(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u2-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <h3>Listening</h3>
+                    <div class="q-item">
+                        <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 2/ef5e_beginner_test_item_ 003.mp3" type="audio/mpeg"></audio>
+                        <p><strong>1.</strong> Listen to Ibrahim book a holiday over the phone. Tick the information he gives.</p>
+                        <label><input type="checkbox" name="u2l0_1"> holiday country</label>
+                        <label><input type="checkbox" name="u2l0_2"> last name</label>
+                        <label><input type="checkbox" name="u2l0_3"> email address</label>
+                        <label><input type="checkbox" name="u2l0_4"> phone number</label>
+                        <label><input type="checkbox" name="u2l0_5"> passport number</label>
+                        <label><input type="checkbox" name="u2l0_6"> address</label>
+                        <label><input type="checkbox" name="u2l0_7"> first name</label>
+                        <label><input type="checkbox" name="u2l0_8"> nationality</label>
+                    </div>
+                    <div class="q-item">
+                        <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 2/ef5e_beginner_test_item_ 004.mp3" type="audio/mpeg"></audio>
+                        <p><strong>2.</strong> Listen to five conversations and tick A, B, or C.</p>
+                        <p>1) Where is Reko and Mei from?</p>
+                        <label><input type="radio" name="u2l1" value="A"> A the USA</label>
+                        <label><input type="radio" name="u2l1" value="B"> B China</label>
+                        <label><input type="radio" name="u2l1" value="C"> C Japan</label>
+                        <p>2) How old is Max?</p>
+                        <label><input type="radio" name="u2l2" value="A"> A 17</label>
+                        <label><input type="radio" name="u2l2" value="B"> B 70</label>
+                        <label><input type="radio" name="u2l2" value="C"> C 18</label>
+                        <p>3) What is May's email address?</p>
+                        <label><input type="radio" name="u2l3" value="A"> A May.Chang@super.com</label>
+                        <label><input type="radio" name="u2l3" value="B"> B May.Yang@super.com</label>
+                        <label><input type="radio" name="u2l3" value="C"> C May.Yang@super.co.uk</label>
+                        <p>4) How do you spell Robert's last name?</p>
+                        <label><input type="radio" name="u2l4" value="A"> A A-N-D-E-R-S-A-N</label>
+                        <label><input type="radio" name="u2l4" value="B"> B A-N-D-E-R-S-E-N</label>
+                        <label><input type="radio" name="u2l4" value="C"> C A-N-D-E-R-S-O-N</label>
+                        <p>5) What nationality is Tomas?</p>
+                        <label><input type="radio" name="u2l5" value="A"> A French</label>
+                        <label><input type="radio" name="u2l5" value="B"> B German</label>
+                        <label><input type="radio" name="u2l5" value="C"> C Swiss</label>
+                    </div>
+                </div>
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU2(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU2()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u2-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item reg-form-container">
+                    <div class="reg-grid">
+                        <div class="input-group"><label>First Name *</label><input type="text" id="u2First" required></div>
+                        <div class="input-group"><label>Last Name *</label><input type="text" id="u2Last" required></div>
+                        <div class="input-group"><label>Group / Level *</label><input type="text" id="u2Group" required></div>
+                        <div class="input-group"><label>Phone Number *</label><input type="tel" id="u2Phone" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit2()" style="width:100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u2-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u2ExamMode = localStorage.getItem('edu_exam_mode_unit2');
+        if (u2ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u2Sections = ['u2-gvp', 'u2-reading', 'u2-writing', 'u2-listening', 'u2-details'];
+        const u2Total = u2Sections.length;
+
+        function updateU2(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u2Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u2Total}`;
+        }
+
+        function showU2(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u2Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU2(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU2(current) { showU2(current); }
+        function prevU2(current) { showU2(current - 2); }
+        function finalU2() { showU2(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]')).reduce((acc, r) => {
+                acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit2() {
+            const first = document.getElementById('u2First').value.trim();
+            const last = document.getElementById('u2Last').value.trim();
+            const group = document.getElementById('u2Group').value.trim();
+            const phone = document.getElementById('u2Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u2g0_1: 'Are', u2g0_2: 'How', u2g0_3: 'How', u2g0_4: 'Who', u2g0_5: ["What's", "What is"],
+                // Grammar 2
+                u2g1: 'B', u2g2: 'A', u2g3: 'B', u2g4: 'B', u2g5: 'B',
+                // Vocabulary 3
+                u2v0_1: ['seventy-five', 'seventy five'], u2v0_2: 'sixteen', u2v0_3: ['forty-two', 'forty two'], u2v0_4: 'thirteen', u2v0_5: 'thirty',
+                // Vocabulary 4
+                u2v1: 'B', u2v2: 'A', u2v3: 'B', u2v4: 'B', u2v5: 'A',
+                // Pronunciation 5
+                u2p1: '1', u2p2: '2', u2p3: '2', u2p4: '1', u2p5: '1',
+                // Pronunciation 6
+                u2p6_1: 'teacher', u2p6_2: 'jazz', u2p6_3: 'house', u2p6_4: 'shower', u2p6_5: 'no',
+                // Reading 1
+                u2r1_1: 'hotel address', u2r1_2: ["Alex's email address", "Alex email address"], u2r1_3: 'nationality', u2r1_4: ["Alex's phone number", "Alex phone number"], u2r1_5: 'hotel phone number', u2r1_6: 'passport number', u2r1_7: 'postcode',
+                // Reading 2
+                u2r2_1: 'Ambassador Hotel', u2r2_2: 'Park Avenue', u2r2_3: '0117 496-0298', u2r2_4: 'Spanish', u2r2_5: 'a.sanchez@gcom.es', u2r2_6: 'BS1 2RW', u2r2_7: 'AA000000', u2r2_8: 'ambassador@mail.co.uk',
+                // Listening 1 (Checkboxes)
+                u2l0_1: true, u2l0_2: true, u2l0_4: true, u2l0_7: true, u2l0_8: true,
+                // Listening 2
+                u2l1: 'C', u2l2: 'A', u2l3: 'C', u2l4: 'B', u2l5: 'C',
+                // Speaking 2
+                u2s2_1: 'Laporte', u2s2_2: '555-0134', u2s2_3: '26', u2s2_4: 'Flat 36, 5th Avenue, New York', u2s2_5: 'SebL26@studywe.com'
+            };
+
+            let score = 0;
+            const totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    if (field[0].type === 'checkbox') {
+                        if (field[0].checked === expected) score++;
+                        continue;
+                    }
+
+                    let actual = '';
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else {
+                        actual = field[0].value;
+                    }
+
+                    const normalizedActual = normalize(actual);
+                    if (Array.isArray(expected)) {
+                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
+                    } else if (normalizedActual === normalize(expected)) {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u2-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+            const speakingAnswers = Array.from(document.querySelectorAll('#u2-speaking input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 2',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: {
+                    totalObjectiveScore: autoScore
+                },
+                sectionCompletion: {
+                    grammarVocabPronunciation: sectionStats('u2-gvp'),
+                    reading: sectionStats('u2-reading'),
+                    writing: sectionStats('u2-writing'),
+                    listening: sectionStats('u2-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit2Form').style.display = 'none';
+            const res = document.getElementById('u2-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU2(0);
+            const p = document.getElementById('u2Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

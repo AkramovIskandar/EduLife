@@ -1,0 +1,20 @@
+{
+  "name": "edulife",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  },
+  "scripts": {
+    "dev": "npx vercel dev",
+    "dev:local": "node dev-server.mjs",
+    "config": "echo 'Skipping config build'",
+    "build": "echo 'Build skip'",
+    "build:preint": "node scripts/build-pre-intermediate.mjs",
+    "validate:tests": "node scripts/validate-tests.mjs"
+  },
+  "devDependencies": {
+    "pdf-parse": "^2.4.5"
+  }
+}

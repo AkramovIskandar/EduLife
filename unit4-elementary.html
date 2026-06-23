@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementary Unit Test 4 - EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary: #10B981;
+            --primary-dark: #059669;
+            --primary-light: #D1FAE5;
+            --secondary: #6366F1;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --bg-body: #F8FAFC;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .test-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .test-header {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .test-section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .test-section.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #F1F5F9;
+        }
+
+        .section-title h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .question-block { margin-bottom: 2rem; }
+        .q-item { margin-bottom: 1.5rem; padding: 1rem; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .q-item p { font-weight: 500; margin-bottom: 0.8rem; }
+        
+        .word-input {
+            border: 2px solid #E2E8F0;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+            transition: var(--transition);
+        }
+
+        .word-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.2rem;
+            background: var(--white);
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .radio-group label:hover { border-color: var(--primary); background: var(--primary-light); }
+        .radio-group input[type="radio"] { width: 1.2rem; height: 1.2rem; accent-color: var(--primary); }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-outline { background: var(--white); border: 2px solid #E2E8F0; color: var(--text-muted); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        .progress-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 100;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .progress-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .progress-bg {
+            flex-grow: 1;
+            height: 10px;
+            background: #E2E8F0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .reading-layout { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        .reading-passages { background: #FFF; padding: 2rem; border-radius: 16px; border-left: 6px solid var(--primary); font-size: 1.05rem; }
+
+        @media (max-width: 768px) {
+            .test-header, .test-section { padding: 1.5rem; }
+            .section-title { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="progress-nav">
+        <div class="progress-container">
+            <div class="progress-bg">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <span id="progressText" style="font-weight: 600; color: var(--primary);">Step 1 of 11</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1 style="color: var(--primary);">Elementary Unit Test 4</h1>
+            <p>Assessment for File 4. Total score: 75 points (Auto-graded sections).</p>
+        </div>
+
+        <form id="unitTestForm">
+            <!-- SECTION 1: GRAMMAR (7 pts) -->
+            <section class="test-section active" id="section-grammar-1">
+                <div class="section-title">
+                    <h2>Grammar 1: Tick (✔) the correct sentence</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">7 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. Which is correct?</p><div class="radio-group"><label><input type="radio" name="g1_1" value="A"> A. Wasim plays football with his friends every week.</label><label><input type="radio" name="g1_1" value="B"> B. Wasim every week plays football with his friends.</label></div></div>
+                    <div class="q-item"><p>2. Which is correct?</p><div class="radio-group"><label><input type="radio" name="g1_2" value="A"> A. Are you right usually?</label><label><input type="radio" name="g1_2" value="B"> B. Are you usually right?</label></div></div>
+                    <div class="q-item"><p>3. Which is correct?</p><div class="radio-group"><label><input type="radio" name="g1_3" value="A"> A. He drinks always tea.</label><label><input type="radio" name="g1_3" value="B"> B. He always drinks tea.</label></div></div>
+                    <div class="q-item"><p>4. Which is correct?</p><div class="radio-group"><label><input type="radio" name="g1_4" value="A"> A. Rita hardly ever watches TV.</label><label><input type="radio" name="g1_4" value="B"> B. Rita hardly watches ever TV.</label></div></div>
+                    <div class="q-item"><p>5. Which is correct?</p><div class="radio-group"><label><input type="radio" name="g1_5" value="A"> A. My parents two or three times a week eat Indian food.</label><label><input type="radio" name="g1_5" value="B"> B. My parents eat Indian food two or three times a week.</label></div></div>
+                    <div class="q-item"><p>6. Which is correct?</p><div class="radio-group"><label><input type="radio" name="g1_6" value="A"> A. Ben’s never late for lessons.</label><label><input type="radio" name="g1_6" value="B"> B. Ben never is late for lessons.</label></div></div>
+                    <div class="q-item"><p>7. Which is correct?</p><div class="radio-group"><label><input type="radio" name="g1_7" value="A"> A. I don’t make often dinner.</label><label><input type="radio" name="g1_7" value="B"> B. I don’t often make dinner.</label></div></div>
+                </div>
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 2: GRAMMAR (7 pts) -->
+            <section class="test-section" id="section-grammar-2">
+                <div class="section-title">
+                    <h2>Grammar 2: Complete the sentences (in, on, at, to)</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">7 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. We have English classes ______ the morning.</p><input type="text" name="g2_1" class="word-input"></div>
+                    <div class="q-item"><p>2. Alison goes ______ the city centre by bus.</p><input type="text" name="g2_2" class="word-input"></div>
+                    <div class="q-item"><p>3. I often go to the theatre ______ the weekend.</p><input type="text" name="g2_3" class="word-input"></div>
+                    <div class="q-item"><p>4. Diego works ______ an office.</p><input type="text" name="g2_4" class="word-input"></div>
+                    <div class="q-item"><p>5. It’s very cold ______ January.</p><input type="text" name="g2_5" class="word-input"></div>
+                    <div class="q-item"><p>6. The party is ______ Saturday.</p><input type="text" name="g2_6" class="word-input"></div>
+                    <div class="q-item"><p>7. They have dinner ______ half past six.</p><input type="text" name="g2_7" class="word-input"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(0)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 3: GRAMMAR (6 pts) -->
+            <section class="test-section" id="section-grammar-3">
+                <div class="section-title">
+                    <h2>Grammar 3: Choose correct word or phrase</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">6 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. That’s my ________ house.</p><div class="radio-group"><label><input type="radio" name="g3_1" value="a"> a) parents</label><label><input type="radio" name="g3_1" value="b"> b) parents’</label></div></div>
+                    <div class="q-item"><p>2. He’s my ________ husband.</p><div class="radio-group"><label><input type="radio" name="g3_2" value="a"> a) teachers’</label><label><input type="radio" name="g3_2" value="b"> b) teacher’s</label></div></div>
+                    <div class="q-item"><p>3. I like James but I don’t like ________ friend.</p><div class="radio-group"><label><input type="radio" name="g3_3" value="a"> a) James’s</label><label><input type="radio" name="g3_3" value="b"> b) Jame’s</label></div></div>
+                    <div class="q-item"><p>4. ________ phone is this?</p><div class="radio-group"><label><input type="radio" name="g3_4" value="a"> a) Who’s</label><label><input type="radio" name="g3_4" value="b"> b) Whose</label></div></div>
+                    <div class="q-item"><p>5. It’s ________ pen.</p><div class="radio-group"><label><input type="radio" name="g3_5" value="a"> a) the Sergio’s</label><label><input type="radio" name="g3_5" value="b"> b) Sergio’s</label></div></div>
+                    <div class="q-item"><p>6. These are my ________ books.</p><div class="radio-group"><label><input type="radio" name="g3_6" value="a"> a) children’s</label><label><input type="radio" name="g3_6" value="b"> b) childrens’</label></div></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 4: VOCABULARY (7 pts) -->
+            <section class="test-section" id="section-vocab-1">
+                <div class="section-title">
+                    <h2>Vocabulary 1: Family Tree</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">7 Points</span>
+                </div>
+                <div class="question-block">
+                    <p style="font-style: italic; margin-bottom: 1rem;">Context: Edward = Janet | Sally = Joe | Jacob | Anthony = Linda | Philip, David, Maria, Oliver, Emily.</p>
+                    <div class="q-item"><p>1. Jacob is David’s ________________.</p><input type="text" name="v1_1" class="word-input"></div>
+                    <div class="q-item"><p>2. Maria is Oliver’s ________________.</p><input type="text" name="v1_2" class="word-input"></div>
+                    <div class="q-item"><p>3. Janet is Emily’s ________________.</p><input type="text" name="v1_3" class="word-input"></div>
+                    <div class="q-item"><p>4. Maria is Anthony’s ________________.</p><input type="text" name="v1_4" class="word-input"></div>
+                    <div class="q-item"><p>5. Edward is Sally’s ________________.</p><input type="text" name="v1_5" class="word-input"></div>
+                    <div class="q-item"><p>6. David is Joe’s ________________.</p><input type="text" name="v1_6" class="word-input"></div>
+                    <div class="q-item"><p>7. Anthony is Linda’s ________________.</p><input type="text" name="v1_7" class="word-input"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 5: VOCABULARY (7 pts) -->
+            <section class="test-section" id="section-vocab-2">
+                <div class="section-title">
+                    <h2>Vocabulary 2: Daily Routines</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">7 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. Johannes __________ the housework every day.</p><input type="text" name="v2_1" class="word-input" placeholder="makes, does, gets"></div>
+                    <div class="q-item"><p>2. I __________ the dog for a walk twice a day.</p><input type="text" name="v2_2" class="word-input" placeholder="take, go, make"></div>
+                    <div class="q-item"><p>3. They often __________ pizza at the weekend.</p><input type="text" name="v2_3" class="word-input" placeholder="have, take, go"></div>
+                    <div class="q-item"><p>4. Jacob usually __________ a shave in the morning.</p><input type="text" name="v2_4" class="word-input" placeholder="does, makes, has"></div>
+                    <div class="q-item"><p>5. We normally __________ up late on Saturdays.</p><input type="text" name="v2_5" class="word-input" placeholder="start, wake, go"></div>
+                    <div class="q-item"><p>6. Alicia __________ work at 8 a.m.</p><input type="text" name="v2_6" class="word-input" placeholder="goes, gets, starts"></div>
+                    <div class="q-item"><p>7. We __________ to school by car.</p><input type="text" name="v2_7" class="word-input" placeholder="are, go, take"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 6: VOCABULARY (6 pts) -->
+            <section class="test-section" id="section-vocab-3">
+                <div class="section-title">
+                    <h2>Vocabulary 3: Choose correct word</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">6 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. I ________ finish work at 5 p.m., but on Fridays I finish at 7 p.m.</p><div class="radio-group"><label><input type="radio" name="v3_1" value="a"> a) always</label><label><input type="radio" name="v3_1" value="b"> b) usually</label></div></div>
+                    <div class="q-item"><p>2. Mason hardly ________ cleans his flat.</p><div class="radio-group"><label><input type="radio" name="v3_2" value="a"> a) never</label><label><input type="radio" name="v3_2" value="b"> b) ever</label></div></div>
+                    <div class="q-item"><p>3. They have English classes ________ a week.</p><div class="radio-group"><label><input type="radio" name="v3_3" value="a"> a) twice</label><label><input type="radio" name="v3_3" value="b"> b) three times</label></div></div>
+                    <div class="q-item"><p>4. I ________ read magazines. I don’t like them.</p><div class="radio-group"><label><input type="radio" name="v3_4" value="a"> a) never</label><label><input type="radio" name="v3_4" value="b"> b) always</label></div></div>
+                    <div class="q-item"><p>5. We don’t work every ________. On Saturday and Sunday we relax.</p><div class="radio-group"><label><input type="radio" name="v3_5" value="a"> a) day</label><label><input type="radio" name="v3_5" value="b"> b) week</label></div></div>
+                    <div class="q-item"><p>6. ‘How many ________ are there in a year?’ ‘Twelve.’</p><div class="radio-group"><label><input type="radio" name="v3_6" value="a"> a) weeks</label><label><input type="radio" name="v3_6" value="b"> b) months</label></div></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 7: PRONUNCIATION (10 pts) -->
+            <section class="test-section" id="section-pronunciation">
+                <div class="section-title">
+                    <h2>Pronunciation: Stress & Sounds</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <h3>Part 1: Word with a different sound</h3>
+                    <div class="q-item"><p>1. close, laptop, office, strong</p><input type="text" name="p1_1" class="word-input"></div>
+                    <div class="q-item"><p>2. love, old, colour, country</p><input type="text" name="p1_2" class="word-input"></div>
+                    <div class="q-item"><p>3. two, brother, whose, food</p><input type="text" name="p1_3" class="word-input"></div>
+                    <div class="q-item"><p>4. come, mother, who, son</p><input type="text" name="p1_4" class="word-input"></div>
+                    <div class="q-item"><p>5. November, open, one, phone</p><input type="text" name="p1_5" class="word-input"></div>
+
+                    <h3 style="margin-top:2rem;">Part 2: Stressed syllable</h3>
+                    <div class="q-item"><p>1. Italian</p><div class="radio-group"><label><input type="radio" name="p2_1" value="1"> 1</label><label><input type="radio" name="p2_1" value="2"> 2</label><label><input type="radio" name="p2_1" value="3"> 3</label></div></div>
+                    <div class="q-item"><p>2. healthy</p><div class="radio-group"><label><input type="radio" name="p2_2" value="1"> 1</label><label><input type="radio" name="p2_2" value="2"> 2</label></div></div>
+                    <div class="q-item"><p>3. sometimes</p><div class="radio-group"><label><input type="radio" name="p2_3" value="1"> 1</label><label><input type="radio" name="p2_3" value="2"> 2</label></div></div>
+                    <div class="q-item"><p>4. grandmother</p><div class="radio-group"><label><input type="radio" name="p2_4" value="1"> 1</label><label><input type="radio" name="p2_4" value="2"> 2</label><label><input type="radio" name="p2_4" value="3"> 3</label></div></div>
+                    <div class="q-item"><p>5. September</p><div class="radio-group"><label><input type="radio" name="p2_5" value="1"> 1</label><label><input type="radio" name="p2_5" value="2"> 2</label><label><input type="radio" name="p2_5" value="3"> 3</label></div></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(7)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 8: READING (15 pts) -->
+            <section class="test-section" id="section-reading">
+                <div class="section-title">
+                    <h2>Reading: My Busy Week</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">15 Points</span>
+                </div>
+                <div class="reading-layout">
+                    <div class="reading-passages">
+                        <p><strong>María José</strong> lives in Tenerife, Spain. She gets up at 7 o’clock and goes for a walk on the beach. Then she has a shower and makes breakfast for her husband and her two children. She takes the children to school and starts work at 9 o’clock. María José is a guide and in the morning she shows tourists around the island. She always goes home for lunch and then in the afternoon she works in the tourist office in Santa Cruz. She works from Monday to Friday, and twice a month she also goes to work on Saturday. In her free time she reads books with the children and does exercise with her friend, Carmen.</p>
+                        <p><strong>Kenzo</strong> is a bank manager. He works in Osaka, Japan. He usually gets up very early and leaves his flat at 7 o’clock. He takes the train to work and arrives at the bank at 8 o’clock. Kenzo works for 8 hours with a short break for lunch in a café. When he gets home, he normally listens to music, and he cooks dinner with his wife, Mika. At the weekend, he plays golf or tennis with friends. On Saturdays, he and Mika often go to his parents’ house in the afternoon for tea. But sometimes he goes to work on Saturday and then he feels stressed.</p>
+                        <p><strong>Francoise</strong> is from Switzerland. She’s a teacher in a school in Geneva. She is at school for 7 hours every day and also works at home in the evenings, but she doesn’t work at the weekend. Francoise has a lot of friends and they like to have dinner in expensive restaurants. She goes to bed very late on Saturday evenings. Francoise doesn’t do sports or go to the gym, but she has two dogs and she takes them for long walks on Sunday afternoons. Once a month she visits her sister and brother-in-law who live in France.</p>
+                    </div>
+                    <div class="question-block">
+                        <h3>Part 1: Tick (✔) A, B, or C</h3>
+                        <div class="q-item"><p>1. After breakfast, María José ________.</p><div class="radio-group"><label><input type="radio" name="r1_1" value="A"> A. goes for a walk</label><label><input type="radio" name="r1_1" value="B"> B. takes the children to school</label><label><input type="radio" name="r1_1" value="C"> C. has a shower</label></div></div>
+                        <div class="q-item"><p>2. She works on ________ Saturdays a month.</p><div class="radio-group"><label><input type="radio" name="r1_2" value="A"> A. 4</label><label><input type="radio" name="r1_2" value="B"> B. 3</label><label><input type="radio" name="r1_2" value="C"> C. 2</label></div></div>
+                        <div class="q-item"><p>3. She does exercise with ________.</p><div class="radio-group"><label><input type="radio" name="r1_3" value="A"> A. her husband</label><label><input type="radio" name="r1_3" value="B"> B. her children</label><label><input type="radio" name="r1_3" value="C"> C. her friend</label></div></div>
+                        <div class="q-item"><p>4. Kenzo goes to work ________.</p><div class="radio-group"><label><input type="radio" name="r1_4" value="A"> A. very early</label><label><input type="radio" name="r1_4" value="B"> B. at 7 o’clock</label><label><input type="radio" name="r1_4" value="C"> C. at 8 o’clock</label></div></div>
+                        <div class="q-item"><p>5. He has lunch ________.</p><div class="radio-group"><label><input type="radio" name="r1_5" value="A"> A. at home</label><label><input type="radio" name="r1_5" value="B"> B. with his wife</label><label><input type="radio" name="r1_5" value="C"> C. in a café</label></div></div>
+                        <div class="q-item"><p>6. At the weekend, he always ________.</p><div class="radio-group"><label><input type="radio" name="r1_6" value="A"> A. plays golf or tennis</label><label><input type="radio" name="r1_6" value="B"> B. goes to work</label><label><input type="radio" name="r1_6" value="C"> C. cooks dinner with his wife</label></div></div>
+                        <div class="q-item"><p>7. Francoise doesn’t work ________.</p><div class="radio-group"><label><input type="radio" name="r1_7" value="A"> A. at home</label><label><input type="radio" name="r1_7" value="B"> B. at the weekend</label><label><input type="radio" name="r1_7" value="C"> C. at school</label></div></div>
+                        <div class="q-item"><p>8. Her sister lives ________.</p><div class="radio-group"><label><input type="radio" name="r1_8" value="A"> A. in Switzerland</label><label><input type="radio" name="r1_8" value="B"> B. with her brother</label><label><input type="radio" name="r1_8" value="C"> C. in France</label></div></div>
+
+                        <h3 style="margin-top:2rem;">Part 2: Write María José, Kenzo or Francoise</h3>
+                        <div class="q-item"><p>1. ________ is Swiss.</p><input type="text" name="r2_1" class="word-input"></div>
+                        <div class="q-item"><p>2. ________ gets up very early.</p><input type="text" name="r2_2" class="word-input"></div>
+                        <div class="q-item"><p>3. ________ has children.</p><input type="text" name="r2_3" class="word-input"></div>
+                        <div class="q-item"><p>4. ________ is sometimes stressed because of the job.</p><input type="text" name="r2_4" class="word-input"></div>
+                        <div class="q-item"><p>5. ________ goes for long walks with his/her dogs.</p><input type="text" name="r2_5" class="word-input"></div>
+                        <div class="q-item"><p>6. ________ often sees his/her parents.</p><input type="text" name="r2_6" class="word-input"></div>
+                        <div class="q-item"><p>7. ________ sometimes works in an office.</p><input type="text" name="r2_7" class="word-input"></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(8)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 9: WRITING (10 pts) -->
+            <section class="test-section" id="section-writing">
+                <div class="section-title">
+                    <h2>Writing: My Favourite Day</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <p>Describe your favourite day of the week (75–100 words). Include why, what time you get up, your routine, and bedtime.</p>
+                    <textarea name="w1" class="writing-area" rows="6" placeholder="Write your answer here..."></textarea>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(9)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 10: LISTENING (10 pts) -->
+            <section class="test-section" id="section-listening">
+                <div class="section-title">
+                    <h2>Listening: Audio assessments</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <h3>Part 1: David talking about a family photo. Tick A or B</h3>
+                    <audio class="listening-audio" controls style="width:100%; margin-bottom:1rem;"><source src="Listenings/elementary/unit_4_listening_1.mp3" type="audio/mpeg"></audio>
+                    <div class="q-item"><p>1. David has a sister and a brother.</p><div class="radio-group"><label><input type="radio" name="l1_1" value="A"> A. True</label><label><input type="radio" name="l1_1" value="B"> B. False</label></div></div>
+                    <div class="q-item"><p>2. Zoe is David’s cousin.</p><div class="radio-group"><label><input type="radio" name="l1_2" value="A"> A. True</label><label><input type="radio" name="l1_2" value="B"> B. False</label></div></div>
+                    <div class="q-item"><p>3. Pedro and Zoe are married.</p><div class="radio-group"><label><input type="radio" name="l1_3" value="A"> A. True</label><label><input type="radio" name="l1_3" value="B"> B. False</label></div></div>
+                    <div class="q-item"><p>4. Amy is David’s aunt.</p><div class="radio-group"><label><input type="radio" name="l1_4" value="A"> A. True</label><label><input type="radio" name="l1_4" value="B"> B. False</label></div></div>
+                    <div class="q-item"><p>5. The little girl is David’s niece.</p><div class="radio-group"><label><input type="radio" name="l1_5" value="A"> A. True</label><label><input type="radio" name="l1_5" value="B"> B. False</label></div></div>
+
+                    <h3 style="margin-top:2rem;">Part 2: Listen to five conversations</h3>
+                    <audio class="listening-audio" controls style="width:100%; margin-bottom:1rem;"><source src="Listenings/elementary/unit_4_listening_2.mp3" type="audio/mpeg"></audio>
+                    <div class="q-item"><p>1. What time does Yaser finish work on Fridays?</p><input type="text" name="l2_1" class="word-input" placeholder="e.g. 4 o'clock"></div>
+                    <div class="q-item"><p>2. When is Valentina’s birthday?</p><input type="text" name="l2_2" class="word-input" placeholder="e.g. in April"></div>
+                    <div class="q-item"><p>3. How often does John do work at home?</p><input type="text" name="l2_3" class="word-input" placeholder="e.g. six days a week"></div>
+                    <div class="q-item"><p>4. What does Mia do after she puts on her make-up?</p><input type="text" name="l2_4" class="word-input" placeholder="e.g. She has breakfast"></div>
+                    <div class="q-item"><p>5. Whose phone does mum find?</p><input type="text" name="l2_5" class="word-input" placeholder="e.g. her daughter's"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(8)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(10)">Final Step <i class="fa-solid fa-user-check"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 11: REGISTRATION -->
+            <section class="test-section" id="section-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                <div class="q-item">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="input-group"><label>First Name *</label><input type="text" id="regFirstName" class="answer-input" required></div>
+                        <div class="input-group"><label>Last Name *</label><input type="text" id="regLastName" class="answer-input" required></div>
+                        <div class="input-group"><label>Proposed Group *</label><input type="text" id="regGroup" class="answer-input" value="Elementary Unit 4" required></div>
+                        <div class="input-group"><label>Phone Number *</label><input type="tel" id="regPhone" class="answer-input" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(9)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary btn-submit" onclick="submitTest()">Finish & Submit <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </section>
+
+            <!-- RESULT SECTION -->
+            <section class="test-section" id="section-result">
+                <div style="text-align: center; padding: 3rem 0;">
+                    <i class="fa-solid fa-circle-check" style="font-size: 5rem; color: var(--primary); margin-bottom: 2rem;"></i>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Test Submitted!</h2>
+                    <p id="resultFeedback" style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;">Calculating your score...</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='index.html'">Go to Homepage</button>
+                </div>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const unitSections = [
+            'section-grammar-1', 'section-grammar-2', 'section-grammar-3',
+            'section-vocab-1', 'section-vocab-2', 'section-vocab-3',
+            'section-pronunciation', 'section-reading', 'section-writing',
+            'section-listening', 'section-details'
+        ];
+
+        function nextUnitSection(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            if (idx >= unitSections.length) return;
+            document.getElementById(unitSections[idx]).classList.add('active');
+            updateUnitProgress(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateUnitProgress(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / unitSections.length * 100) + '%';
+            if (txt) txt.innerText = `Step ${idx + 1} of ${unitSections.length}`;
+        }
+
+        function normalize(s) {
+            if (!s) return '';
+            return s.toString().trim().toLowerCase()
+                .replace(/'m\b/g, ' am')
+                .replace(/'re\b/g, ' are')
+                .replace(/'s\b/g, ' is')
+                .replace(/n't\b/g, ' not')
+                .replace(/[?!.,;:'"()]/g, '')
+                .replace(/\s+/g, ' ');
+        }
+
+        async function submitTest() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const group = document.getElementById('regGroup').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+
+            if (!firstName || !lastName || !group || !phone) {
+                alert('Please fill in all required fields!');
+                return;
+            }
+
+            const btn = document.querySelector('.btn-submit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+
+            let score = 0;
+            const answers = new FormData(document.getElementById('unitTestForm'));
+            const key = {
+                g1_1: "A", g1_2: "B", g1_3: "B", g1_4: "A", g1_5: "B", g1_6: "A", g1_7: "B",
+                g2_1: "in", g2_2: "to", g2_3: "at", g2_4: "in", g2_5: "in", g2_6: "on", g2_7: "at",
+                g3_1: "b", g3_2: "b", g3_3: "a", g3_4: "b", g3_5: "b", g3_6: "a",
+                v1_1: "uncle", v1_2: "cousin", v1_3: "grandmother", v1_4: "niece", v1_5: "father", v1_6: "son", v1_7: "husband",
+                v2_1: "does", v2_2: "take", v2_3: "have", v2_4: "has", v2_5: "wake", v2_6: "starts", v2_7: "go",
+                v3_1: "b", v3_2: "b", v3_3: "b", v3_4: "a", v3_5: "a", v3_6: "b",
+                p1_1: "close", p1_2: "old", p1_3: "brother", p1_4: "who", p1_5: "one",
+                p2_1: "2", p2_2: "1", p2_3: "1", p2_4: "1", p2_5: "2",
+                r1_1: "B", r1_2: "C", r1_3: "C", r1_4: "B", r1_5: "C", r1_6: "A", r1_7: "B", r1_8: "C",
+                r2_1: "Francoise", r2_2: "Kenzo", r2_3: "Maria Jose", r2_4: "Kenzo", r2_5: "Francoise", r2_6: "Kenzo", r2_7: "Maria Jose",
+                l1_1: "A", l1_2: "B", l1_3: "A", l1_4: "B", l1_5: "A",
+                l2_1: "4 o'clock", l2_2: "in April", l2_3: "six days a week", l2_4: "She has breakfast", l2_5: "her daughter"
+            };
+
+            const sectionScores = { grammar: 0, vocabulary: 0, pronunciation: 0, reading: 0, listening: 0 };
+            for (let id in key) {
+                let userVal = answers.get(id);
+                if (userVal) {
+                    userVal = normalize(userVal);
+                    let correctVal = normalize(key[id]);
+                    if (userVal === correctVal || userVal.includes(correctVal)) {
+                        score++;
+                        if (id.startsWith('g')) sectionScores.grammar++;
+                        else if (id.startsWith('v')) sectionScores.vocabulary++;
+                        else if (id.startsWith('p')) sectionScores.pronunciation++;
+                        else if (id.startsWith('r')) sectionScores.reading++;
+                        else if (id.startsWith('l')) sectionScores.listening++;
+                    }
+                }
+            }
+
+            if (window.eduSupabase) {
+                await window.eduSupabase.from('submissions').insert([{
+                    student_name: `${firstName} ${lastName}`,
+                    test_type: 'Elementary Unit Test 4',
+                    score: score,
+                    group_name: group,
+                    phone: phone,
+                    raw_answers: Object.fromEntries(answers.entries())
+                }]);
+            }
+
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-result').classList.add('active');
+            document.getElementById('resultFeedback').innerText = `Congratulations ${firstName}! You completed Unit Test 4.`;
+            setTimeout(() => { window.location.href = 'index.html'; }, 5000);
+        }
+    </script>
+</body>
+</html>

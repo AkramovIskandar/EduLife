@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | EDU LIFE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header .logo {
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .login-header p {
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-full {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        #loginError {
+            color: #DC2626;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+            text-align: center;
+        }
+
+        /* Registration form styles */
+        .form-switch {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .form-switch a {
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .form-switch a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .form-switch p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        #registerSection {
+            display: none;
+        }
+
+        #registerSection.active {
+            display: block;
+        }
+
+        #loginSection.hidden {
+            display: none;
+        }
+
+        #registerSuccess {
+            display: none;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        #registerSuccess .success-icon {
+            font-size: 3rem;
+            color: #10B981;
+            margin-bottom: 1rem;
+        }
+
+        #registerSuccess h3 {
+            color: #059669;
+            margin-bottom: 0.5rem;
+        }
+
+        #registerSuccess p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        #registerError {
+            color: #DC2626;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+            text-align: center;
+        }
+
+        .phone-input-wrapper {
+            display: flex;
+            gap: 0;
+        }
+
+        .phone-prefix {
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            padding: 0.75rem 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .phone-input-wrapper .form-control {
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* ============ LOGIN RESPONSIVE OVERRIDES ============ */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem !important;
+                height: auto !important;
+                min-height: 100vh !important;
+                align-items: flex-start !important;
+                padding-top: 4rem !important;
+            }
+            
+            .login-card {
+                width: 100% !important;
+                max-width: none !important;
+                padding: 2rem 1.5rem !important;
+                margin: 0 !important;
+            }
+            
+            .login-header h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            .login-header p {
+                font-size: 0.95rem !important;
+            }
+            
+            .form-group label {
+                font-size: 0.9rem !important;
+            }
+            
+            .form-control {
+                padding: 0.85rem 1rem !important;
+                font-size: 1rem !important;
+            }
+            
+            .btn-full {
+                padding: 0.9rem 1.5rem !important;
+                font-size: 1rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 1.75rem 1.25rem !important;
+            }
+            
+            .login-header {
+                margin-bottom: 1.5rem !important;
+            }
+            
+            .login-header .logo-icon img {
+                height: 36px !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .login-card {
+                padding: 1.5rem 1rem !important;
+            }
+        }
+
+        /* Prevent iOS text zoom on form focus */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            select,
+            textarea,
+            input[type="text"],
+            input[type="password"],
+            input[type="search"],
+            input[type="number"] {
+                font-size: 16px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <div class="login-header">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                    <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo" style="height:40px;"></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- LOGIN SECTION -->
+        <div id="loginSection">
+            <h2 style="text-align:center; margin-bottom:0.25rem;">Welcome Back</h2>
+            <p style="text-align:center; color:var(--text-muted); margin-bottom:1.5rem;">Please login to your account</p>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                <div id="loginError">Invalid username or password</div>
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+            </form>
+
+            <div class="form-switch">
+                <p>Hisobingiz yo'qmi? <a onclick="showRegister()">Ro'yxatdan o'tish</a></p>
+            </div>
+        </div>
+
+        <!-- REGISTER SECTION -->
+        <div id="registerSection">
+            <h2 style="text-align:center; margin-bottom:0.25rem;"><i class="fa-solid fa-user-plus" style="color:var(--primary); margin-right:0.5rem;"></i>Ro'yxatdan o'tish</h2>
+            <p style="text-align:center; color:var(--text-muted); margin-bottom:1.5rem;">Ma'lumotlaringizni kiriting</p>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regFullName"><i class="fa-solid fa-user" style="margin-right:0.4rem; color:var(--primary);"></i>Ism Familiya</label>
+                    <input type="text" id="regFullName" class="form-control" placeholder="Masalan: Aliyev Jasur" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone"><i class="fa-solid fa-phone" style="margin-right:0.4rem; color:var(--primary);"></i>Telefon raqam</label>
+                    <div class="phone-input-wrapper">
+                        <span class="phone-prefix">+998</span>
+                        <input type="tel" id="regPhone" class="form-control" placeholder="90 123 45 67" maxlength="12" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regNote"><i class="fa-solid fa-comment-dots" style="margin-right:0.4rem; color:var(--primary);"></i>Izoh (o'zingiz haqingizda)</label>
+                    <textarea id="regNote" class="form-control" placeholder="Masalan: 15 yoshdaman, ingliz tilini boshlang'ich darajadan o'rganmoqchiman..." rows="3" style="resize: vertical; min-height: 70px;"></textarea>
+                </div>
+                <div id="registerError"></div>
+                <button type="submit" class="btn btn-primary btn-full" id="registerBtn">
+                    <i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i>Ariza yuborish
+                </button>
+            </form>
+
+            <div id="registerSuccess">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h3>Ariza qabul qilindi! ✅</h3>
+                <p>Admin arizangizni ko'rib chiqadi va sizga login va parol ochib beradi. Iltimos, kuting.</p>
+                <button class="btn btn-primary btn-full" style="margin-top:1.5rem;" onclick="showLogin()">
+                    <i class="fa-solid fa-arrow-left" style="margin-right:0.5rem;"></i>Login sahifasiga qaytish
+                </button>
+            </div>
+
+            <div class="form-switch">
+                <p>Hisobingiz bormi? <a onclick="showLogin()">Kirish</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Ensure supabase is initialized properly
+        if (!window.eduSupabase) {
+            console.error('Supabase not initialized!');
+        }
+
+        // ===== LOGIN / REGISTER TOGGLE =====
+        function showRegister() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('registerSection').classList.add('active');
+            document.getElementById('registerSuccess').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.querySelector('#registerSection .form-switch').style.display = 'block';
+            document.getElementById('registerError').style.display = 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('registerSection').classList.remove('active');
+        }
+
+        // ===== REGISTRATION FORM SUBMIT =====
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const fullName = document.getElementById('regFullName').value.trim();
+                const phoneRaw = document.getElementById('regPhone').value.trim().replace(/\s+/g, '').replace(/-/g, '');
+                const note = document.getElementById('regNote').value.trim();
+                const errorEl = document.getElementById('registerError');
+                const btn = document.getElementById('registerBtn');
+
+                // Validatsiya
+                if (!fullName || fullName.length < 3) {
+                    errorEl.innerText = '⚠️ Ism familiya kamida 3 ta harf bo\'lishi kerak.';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                if (!phoneRaw || phoneRaw.length < 9) {
+                    errorEl.innerText = '⚠️ Telefon raqamni to\'liq kiriting.';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                const phone = '+998' + phoneRaw;
+                errorEl.style.display = 'none';
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:0.5rem;"></i>Yuborilmoqda...';
+
+                if (!window.eduSupabase) {
+                    errorEl.innerText = '⚠️ Ma\'lumotlar bazasi ulanmagan. Keyinroq urinib ko\'ring.';
+                    errorEl.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i>Ariza yuborish';
+                    return;
+                }
+
+                try {
+                    const { data, error } = await window.eduSupabase
+                        .rpc('submit_registration', {
+                            p_full_name: fullName,
+                            p_phone: phone,
+                            p_note: note
+                        });
+
+                    if (error) {
+                        errorEl.innerText = '⚠️ Xatolik: ' + error.message;
+                        errorEl.style.display = 'block';
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i>Ariza yuborish';
+                        return;
+                    }
+
+                    if (data && !data.success) {
+                        errorEl.innerText = '⚠️ ' + (data.message || 'Xatolik yuz berdi.');
+                        errorEl.style.display = 'block';
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i>Ariza yuborish';
+                        return;
+                    }
+
+                    // Muvaffaqiyat!
+                    document.getElementById('registerForm').style.display = 'none';
+                    document.getElementById('registerSuccess').style.display = 'block';
+                    document.querySelector('#registerSection .form-switch').style.display = 'none';
+
+                } catch (err) {
+                    errorEl.innerText = '⚠️ Tarmoq xatosi. Internet aloqangizni tekshiring.';
+                    errorEl.style.display = 'block';
+                }
+
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i>Ariza yuborish';
+            });
+        }
+    </script>
+</body>
+</html>

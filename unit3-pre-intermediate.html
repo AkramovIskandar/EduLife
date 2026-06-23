@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-intermediate Unit Test 3 - EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --primary: #7C3AED; --primary-dark: #6D28D9; --primary-light: #EDE9FE; --text-muted: #64748B; }
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.6; }
+        .test-container { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+        .test-header { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; text-align: center; border-bottom: 4px solid var(--primary); }
+        .test-section { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; display: none; }
+        .test-section.active { display: block; }
+        .section-title { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #F1F5F9; }
+        .section-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; color: var(--primary-dark); margin: 0; }
+        .question-block h3, .reading-questions h3 { font-size: 1.05rem; margin: 0 0 1rem; color: var(--primary-dark); }
+        .q-item { margin-bottom: 1rem; padding: 1rem 1.25rem; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .q-item p { font-weight: 500; margin-bottom: 0.75rem; }
+        .test-section .answer-input:not(.inline-input), .test-section select.answer-input, .test-section textarea.answer-input {
+            display: block; width: 100% !important; max-width: 100% !important; box-sizing: border-box;
+            border: 2px solid #E2E8F0 !important; border-radius: 10px !important; background: #fff !important;
+            padding: 0.65rem 0.9rem !important; font-size: 1rem !important; letter-spacing: normal !important; margin-top: 0.35rem;
+        }
+        .test-section input.answer-input[type="text"]:not(.inline-input) { max-width: 28rem !important; }
+        .test-section .q-item > p .inline-input {
+            display: inline-block !important; width: auto !important; min-width: 3.5rem !important; max-width: 9rem !important;
+            margin: 0 0.1rem !important; padding: 0.15rem 0.35rem !important;
+            border: none !important; border-bottom: 2px solid var(--primary) !important; border-radius: 0 !important;
+            background: transparent !important; vertical-align: baseline; box-shadow: none !important;
+        }
+        .test-section .q-item > p .inline-input-wide { min-width: 6rem !important; max-width: 11rem !important; }
+        .test-section .q-item > p:has(.inline-input) { line-height: 2.1; margin-bottom: 0.35rem; }
+        .test-section textarea.writing-area { min-height: 8rem; max-height: 16rem; resize: vertical; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 1rem; background: #fff; border: 1px dashed var(--primary); border-radius: 10px; font-size: 0.95rem; }
+        .match-options { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; padding: 0.75rem 1rem; background: #fff; border-radius: 10px; border: 1px solid #E2E8F0; }
+        .match-options div { margin-bottom: 0.35rem; }
+        .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .radio-group label { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border: 2px solid #E2E8F0; border-radius: 10px; cursor: pointer; font-weight: 400; }
+        .radio-group label:hover { border-color: var(--primary); background: var(--primary-light); }
+        .radio-group input { width: 1.1rem; height: 1.1rem; accent-color: var(--primary); }
+        .reading-split { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(300px, 1fr); gap: 1.5rem; align-items: start; }
+        .reading-passages { background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary); max-height: min(70vh, 28rem); overflow-y: auto; line-height: 1.7; font-size: 1.02rem; }
+        .reading-questions { max-height: min(70vh, 28rem); overflow-y: auto; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; border: none; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-outline { background: #fff; border: 2px solid #E2E8F0; color: var(--text-muted); }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .progress-nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 1rem 0; z-index: 100; border-bottom: 1px solid #E2E8F0; }
+        .progress-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+        .progress-bg { flex-grow: 1; height: 10px; background: #E2E8F0; border-radius: 5px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        @media (max-width: 900px) { .reading-split { grid-template-columns: 1fr; } .reading-passages, .reading-questions { max-height: none; } }
+    </style>
+</head>
+<body>
+    <nav class="progress-nav">
+        <div class="progress-container">
+            <div class="progress-bg"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText" style="font-weight:600;color:var(--primary);">Step 1</span>
+        </div>
+    </nav>
+    <main class="test-container">
+        <div class="test-header">
+            <h1 style="color:var(--primary);">Pre-intermediate Unit Test 3</h1>
+            <p>File 3 — Variant A (no speaking section)</p>
+        </div>
+        <form id="unitTestForm">
+
+            <section class="test-section active" id="section-grammar-1">
+                <div class="section-title">
+                    <h2>Grammar 1</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Make sentences about future arrangements using the present continuous.</h3><div class="q-item"><p>1. I / spend / New Year's Eve in Scotland</p><input type="text" name="g1_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. we / not go / away at Christmas</p><input type="text" name="g1_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. they / travel / to Basel on Saturday</p><input type="text" name="g1_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. when / Simon / get a new car ?</p><input type="text" name="g1_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. I / not have / dinner with</p><input type="text" name="g1_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. where / you / meet Qianru ?</p><input type="text" name="g1_6" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <span></span>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-2">
+                <div class="section-title">
+                    <h2>Grammar 2</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with who, which, or where.</h3><div class="q-item"><p>1. 'Café' is a word ______ comes from the Spanish word cafetería.</p><input type="text" name="g2_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. This is the restaurant ______ we had dinner.</p><input type="text" name="g2_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Kangaroos are animals ______ live in Australia.</p><input type="text" name="g2_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. A shop assistant is a person ______ serves you in a shop.</p><input type="text" name="g2_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. A snack bar is a place ______ you can get a drink or a small meal.</p><input type="text" name="g2_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. He's the man ______ lives next door to my grandparents.</p><input type="text" name="g2_6" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(0)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-3">
+                <div class="section-title">
+                    <h2>Grammar 3</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences. Use the correct form of going to and a verb from the box.</h3><div class="q-item"><p>1. One day, I ______ around the world.</p><input type="text" name="g3_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. What ______ you ______ when you leave university?</p><input type="text" name="g3_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. It's very late. We ______ this report today.</p><input type="text" name="g3_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Do you think Hasad ______ his exams?</p><input type="text" name="g3_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. Hurry up! We ______ the train.</p><input type="text" name="g3_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. You don't need an umbrella. It ______ .</p><input type="text" name="g3_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. I don't want to go to the party. I know I ______ it.</p><input type="text" name="g3_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. How long ______ Janos and Aisa ______ in Türkiye?</p><input type="text" name="g3_8" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-4">
+                <div class="section-title">
+                    <h2>Vocabulary 4</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with words related to airports.</h3><div class="q-item"><p>1. Which t ______ do international flights leave from?</p><input type="text" name="v4_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Flight 0342 to Rome leaves from g ______ number 15.</p><input type="text" name="v4_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. After the flight, they went to b ______ reclaim to get their suitcases.</p><input type="text" name="v4_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. We went through passport c ______ before we got on the plane.</p><input type="text" name="v4_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. I can't carry all these bags. I need a t ______ .</p><input type="text" name="v4_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. She didn't stop at c ______ as she had nothing to declare.</p><input type="text" name="v4_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. You can take the l ______ or the stairs to the next floor.</p><input type="text" name="v4_7" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-5">
+                <div class="section-title">
+                    <h2>Vocabulary 5</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with the correct word or phrase.</h3><div class="q-item"><p>1. Tidy is the ______ of untidy.</p><input type="text" name="v5_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. A dictionary has different uses, ______ you can use it to check pronunciation.</p><input type="text" name="v5_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. An onion is a ______ of vegetable.</p><input type="text" name="v5_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. A market is a ______ where you can buy fresh fruit and vegetables.</p><input type="text" name="v5_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. A passport is ______ which you need when you travel abroad.</p><input type="text" name="v5_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. Hire and rent have a ______ meaning.</p><input type="text" name="v5_6" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-6">
+                <div class="section-title">
+                    <h2>Vocabulary 6</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the phrases with the correct preposition.</h3><div class="q-item"><p>1. wait ______ a friend</p><input type="text" name="v6_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. think ______ something</p><input type="text" name="v6_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. worry ______ a problem</p><input type="text" name="v6_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. write an email ______ somebody</p><input type="text" name="v6_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. spend money ______ books</p><input type="text" name="v6_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. pay ______ a meal</p><input type="text" name="v6_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. agree ______ somebody</p><input type="text" name="v6_7" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-pronunciation-7">
+                <div class="section-title">
+                    <h2>Pronunciation 7</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Match the words with the same sound.</h3><div class="q-item"><p>1. sights flight ______</p><input type="text" name="p7_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. region ______ ______</p><input type="text" name="p7_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. guide ______ ______</p><input type="text" name="p7_3" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(7)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-pronunciation-8">
+                <div class="section-title">
+                    <h2>Pronunciation 8</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Which is the stressed syllable? Tick 1, 2, 3, or 4.</h3><div class="q-item"><p>1. pa|ssen|ger 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_1" value="1"> syllable 1</label><label><input type="radio" name="p8_1" value="2"> syllable 2</label><label><input type="radio" name="p8_1" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>2. de|fi|ni|tion 	1  	2  	3  	4 </p><div class="radio-group"><label><input type="radio" name="p8_2" value="1"> syllable 1</label><label><input type="radio" name="p8_2" value="2"> syllable 2</label><label><input type="radio" name="p8_2" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>3. ba|ggage 	1  	2 </p><div class="radio-group"><label><input type="radio" name="p8_3" value="1"> syllable 1</label><label><input type="radio" name="p8_3" value="2"> syllable 2</label><label><input type="radio" name="p8_3" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>4. de|par|tures 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_4" value="1"> syllable 1</label><label><input type="radio" name="p8_4" value="2"> syllable 2</label><label><input type="radio" name="p8_4" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>5. e|xam|ple 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_5" value="1"> syllable 1</label><label><input type="radio" name="p8_5" value="2"> syllable 2</label><label><input type="radio" name="p8_5" value="3"> syllable 3</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(8)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-reading">
+                <div class="section-title">
+                    <h2>Reading</h2>
+                </div>
+                
+                <div class="reading-split"><div class="reading-passages"><p>Three hours in my city Are you planning a stopover at Schipol airport? If the answer is 'yes', then visit Amsterdam. This beautiful city is only a short train journey away. We asked three people who live there: 'We have three hours in your city. What are the best things to do?' Anika, 26 It depends on the weather. Check the forecast when you arrive at the airport. If the weather is not good, visit one of our famous cafés. Try some bitterballen – it's a kind of Dutch meat snack – or have some pancakes with Dutch cheese. I'm sure you're going to love Dutch food. If it's a sunny day, spend some time at the flower market. The flower shops are on small boats and it is also a great place to buy gifts. You will return to the airport feeling happy and with many colourful pictures to look at on your journey. Hendrik, 34 Take a ride on a tram. A tram is a kind of electric bus that drives on metal lines in the road. Amsterdam has a great tram system – I use it every day to get to work. I think the number 2 route is best for tourists. That's the tram that drives past many of the main Amsterdam sights, like the Van Gogh art gallery. The trams leave Amsterdam Central Station regularly and tickets are not expensive. You can see your luggage is safe, but you don't have to carry it. And you won't be stressed about getting back to the airport in time – you can get off the tram at any stop and return to the station on tram 2 in the opposite direction. It's perfect. Issac, 23 The best way to see Amsterdam is to hire a bike. Everyone in Amsterdam loves to cycle! You can hire bikes at the main train station – it's easy. There are also lockers at the station where you can leave your luggage, although they are quite expensive. On a bike, you can see Amsterdam's beautiful buildings and canals. You can see the old houses very well from the street, but a few are also open as museums. If you have children, visit one of the large parks. Vondelpark has an exciting playground where children can climb trees.</p></div><div class="reading-questions">
+                <h3>Part 1</h3><div class="q-item"><p>1. Anika wants us to check ______ when we arrive at the airport.</p><div class="radio-group"><label><input type="radio" name="r1_1" value="A"> A. the time</label><label><input type="radio" name="r1_1" value="B"> B. our ticket</label><label><input type="radio" name="r1_1" value="C"> C. the weather</label></div></div><div class="q-item"><p>2. Anika says the flower market is good on a ______ day.</p><div class="radio-group"><label><input type="radio" name="r1_2" value="A"> A. sunny</label><label><input type="radio" name="r1_2" value="B"> B. cold</label><label><input type="radio" name="r1_2" value="C"> C. rainy</label></div></div><div class="q-item"><p>3. Hendrik says tram number 2 drives past ______ .</p><div class="radio-group"><label><input type="radio" name="r1_3" value="A"> A. a gallery</label><label><input type="radio" name="r1_3" value="B"> B. a park</label><label><input type="radio" name="r1_3" value="C"> C. a</label></div></div><div class="q-item"><p>4. Hendrik says his idea is ______ .</p><div class="radio-group"><label><input type="radio" name="r1_4" value="A"> A. stressful</label><label><input type="radio" name="r1_4" value="B"> B. perfect</label><label><input type="radio" name="r1_4" value="C"> C. expensive</label></div></div><div class="q-item"><p>5. Issac says that ______ are very popular in Amsterdam.</p><div class="radio-group"><label><input type="radio" name="r1_5" value="A"> A. bikes</label><label><input type="radio" name="r1_5" value="B"> B. trains</label><label><input type="radio" name="r1_5" value="C"> C. trams</label></div></div><div class="q-item"><p>6. Issac says some of the old houses are also ______ .</p><div class="radio-group"><label><input type="radio" name="r1_6" value="A"> A. cafés</label><label><input type="radio" name="r1_6" value="B"> B. schools</label><label><input type="radio" name="r1_6" value="C"> C. museums</label></div></div><h3>Part 2</h3><div class="q-item"><p>1. The city has a great tram system. ______</p><input type="text" name="r2_1" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div><div class="q-item"><p>2. The luggage lockers are quite expensive. ______</p><input type="text" name="r2_2" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div><div class="q-item"><p>3. Our cafés are famous. ______</p><input type="text" name="r2_3" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div><div class="q-item"><p>4. Children can climb trees in the park. ______</p><input type="text" name="r2_4" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div><div class="q-item"><p>5. It's like a bus. ______</p><input type="text" name="r2_5" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div><div class="q-item"><p>6. It's a good place to buy gifts. ______</p><input type="text" name="r2_6" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div><div class="q-item"><p>7. Try eating some Dutch food. ______</p><input type="text" name="r2_7" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div><div class="q-item"><p>8. It's easy to hire a bike from the station. ______</p><input type="text" name="r2_8" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div><div class="q-item"><p>9. You won't be stressed. ______</p><input type="text" name="r2_9" class="answer-input" maxlength="1" placeholder="K / S / M" style="max-width:4rem!important"></div>
+                </div></div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(9)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-writing">
+                <div class="section-title">
+                    <h2>Writing</h2>
+                </div>
+                
+                <div class="question-block">
+                <div class="question-block"><h3>Write a reply and answer these questions. (100–150 words)</h3><textarea name="writing" class="writing-area answer-input" rows="6" placeholder="Write here (100–150 words)..."></textarea><p style="font-size:0.85rem;color:#64748B;margin-top:0.5rem;">This section is reviewed manually.</p></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(8)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(10)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-1">
+                <div class="section-title">
+                    <h2>Listening 1</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/unit_3/listening_1.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to two people talking about a business trip. Tick A, B, or C.</h3><div class="q-item"><p>1. What are they doing on Monday morning?</p><div class="radio-group"><label><input type="radio" name="l1_1" value="A"> A. Travelling to Oslo.</label><label><input type="radio" name="l1_1" value="B"> B. Travelling from Edinburgh.</label><label><input type="radio" name="l1_1" value="C"> C. Writing a report.</label></div></div>
+<div class="q-item"><p>2. What are they doing on Tuesday afternoon?</p><div class="radio-group"><label><input type="radio" name="l1_2" value="A"> A. Finding an office.</label><label><input type="radio" name="l1_2" value="B"> B. Practising a talk.</label><label><input type="radio" name="l1_2" value="C"> C. Finishing a report.</label></div></div>
+<div class="q-item"><p>3. What time is the first meeting on Wednesday?</p><div class="radio-group"><label><input type="radio" name="l1_3" value="A"> A. 9.30.</label><label><input type="radio" name="l1_3" value="B"> B. 8.30.</label><label><input type="radio" name="l1_3" value="C"> C. 10.00.</label></div></div>
+<div class="q-item"><p>4. What is the woman doing on Thursday?</p><div class="radio-group"><label><input type="radio" name="l1_4" value="A"> A. A castle tour.</label><label><input type="radio" name="l1_4" value="B"> B. A gallery tour.</label><label><input type="radio" name="l1_4" value="C"> C. A book tour.</label></div></div>
+<div class="q-item"><p>5. What does she most want to see?</p><div class="radio-group"><label><input type="radio" name="l1_5" value="A"> A. A shop.</label><label><input type="radio" name="l1_5" value="B"> B. A café.</label><label><input type="radio" name="l1_5" value="C"> C. A house.</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(9)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(11)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-2">
+                <div class="section-title">
+                    <h2>Listening 2</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/unit_3/listening_2.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to five conversations. Match the conversations (1–5) with the airport locations (A–G). There are two answers that you don't need.</h3><div class="match-options"><div><strong>A</strong> arrivals</div><div><strong>B</strong> the lifts</div><div><strong>C</strong> passport control</div><div><strong>D</strong> security check</div><div><strong>E</strong> a</div><div><strong>F</strong> the</div><div><strong>G</strong> the</div></div><div class="q-item"><p>1. Item 1</p><select name="l2_1" class="answer-input"><option value="">— Select —</option><option value="A">A. arrivals</option><option value="B">B. the lifts</option><option value="C">C. passport control</option><option value="D">D. security check</option><option value="E">E. a</option><option value="F">F. the</option><option value="G">G. the</option></select></div>
+<div class="q-item"><p>2. Item 2</p><select name="l2_2" class="answer-input"><option value="">— Select —</option><option value="A">A. arrivals</option><option value="B">B. the lifts</option><option value="C">C. passport control</option><option value="D">D. security check</option><option value="E">E. a</option><option value="F">F. the</option><option value="G">G. the</option></select></div>
+<div class="q-item"><p>3. Item 3</p><select name="l2_3" class="answer-input"><option value="">— Select —</option><option value="A">A. arrivals</option><option value="B">B. the lifts</option><option value="C">C. passport control</option><option value="D">D. security check</option><option value="E">E. a</option><option value="F">F. the</option><option value="G">G. the</option></select></div>
+<div class="q-item"><p>4. Item 4</p><select name="l2_4" class="answer-input"><option value="">— Select —</option><option value="A">A. arrivals</option><option value="B">B. the lifts</option><option value="C">C. passport control</option><option value="D">D. security check</option><option value="E">E. a</option><option value="F">F. the</option><option value="G">G. the</option></select></div>
+<div class="q-item"><p>5. Item 5</p><select name="l2_5" class="answer-input"><option value="">— Select —</option><option value="A">A. arrivals</option><option value="B">B. the lifts</option><option value="C">C. passport control</option><option value="D">D. security check</option><option value="E">E. a</option><option value="F">F. the</option><option value="G">G. the</option></select></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(10)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(12)">Final Step <i class="fa-solid fa-user-check"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">First Name *</label><input type="text" id="regFirstName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Last Name *</label><input type="text" id="regLastName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Proposed Group *</label><input type="text" id="regGroup" class="answer-input" value="Pre-intermediate Unit 3" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Phone Number *</label><input type="tel" id="regPhone" class="answer-input" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(11)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary btn-submit" onclick="submitTest()">Finish & Submit <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </section>
+            <section class="test-section" id="section-result">
+                <div style="text-align:center;padding:3rem 0;">
+                    <i class="fa-solid fa-circle-check" style="font-size:5rem;color:var(--primary);margin-bottom:2rem;"></i>
+                    <h2>Test Submitted!</h2>
+                    <p id="resultFeedback" style="color:#64748B;">Calculating your score...</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='tests.html'">Back to Tests</button>
+                </div>
+            </section>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) { window.location.href = 'login.html'; }
+        const unitSections = ["section-grammar-1","section-grammar-2","section-grammar-3","section-vocab-4","section-vocab-5","section-vocab-6","section-pronunciation-7","section-pronunciation-8","section-reading","section-writing","section-listening-1","section-listening-2","section-details"];
+        const answerKey = {"g1_1":["i’m","i am spending new year’s eve in scotland"],"g1_2":["we’re not","we are not going away at christmas"],"g1_3":["they’re","they are travelling to basel on saturday"],"g1_4":["when is simon getting a new car"],"g1_5":["i’m","i am not having dinner with marco tonight"],"g1_6":["where are you meeting qianru"],"g2_1":["which"],"g2_2":["where"],"g2_3":["which"],"g2_4":["who"],"g2_5":["where"],"g2_6":["who"],"g3_1":["’m","am going to travel"],"g3_2":["are going to do"],"g3_3":["aren’t","are not going to finish"],"g3_4":["is going to pass"],"g3_5":["’re","are going to miss"],"g3_6":["isn’t","is not going to rain"],"g3_7":["’m","am not going to enjoy"],"g3_8":["are going to stay"],"v4_1":["terminal"],"v4_2":["gate"],"v4_3":["baggage"],"v4_4":["control"],"v4_5":["trolley"],"v4_6":["customs"],"v4_7":["lift"],"v5_1":["opposite"],"v5_2":["for example"],"v5_3":["kind"],"v5_4":["place"],"v5_5":["something"],"v5_6":["similar"],"v6_1":["for"],"v6_2":["of"],"v6_3":["about"],"v6_4":["to"],"v6_5":["on"],"v6_6":["for"],"v6_7":["with"],"p7_1":["sign"],"p7_2":["general","emergency"],"p7_3":["garden","organize"],"p8_1":["1"],"p8_2":["3"],"p8_3":["1"],"p8_4":["2"],"p8_5":["2"],"r1_1":["c"],"r1_2":["a"],"r1_3":["a"],"r1_4":["b"],"r1_5":["a"],"r1_6":["c"],"r2_1":["h"],"r2_2":["i"],"r2_3":["a"],"r2_4":["i"],"r2_5":["h"],"r2_6":["a"],"r2_7":["a"],"r2_8":["i"],"r2_9":["h"],"l1_1":["a"],"l1_2":["b"],"l1_3":["a"],"l1_4":["c"],"l1_5":["b"],"l2_1":["b"],"l2_2":["d"],"l2_3":["g"],"l2_4":["e"],"l2_5":["a"]};
+
+        function nextUnitSection(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            if (idx >= unitSections.length) return;
+            document.getElementById(unitSections[idx]).classList.add('active');
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / unitSections.length * 100) + '%';
+            if (txt) txt.innerText = 'Step ' + (idx + 1) + ' of ' + unitSections.length;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function normalize(s) {
+            if (!s) return '';
+            return s.toString().trim().toLowerCase()
+                .replace(/['']/g, "'").replace(/[?!.,;:"()]/g, '').replace(/\s+/g, ' ');
+        }
+
+        function checkAnswer(userVal, accepted) {
+            const u = normalize(userVal);
+            if (!u) return false;
+            return accepted.some((a) => {
+                const c = normalize(a);
+                if (u === c) return true;
+                if (/^[a-gtflh]$/.test(c) && u === c) return true;
+                const parts = a.replace(/…/g, '...').split(/\s*\.\.\.\s*/).map((p) => normalize(p)).filter(Boolean);
+                if (parts.length >= 2 && parts.every((p) => u.includes(p))) return true;
+                if (c.length >= 4 && (u.includes(c) || c.includes(u))) return true;
+                return false;
+            });
+        }
+
+        async function submitTest() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const group = document.getElementById('regGroup').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            if (!firstName || !lastName || !group || !phone) { alert('Please fill in all required fields!'); return; }
+
+            const btn = document.querySelector('.btn-submit');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...'; }
+
+            let score = 0;
+            const answers = new FormData(document.getElementById('unitTestForm'));
+            for (const id in answerKey) {
+                const userVal = answers.get(id);
+                if (checkAnswer(userVal, answerKey[id])) score++;
+            }
+
+            if (window.eduSupabase) {
+                await window.eduSupabase.from('submissions').insert([{
+                    student_name: firstName + ' ' + lastName,
+                    test_type: "Pre-intermediate Unit Test 3",
+                    score: score,
+                    group_name: group,
+                    phone: phone,
+                    raw_answers: Object.fromEntries(answers.entries())
+                }]);
+            }
+
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-result').classList.add('active');
+            document.getElementById('resultFeedback').innerText = 'Thank you, ' + firstName + '! Auto-graded score: ' + score + ' points (writing reviewed separately).';
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+    </script>
+</body>
+</html>

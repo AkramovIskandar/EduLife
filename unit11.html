@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 11 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table-custom { width:100%; border-collapse: collapse; margin-bottom: 1rem; }
+        .table-custom th, .table-custom td { border: 1px solid #CBD5E1; padding: 0.4rem; text-align: center; font-size: 0.95rem; }
+        
+        @media (max-width: 992px) { 
+            .sheet-grid { grid-template-columns: 1fr; } 
+            .reading-layout { grid-template-columns:1fr; } 
+        }
+        body.dark-theme .word-bank { background: #1F2937; border-color: #475569; color: #E2E8F0; }
+        body.dark-theme .table-custom th,
+        body.dark-theme .table-custom td {
+            border-color: #334155;
+            color: #cbd5e1;
+        }
+
+        body.dark-theme .table-custom th {
+            background: #1e293b;
+            color: var(--white);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 11</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, practical English, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit11Form">
+            <!-- PART 1: Grammar, Vocabulary, Pronunciation, Practical English -->
+            <section class="test-section active" id="u11-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation, Practical English</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>GRAMMAR</h3>
+                            <p class="instruction">1 Tick (✔) the correct simple past form.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Did you <label><input type="radio" checked disabled> watch</label> / <label><input type="radio" disabled> watched</label> TV last night?</p>
+                                <p>1 My father didn't <label><input type="radio" name="u11g1" value="carry"> carry</label> / <label><input type="radio" name="u11g1" value="carried"> carried</label> the suitcases.</p>
+                                <p>2 What time did you <label><input type="radio" name="u11g2" value="went"> went</label> / <label><input type="radio" name="u11g2" value="go"> go</label> to the supermarket?</p>
+                                <p>3 It didn't <label><input type="radio" name="u11g3" value="rained"> rained</label> / <label><input type="radio" name="u11g3" value="rain"> rain</label> yesterday.</p>
+                                <p>4 Where <label><input type="radio" name="u11g4" value="did you get"> did you get</label> / <label><input type="radio" name="u11g4" value="you got"> you got</label> that dress? It's beautiful.</p>
+                                <p>5 <label><input type="radio" name="u11g5" value="Had you"> Had you</label> / <label><input type="radio" name="u11g5" value="Did you have"> Did you have</label> lunch at home?</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Complete the sentences. Use the past simple form of the verb in brackets.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Eric <u>did</u> (do) his homework last night.</p>
+                                <p>1 I <input type="text" name="u11g2_1" class="small-input"> (study) French at school.</p>
+                                <p>2 Roberto <input type="text" name="u11g2_2" class="small-input"> (had) pasta for lunch.</p>
+                                <p>3 We <input type="text" name="u11g2_3" class="small-input"> (went) to the museum last weekend.</p>
+                                <p>4 They <input type="text" name="u11g2_4" class="small-input"> (stopped) to look at the views.</p>
+                                <p>5 Maggie <input type="text" name="u11g2_5" class="small-input"> (got) a taxi to the airport really early this morning.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>VOCABULARY</h3>
+                            <p class="instruction">3 Complete the sentences with a verb from the box. Use the past simple.</p>
+                            <div class="word-bank">cry, decide, finish, rain, travel</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Peter <u>answered</u> the phone.</p>
+                                <p>1 I <input type="text" name="u11v3_1" class="small-input"> reading the book yesterday.</p>
+                                <p>2 Keiko <input type="text" name="u11v3_2" class="small-input"> to stay at home.</p>
+                                <p>3 We <input type="text" name="u11v3_3" class="small-input"> from London to Brussels by train.</p>
+                                <p>4 They <input type="text" name="u11v3_4" class="small-input"> at the end of the film.</p>
+                                <p>5 The weather was awful on our holiday. It <input type="text" name="u11v3_5" class="small-input"> every day!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">4 Complete the sentences. Use the correct word or phrase.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> When do you usually _____ dinner?<br>
+                                    <label><input type="radio" disabled> A do</label> &nbsp; <label><input type="radio" disabled> B go</label> &nbsp; <label><input type="radio" checked disabled> C have</label>
+                                </p>
+                                <p>1 I usually _____ up late at the weekend.<br>
+                                    <label><input type="radio" name="u11v1" value="A"> A have</label> &nbsp; <label><input type="radio" name="u11v1" value="B"> B get</label> &nbsp; <label><input type="radio" name="u11v1" value="C"> C go</label>
+                                </p>
+                                <p>2 Pat didn't do her _____ after school.<br>
+                                    <label><input type="radio" name="u11v2" value="A"> A homework</label> &nbsp; <label><input type="radio" name="u11v2" value="B"> B lunch</label> &nbsp; <label><input type="radio" name="u11v2" value="C"> C shower</label>
+                                </p>
+                                <p>3 We _____ out last night.<br>
+                                    <label><input type="radio" name="u11v3" value="A"> A did</label> &nbsp; <label><input type="radio" name="u11v3" value="B"> B had</label> &nbsp; <label><input type="radio" name="u11v3" value="C"> C went</label>
+                                </p>
+                                <p>4 I love to do _____.<br>
+                                    <label><input type="radio" name="u11v4" value="A"> A a coffee</label> &nbsp; <label><input type="radio" name="u11v4" value="B"> B to bed</label> &nbsp; <label><input type="radio" name="u11v4" value="C"> C yoga</label>
+                                </p>
+                                <p>5 _____ a nice day!<br>
+                                    <label><input type="radio" name="u11v5" value="A"> A Do</label> &nbsp; <label><input type="radio" name="u11v5" value="B"> B Have</label> &nbsp; <label><input type="radio" name="u11v5" value="C"> C Get</label>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRONUNCIATION</h3>
+                            <p class="instruction">5 Write the words in the correct column.</p>
+                            <div class="word-bank">arrived, cooked, invited, lived, painted, relaxed</div>
+                            <div class="q-item">
+                                <table class="table-custom">
+                                    <tr>
+                                        <th>played /d/</th>
+                                        <th>liked /t/</th>
+                                        <th>wanted /ɪd/</th>
+                                    </tr>
+                                    <tr>
+                                        <td><em>arrived</em></td>
+                                        <td><input type="text" name="u11p5_1" style="width:100%; border:none; background:transparent; text-align:center;"></td>
+                                        <td><input type="text" name="u11p5_2" style="width:100%; border:none; background:transparent; text-align:center;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="u11p5_3" style="width:100%; border:none; background:transparent; text-align:center;"></td>
+                                        <td><input type="text" name="u11p5_4" style="width:100%; border:none; background:transparent; text-align:center;"></td>
+                                        <td><input type="text" name="u11p5_5" style="width:100%; border:none; background:transparent; text-align:center;"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRACTICAL ENGLISH</h3>
+                            <p class="instruction">6 Look at the map. Complete the two dialogues with the words in the box.</p>
+                            <div class="word-bank">next to, straight on, between, on the left, turn right</div>
+                            <div class="q-item" style="border:1px solid #CBD5E1; padding: 1rem; border-radius:6px; background:#F8FAFC;">
+                                <p style="text-align: center; color: #64748B; margin-bottom: 5px;"><small>[Map: bank, hotel, cinema are near the top. supermarket, gym, bookshop are in middle. museum is on right.]</small></p>
+                                <p>1 A Where's the bookshop, please?<br>&nbsp; &nbsp; B Er...OK. Go <sup>1</sup><input type="text" name="u11e6_1" class="small-input"> then <sup>2</sup><input type="text" name="u11e6_2" class="small-input">. It's <sup>3</sup><input type="text" name="u11e6_3" class="small-input"> the gym.<br>&nbsp; &nbsp; A Thanks.</p>
+                                <p style="margin-top: 10px;">2 A Excuse me. Is there a hotel near here?<br>&nbsp; &nbsp; B Yes. It's <sup>4</sup><input type="text" name="u11e6_4" class="small-input">. It's <sup>5</sup><input type="text" name="u11e6_5" class="small-input"> the bank and the cinema.<br>&nbsp; &nbsp; A Thank you very much.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU11(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 2: Reading -->
+            <section class="test-section" id="u11-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Read the text. Tick (✔) the correct option to complete the sentences.</p>
+                        <div class="reading-panel">
+                            <p><strong>On This Day in History</strong></p>
+                            <p>23rd April is an important day in history around the world. Many people know it as the birthday of the famous English writer, William Shakespeare, but this wasn't the only thing in history on 23rd April.</p>
+                            <p>William Shakespeare lived from 1564 until he was 52 years old in 1616. He went to school in Stratford-upon-Avon. In 1590 he went to live in London and worked as an actor in a theatre. When he was in London, he started to write plays for the theatre. There are 37 plays and many students around the world know some of them, for example <em>Romeo and Juliet, Hamlet</em>, and <em>Macbeth</em>.</p>
+                            <p>On the same day in 1972, thousands of miles away, John Young and Charles Duke walked on the moon. At the time, they were two of only 12 men to do this. The first was Neil Armstrong on 21st July 1969. John Young and Charles Duke were two of the astronauts on Apollo 16.</p>
+                            <p>Twenty years after this walk on the moon, on 23rd April, the American fast-food company McDonald's opened its first restaurant in Beijing, China. On that first day, 40,000 people visited this new McDonald's and had something to eat! Today there are more than 2,500 McDonald's restaurants in China.</p>
+                            <p>On 23rd April in 2005, Jawed Karim watched the first video on YouTube. Jawed is from Germany, but he went to live in the United States with his family in 1992 when he was 13 years old. He studied computer science at university and started YouTube in 2005 with two friends.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <div class="q-item">
+                                <p><strong>Example:</strong> William Shakespeare lived from _____.<br><label><input type="radio" checked disabled> A 1564</label> &nbsp; <label><input type="radio" disabled> B 1590</label> &nbsp; <label><input type="radio" disabled> C 1616</label></p>
+                                <p>1 There are _____ plays for the theatre by Shakespeare.<br><label><input type="radio" name="u11r1" value="A"> A 27</label> &nbsp; <label><input type="radio" name="u11r1" value="B"> B 37</label> &nbsp; <label><input type="radio" name="u11r1" value="C"> C 52</label></p>
+                                <p>2 Between 1969 and 1972, _____ men walked on the moon.<br><label><input type="radio" name="u11r2" value="A"> A two</label> &nbsp; <label><input type="radio" name="u11r2" value="B"> B three</label> &nbsp; <label><input type="radio" name="u11r2" value="C"> C twelve</label></p>
+                                <p>3 Neil Armstrong was the _____ man to walk on the moon.<br><label><input type="radio" name="u11r3" value="A"> A first</label> &nbsp; <label><input type="radio" name="u11r3" value="B"> B second</label> &nbsp; <label><input type="radio" name="u11r3" value="C"> C twelfth</label></p>
+                                <p>4 Jawed Karim lived in _____ between 1979 and 1992.<br><label><input type="radio" name="u11r4" value="A"> A China</label> &nbsp; <label><input type="radio" name="u11r4" value="B"> B Germany</label> &nbsp; <label><input type="radio" name="u11r4" value="C"> C the United States</label></p>
+                                <p>5 Jawed Karim started YouTube in _____.<br><label><input type="radio" name="u11r5" value="A"> A 1979</label> &nbsp; <label><input type="radio" name="u11r5" value="B"> B 1992</label> &nbsp; <label><input type="radio" name="u11r5" value="C"> C 2005</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Read the text again. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 William Shakespeare lived until he was 52 years old.<br><label><input type="radio" name="u11r6" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r6" value="False"> False</label></p>
+                                <p>2 He worked as an actor in Stratford-upon-Avon.<br><label><input type="radio" name="u11r7" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r7" value="False"> False</label></p>
+                                <p>3 <em>Romeo and Juliet</em> is a play by Shakespeare.<br><label><input type="radio" name="u11r8" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r8" value="False"> False</label></p>
+                                <p>4 Neil Armstrong walked on the moon on 23rd April.<br><label><input type="radio" name="u11r9" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r9" value="False"> False</label></p>
+                                <p>5 John Young walked on the moon in 1972.<br><label><input type="radio" name="u11r10" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r10" value="False"> False</label></p>
+                                <p>6 McDonald's opened a restaurant in Beijing, China in 1992.<br><label><input type="radio" name="u11r11" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r11" value="False"> False</label></p>
+                                <p>7 2,500 people visited the new McDonald's restaurant in Beijing on the first day.<br><label><input type="radio" name="u11r12" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r12" value="False"> False</label></p>
+                                <p>8 Jawed Karim went to live in Germany in 1992.<br><label><input type="radio" name="u11r13" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r13" value="False"> False</label></p>
+                                <p>9 He studied business at university.<br><label><input type="radio" name="u11r14" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r14" value="False"> False</label></p>
+                                <p>10 Jawed Karim started YouTube with his father.<br><label><input type="radio" name="u11r15" value="True"> True</label> &nbsp; <label><input type="radio" name="u11r15" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU11(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU11(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 3: Writing -->
+            <section class="test-section" id="u11-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="question-block">
+                    <p class="instruction">Answer the questions about an important day that you remember.</p>
+                    <div class="q-item">
+                        <p>1 When was the day? <input type="text" class="full-input"></p>
+                        <p>2 What did you do on that day? <input type="text" class="full-input"></p>
+                        <p>3 Who were you with? <input type="text" class="full-input"></p>
+                        <p>4 Why was the day important? <input type="text" class="full-input"></p>
+                        <p>5 How did you feel? <input type="text" class="full-input"></p>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU11(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU11(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 4: Listening -->
+            <section class="test-section" id="u11-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 11/ef5e_beginner_test_item_ 021.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">1 Listen to Luis talking to Ellen about her trip to New York. Tick (✔) the correct information.</p>
+                            <div class="q-item">
+                                <p>1 Ellen is tired because she <label><input type="radio" name="u11l1" value="arrived in New York"> arrived in New York</label> / <label><input type="radio" name="u11l1" value="back from New York"> back from New York</label> late last night.</p>
+                                <p>2 Ellen rented <label><input type="radio" name="u11l2" value="a flat"> a flat</label> / <label><input type="radio" name="u11l2" value="a car"> a car</label> when she was in New York.</p>
+                                <p>3 Ellen's friends live <label><input type="radio" name="u11l3" value="in New York"> in New York</label> / <label><input type="radio" name="u11l3" value="near New York"> near New York</label>.</p>
+                                <p>4 Ellen <label><input type="radio" name="u11l4" value="liked"> liked</label> / <label><input type="radio" name="u11l4" value="didn't like"> didn't like</label> New York.</p>
+                                <p>5 Ellen had a party <label><input type="radio" name="u11l5" value="in the park"> in the park</label> / <label><input type="radio" name="u11l5" value="on the beach"> on the beach</label> with her friends.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 11/ef5e_beginner_test_item_ 022.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">2 Listen to five conversations. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 There's a hotel on the corner of South Road and First Avenue.<br><label><input type="radio" name="u11l6" value="True"> True</label> &nbsp; <label><input type="radio" name="u11l6" value="False"> False</label></p>
+                                <p>2 The weather was nice on Sunday.<br><label><input type="radio" name="u11l7" value="True"> True</label> &nbsp; <label><input type="radio" name="u11l7" value="False"> False</label></p>
+                                <p>3 The man watched a film on TV last night.<br><label><input type="radio" name="u11l8" value="True"> True</label> &nbsp; <label><input type="radio" name="u11l8" value="False"> False</label></p>
+                                <p>4 The woman stayed in the city.<br><label><input type="radio" name="u11l9" value="True"> True</label> &nbsp; <label><input type="radio" name="u11l9" value="False"> False</label></p>
+                                <p>5 The Japanese restaurant is opposite the supermarket.<br><label><input type="radio" name="u11l10" value="True"> True</label> &nbsp; <label><input type="radio" name="u11l10" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU11(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU11()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <!-- Final Step: Details -->
+            <section class="test-section" id="u11-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                
+                <div class="question-block">
+                    <div class="q-item" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">First Name *</label>
+                            <input type="text" id="u11First" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Last Name *</label>
+                            <input type="text" id="u11Last" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Group / Level *</label>
+                            <input type="text" id="u11Group" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Phone Number *</label>
+                            <input type="tel" id="u11Phone" class="full-input" value="+998 " style="margin-bottom: 0;" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit11()" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u11-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u11ExamMode = localStorage.getItem('edu_exam_mode_unit11');
+        if (u11ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u11Sections = ['u11-part1', 'u11-reading', 'u11-writing', 'u11-listening', 'u11-details'];
+        const u11Total = u11Sections.length;
+
+        function updateU11(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u11Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u11Total}`;
+        }
+
+        function showU11(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u11Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU11(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU11(current) { showU11(current); }
+        function prevU11(current) { showU11(current - 2); }
+        function finalU11() { showU11(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]:not([disabled])')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]:not([disabled])'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]:not([disabled])'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit11() {
+            const first = document.getElementById('u11First').value.trim();
+            const last = document.getElementById('u11Last').value.trim();
+            const group = document.getElementById('u11Group').value.trim();
+            const phone = document.getElementById('u11Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u11g1: 'carry', u11g2: 'go', u11g3: 'rain', u11g4: 'did you get', u11g5: 'Did you have',
+                // Grammar 2
+                u11g2_1: 'studied', u11g2_2: 'had', u11g2_3: 'went', u11g2_4: 'stopped', u11g2_5: 'got',
+                // Vocabulary 3
+                u11v3_1: 'finished', u11v3_2: 'decided', u11v3_3: 'traveled', u11v3_4: 'cried', u11v3_5: 'rained',
+                // Vocabulary 4
+                u11v1: 'B', u11v2: 'A', u11v3: 'C', u11v4: 'C', u11v5: 'B',
+                // Pronunciation 5
+                u11p5_1: 'cooked', u11p5_2: 'invited', u11p5_3: 'lived', u11p5_4: 'relaxed', u11p5_5: 'painted',
+                // Practical English 6
+                u11e6_1: 'straight on', u11e6_2: 'turn right', u11e6_3: 'next to', u11e6_4: 'on the left', u11e6_5: 'between',
+                // Reading 1
+                u11r1: 'B', u11r2: 'C', u11r3: 'A', u11r4: 'B', u11r5: 'C',
+                // Reading 2
+                u11r6: 'True', u11r7: 'False', u11r8: 'True', u11r9: 'False', u11r10: 'True', u11r11: 'True', u11r12: 'False', u11r13: 'False', u11r14: 'False', u11r15: 'False',
+                // Listening 1
+                u11l1: 'back from New York', u11l2: 'a car', u11l3: 'in New York', u11l4: 'liked', u11l5: 'on the beach',
+                // Listening 2
+                u11l6: 'True', u11l7: 'False', u11l8: 'True', u11l9: 'False', u11l10: 'True'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    let actual = '';
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else {
+                        actual = field[0].value;
+                    }
+
+                    const normalizedActual = normalize(actual);
+                    if (Array.isArray(expected)) {
+                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
+                    } else if (normalizedActual === normalize(expected)) {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u11-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 11',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPron: sectionStats('u11-part1'),
+                    reading: sectionStats('u11-reading'),
+                    writing: sectionStats('u11-writing'),
+                    listening: sectionStats('u11-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit11Form').style.display = 'none';
+            const res = document.getElementById('u11-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU11(0);
+            const p = document.getElementById('u11Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+

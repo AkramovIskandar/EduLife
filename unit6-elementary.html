@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementary Unit Test 6 - EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary: #10B981;
+            --primary-dark: #059669;
+            --primary-light: #D1FAE5;
+            --secondary: #6366F1;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --bg-body: #F8FAFC;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .test-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .test-header {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .test-section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .test-section.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #F1F5F9;
+        }
+
+        .section-title h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .question-block { margin-bottom: 2rem; }
+        .q-item { margin-bottom: 1.5rem; padding: 1rem; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .q-item p { font-weight: 500; margin-bottom: 0.8rem; }
+        
+        .word-input {
+            border: 2px solid #E2E8F0;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 400px;
+            transition: var(--transition);
+        }
+
+        .word-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.2rem;
+            background: var(--white);
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .radio-group label:hover { border-color: var(--primary); background: var(--primary-light); }
+        .radio-group input[type="radio"] { width: 1.2rem; height: 1.2rem; accent-color: var(--primary); }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-outline { background: var(--white); border: 2px solid #E2E8F0; color: var(--text-muted); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        .progress-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 100;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .progress-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .progress-bg {
+            flex-grow: 1;
+            height: 10px;
+            background: #E2E8F0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .reading-layout { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        .reading-passages { background: #FFF; padding: 2rem; border-radius: 16px; border-left: 6px solid var(--primary); font-size: 1.05rem; }
+
+        @media (max-width: 768px) {
+            .test-header, .test-section { padding: 1.5rem; }
+            .section-title { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="progress-nav">
+        <div class="progress-container">
+            <div class="progress-bg">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <span id="progressText" style="font-weight: 600; color: var(--primary);">Step 1 of 11</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1 style="color: var(--primary);">Elementary Unit Test 6</h1>
+            <p>Assessment for File 6. Total score: 75 points (Auto-graded sections).</p>
+        </div>
+
+        <form id="unitTestForm">
+            <!-- SECTION 1: GRAMMAR (6 pts) -->
+            <section class="test-section active" id="section-grammar-1">
+                <div class="section-title">
+                    <h2>Grammar 1: Choose the correct word</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">6 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. Cora ________ at school today.</p><div class="radio-group"><label><input type="radio" name="g1_1" value="doesn't"> doesn't</label><label><input type="radio" name="g1_1" value="isn't"> isn't</label></div></div>
+                    <div class="q-item"><p>2. I ________ working at the moment.</p><div class="radio-group"><label><input type="radio" name="g1_2" value="don't"> don't</label><label><input type="radio" name="g1_2" value="'m not"> 'm not</label></div></div>
+                    <div class="q-item"><p>3. ________ this Amber’s purse?</p><div class="radio-group"><label><input type="radio" name="g1_3" value="Does"> Does</label><label><input type="radio" name="g1_3" value="Is"> Is</label></div></div>
+                    <div class="q-item"><p>4. What ________ they looking at?</p><div class="radio-group"><label><input type="radio" name="g1_4" value="do"> do</label><label><input type="radio" name="g1_4" value="are"> are</label></div></div>
+                    <div class="q-item"><p>5. ________ you like shopping?</p><div class="radio-group"><label><input type="radio" name="g1_5" value="Do"> Do</label><label><input type="radio" name="g1_5" value="Are"> Are</label></div></div>
+                    <div class="q-item"><p>6. Where ________ Irina from?</p><div class="radio-group"><label><input type="radio" name="g1_6" value="does"> does</label><label><input type="radio" name="g1_6" value="is"> is</label></div></div>
+                </div>
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 2: GRAMMAR (6 pts) -->
+            <section class="test-section" id="section-grammar-2">
+                <div class="section-title">
+                    <h2>Grammar 2: Ryan's Email (-ing form)</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">6 Points</span>
+                </div>
+                <div class="question-block">
+                    <p style="font-style: italic;">Fill with: listen, cook, do, dance, study, be, sit.</p>
+                    <div class="q-item"><p>1. I don’t like studying, but I like ________ a student.</p><input type="text" name="g2_1" class="word-input"></div>
+                    <div class="q-item"><p>2. We love ________ in cafés.</p><input type="text" name="g2_2" class="word-input"></div>
+                    <div class="q-item"><p>3. We also like ________ to good music.</p><input type="text" name="g2_3" class="word-input"></div>
+                    <div class="q-item"><p>4. ...but we both hate ________ – we can’t dance well.</p><input type="text" name="g2_4" class="word-input"></div>
+                    <div class="q-item"><p>5. I don’t mind ________ and my favourite food is pasta.</p><input type="text" name="g2_5" class="word-input"></div>
+                    <div class="q-item"><p>6. What do you like ________?</p><input type="text" name="g2_6" class="word-input"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(0)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 3: GRAMMAR (8 pts) -->
+            <section class="test-section" id="section-grammar-3">
+                <div class="section-title">
+                    <h2>Grammar 3: Object Pronouns (me, you, him, etc.)</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">8 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. Are they Scottish? Can you ask __________?</p><input type="text" name="g3_1" class="word-input"></div>
+                    <div class="q-item"><p>2. It isn’t __________ car. She has a red car.</p><input type="text" name="g3_2" class="word-input"></div>
+                    <div class="q-item"><p>3. That isn’t __________ house. They don’t live in this street.</p><input type="text" name="g3_3" class="word-input"></div>
+                    <div class="q-item"><p>4. We’re friends. You like me and I like __________.</p><input type="text" name="g3_4" class="word-input"></div>
+                    <div class="q-item"><p>5. That’s __________ phone! Give it to me.</p><input type="text" name="g3_5" class="word-input"></div>
+                    <div class="q-item"><p>6. He likes Anita, but he doesn’t love __________.</p><input type="text" name="g3_6" class="word-input"></div>
+                    <div class="q-item"><p>7. We don’t speak Czech. They can’t understand __________.</p><input type="text" name="g3_7" class="word-input"></div>
+                    <div class="q-item"><p>8. Can you help __________? I can’t do my homework.</p><input type="text" name="g3_8" class="word-input"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 4: VOCABULARY (8 pts) -->
+            <section class="test-section" id="section-vocab-1">
+                <div class="section-title">
+                    <h2>Vocabulary 1: Lists (Dates & Months)</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">8 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. second, __________, fourth, fifth</p><input type="text" name="v1_1" class="word-input"></div>
+                    <div class="q-item"><p>2. __________, March, April</p><input type="text" name="v1_2" class="word-input"></div>
+                    <div class="q-item"><p>3. fiftieth, __________, fifty-second</p><input type="text" name="v1_3" class="word-input"></div>
+                    <div class="q-item"><p>4. April, May, __________</p><input type="text" name="v1_4" class="word-input"></div>
+                    <div class="q-item"><p>5. spring, __________, autumn, winter</p><input type="text" name="v1_5" class="word-input"></div>
+                    <div class="q-item"><p>6. ninth, tenth, __________</p><input type="text" name="v1_6" class="word-input"></div>
+                    <div class="q-item"><p>7. October, November, __________</p><input type="text" name="v1_7" class="word-input"></div>
+                    <div class="q-item"><p>8. __________, September, October</p><input type="text" name="v1_8" class="word-input"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 5: VOCABULARY (6 pts) -->
+            <section class="test-section" id="section-vocab-2">
+                <div class="section-title">
+                    <h2>Vocabulary 2: Correct word</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">6 Points</span>
+                </div>
+                <div class="question-block">
+                    <p style="font-style: italic;">decide, strange, inside, towards, valuable, desert, through.</p>
+                    <div class="q-item"><p>1. It’s very hot in the Sahara __________.</p><input type="text" name="v2_1" class="word-input"></div>
+                    <div class="q-item"><p>2. He walks __________ his house far away.</p><input type="text" name="v2_2" class="word-input"></div>
+                    <div class="q-item"><p>3. What’s that __________ noise?</p><input type="text" name="v2_3" class="word-input"></div>
+                    <div class="q-item"><p>4. Silver and gold are __________.</p><input type="text" name="v2_4" class="word-input"></div>
+                    <div class="q-item"><p>5. We are thirsty so we __________ to drink water.</p><input type="text" name="v2_5" class="word-input"></div>
+                    <div class="q-item"><p>6. She opens the door and says ‘Come __________.’</p><input type="text" name="v2_6" class="word-input"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 6: VOCABULARY (6 pts) -->
+            <section class="test-section" id="section-vocab-3">
+                <div class="section-title">
+                    <h2>Vocabulary 3: Complete words</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">6 Points</span>
+                </div>
+                <div class="question-block">
+                    <div class="q-item"><p>1. He’s a t _ _ m _ _ _ _ _ . He plays the trumpet.</p><input type="text" name="v3_1" class="word-input"></div>
+                    <div class="q-item"><p>2. Jessica sings in a c_ _ _ r.</p><input type="text" name="v3_2" class="word-input"></div>
+                    <div class="q-item"><p>3. My aunt likes jazz, but she doesn’t like c _ _ _ _ i _ _ l music.</p><input type="text" name="v3_3" class="word-input"></div>
+                    <div class="q-item"><p>4. I sometimes go to pop c_ _ ce _ ts.</p><input type="text" name="v3_4" class="word-input"></div>
+                    <div class="q-item"><p>5. He plays the accordion. He’s an a_ _ _ r _ _ _ n _ _ _.</p><input type="text" name="v3_5" class="word-input"></div>
+                    <div class="q-item"><p>6. She’s a d _ _ _ _ _ r. She plays the drums.</p><input type="text" name="v3_6" class="word-input"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 7: PRONUNCIATION (10 pts) -->
+            <section class="test-section" id="section-pronunciation">
+                <div class="section-title">
+                    <h2>Pronunciation: Stress & Sounds</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <h3>Part 1: Stressed syllable</h3>
+                    <div class="q-item"><p>1. guitar</p><div class="radio-group"><label><input type="radio" name="p1_1" value="1"> 1</label><label><input type="radio" name="p1_1" value="2"> 2</label></div></div>
+                    <div class="q-item"><p>2. fantastic</p><div class="radio-group"><label><input type="radio" name="p1_2" value="1"> 1</label><label><input type="radio" name="p1_2" value="2"> 2</label><label><input type="radio" name="p1_2" value="3"> 3</label></div></div>
+                    <div class="q-item"><p>3. musician</p><div class="radio-group"><label><input type="radio" name="p1_3" value="1"> 1</label><label><input type="radio" name="p1_3" value="2"> 2</label><label><input type="radio" name="p1_3" value="3"> 3</label></div></div>
+                    <div class="q-item"><p>4. keyboard</p><div class="radio-group"><label><input type="radio" name="p1_4" value="1"> 1</label><label><input type="radio" name="p1_4" value="2"> 2</label></div></div>
+                    <div class="q-item"><p>5. terrible</p><div class="radio-group"><label><input type="radio" name="p1_5" value="1"> 1</label><label><input type="radio" name="p1_5" value="2"> 2</label><label><input type="radio" name="p1_5" value="3"> 3</label></div></div>
+
+                    <h3 style="margin-top:2rem;">Part 2: Word which does NOT contain the sound</h3>
+                    <div class="q-item"><p>/ð/ (mother, this, sixth, the)</p><input type="text" name="p2_1" class="word-input"></div>
+                    <div class="q-item"><p>/aɪ/ (violin, spring, Friday, sometimes)</p><input type="text" name="p2_2" class="word-input"></div>
+                    <div class="q-item"><p>/j/ (beautiful, music, fruit, new)</p><input type="text" name="p2_3" class="word-input"></div>
+                    <div class="q-item"><p>/i:/ (niece, see, police, ice)</p><input type="text" name="p2_4" class="word-input"></div>
+                    <div class="q-item"><p>/ɪ/ (him, mind, internet, musician)</p><input type="text" name="p2_5" class="word-input"></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(7)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 8: READING (15 pts) -->
+            <section class="test-section" id="section-reading">
+                <div class="section-title">
+                    <h2>Reading: Sziget Festival</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">15 Points</span>
+                </div>
+                <div class="reading-layout">
+                    <div class="reading-passages">
+                        <p><strong>Sziget festival:</strong> In August, Budapest, Hungary. Lasts 7 days. First festival 1993. Takes place on Old Buda Island. Special festival train called Sziget Express brings people from the Netherlands. Almost 500,000 people go every year. Famous for dance and hip hop, but also rock, reggae, jazz and pop. Fantastic weather, often over 30 degrees. Some performances are inside...</p>
+                    </div>
+                    <div class="question-block">
+                        <h3>Part 1: Tick (✔) A, B, or C</h3>
+                        <div class="q-item"><p>1. Sziget festival takes place in the spring.</p><div class="radio-group"><label><input type="radio" name="r1_1" value="A"> A. True</label><label><input type="radio" name="r1_1" value="B"> B. False</label><label><input type="radio" name="r1_1" value="C"> C. Doesn't say</label></div></div>
+                        <div class="q-item"><p>2. The festival is more than 10 years old.</p><div class="radio-group"><label><input type="radio" name="r1_2" value="A"> A. True</label><label><input type="radio" name="r1_2" value="B"> B. False</label><label><input type="radio" name="r1_2" value="C"> C. Doesn't say</label></div></div>
+                        <div class="q-item"><p>3. The festival is a weekend long.</p><div class="radio-group"><label><input type="radio" name="r1_3" value="A"> A. True</label><label><input type="radio" name="r1_3" value="B"> B. False</label><label><input type="radio" name="r1_3" value="C"> C. Doesn't say</label></div></div>
+                        <div class="q-item"><p>4. At Sziget, you can see films as well as listen to music.</p><div class="radio-group"><label><input type="radio" name="r1_4" value="A"> A. True</label><label><input type="radio" name="r1_4" value="B"> B. False</label><label><input type="radio" name="r1_4" value="C"> C. Doesn't say</label></div></div>
+                        <div class="q-item"><p>5. All the performances are outside.</p><div class="radio-group"><label><input type="radio" name="r1_5" value="A"> A. True</label><label><input type="radio" name="r1_5" value="B"> B. False</label><label><input type="radio" name="r1_5" value="C"> C. Doesn't say</label></div></div>
+
+                        <h3 style="margin-top:2rem;">Part 2: Answer the questions</h3>
+                        <div class="q-item"><p>1. How many people go to the festival?</p><input type="text" name="r2_1" class="word-input"></div>
+                        <div class="q-item"><p>2. What temperature is it in Budapest in summer?</p><input type="text" name="r2_2" class="word-input"></div>
+                        <div class="q-item"><p>3. Can you hear classical music at Sziget?</p><input type="text" name="r2_3" class="word-input"></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(8)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 9: WRITING (10 pts) -->
+            <section class="test-section" id="section-writing">
+                <div class="section-title">
+                    <h2>Writing: About a Festival (WOMAD)</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <p>Write about WOMAD festival (Once a year, summer, Malmesbury, 40,000 people, musicians/dancers, world music, food/clothes).</p>
+                    <textarea name="w1" class="writing-area" rows="6" placeholder="Write your answer here..."></textarea>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(9)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 10: LISTENING (10 pts) -->
+            <section class="test-section" id="section-listening">
+                <div class="section-title">
+                    <h2>Listening: Audio assessments</h2>
+                    <span style="background: var(--primary-light); color: var(--primary-dark); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700;">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <h3>Part 1: Listen to the conversation</h3>
+                    <audio class="listening-audio" controls style="width:100%; margin-bottom:1rem;"><source src="Listenings/elementary/unit_6_listening_1.mp3" type="audio/mpeg"></audio>
+                    <div class="q-item"><p>1. The date is:</p><div class="radio-group"><label><input type="radio" name="l1_1" value="17th"> 17th November</label><label><input type="radio" name="l1_1" value="20th"> 20th November</label></div></div>
+                    <div class="q-item"><p>2. Who wants to go shopping?</p><div class="radio-group"><label><input type="radio" name="l1_2" value="Viktor"> Viktor</label><label><input type="radio" name="l1_2" value="Juliette"> Juliette</label></div></div>
+                    <div class="q-item"><p>3. Viktor's trip to Canada is on:</p><div class="radio-group"><label><input type="radio" name="l1_3" value="22nd"> 22nd November</label><label><input type="radio" name="l1_3" value="29th"> 29th November</label></div></div>
+                    <div class="q-item"><p>4. Viktor goes on holiday in:</p><div class="radio-group"><label><input type="radio" name="l1_4" value="winter"> winter</label><label><input type="radio" name="l1_4" value="summer"> summer</label></div></div>
+                    <div class="q-item"><p>5. The present for Juliette’s boyfriend is:</p><div class="radio-group"><label><input type="radio" name="l1_5" value="lessons"> guitar lessons</label><label><input type="radio" name="l1_5" value="guitar"> lessons and a guitar</label></div></div>
+
+                    <h3 style="margin-top:2rem;">Part 2: Jane and her teenage children</h3>
+                    <audio class="listening-audio" controls style="width:100%; margin-bottom:1rem;"><source src="Listenings/elementary/unit_6_listening_2.mp3" type="audio/mpeg"></audio>
+                    <div class="q-item"><p>1. What music does Jane sometimes enjoy?</p><div class="radio-group"><label><input type="radio" name="l2_1" value="A"> A. hip hop</label><label><input type="radio" name="l2_1" value="B"> B. reggae</label></div></div>
+                    <div class="q-item"><p>2. What does Emma want to do for her mum’s birthday?</p><div class="radio-group"><label><input type="radio" name="l2_2" value="A"> A. help with housework</label><label><input type="radio" name="l2_2" value="B"> B. buy a book</label></div></div>
+                    <div class="q-item"><p>3. How many musical instruments can Jane play?</p><div class="radio-group"><label><input type="radio" name="l2_3" value="A"> A. two</label><label><input type="radio" name="l2_3" value="B"> B. one</label></div></div>
+                    <div class="q-item"><p>4. What day is Adam’s French test on?</p><div class="radio-group"><label><input type="radio" name="l2_4" value="A"> A. 13th September</label><label><input type="radio" name="l2_4" value="B"> B. 30th September</label></div></div>
+                    <div class="q-item"><p>5. Jane’s favourite month to visit Berlin?</p><div class="radio-group"><label><input type="radio" name="l2_5" value="A"> A. August</label><label><input type="radio" name="l2_5" value="B"> B. January</label></div></div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(8)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(10)">Final Step <i class="fa-solid fa-user-check"></i></button>
+                </div>
+            </section>
+
+            <!-- SECTION 11: REGISTRATION -->
+            <section class="test-section" id="section-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                <div class="q-item">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="input-group"><label>First Name *</label><input type="text" id="regFirstName" class="answer-input" required></div>
+                        <div class="input-group"><label>Last Name *</label><input type="text" id="regLastName" class="answer-input" required></div>
+                        <div class="input-group"><label>Proposed Group *</label><input type="text" id="regGroup" class="answer-input" value="Elementary Unit 6" required></div>
+                        <div class="input-group"><label>Phone Number *</label><input type="tel" id="regPhone" class="answer-input" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(9)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary btn-submit" onclick="submitTest()">Finish & Submit <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </section>
+
+            <!-- RESULT SECTION -->
+            <section class="test-section" id="section-result">
+                <div style="text-align: center; padding: 3rem 0;">
+                    <i class="fa-solid fa-circle-check" style="font-size: 5rem; color: var(--primary); margin-bottom: 2rem;"></i>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Test Submitted!</h2>
+                    <p id="resultFeedback" style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;">Calculating your score...</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='index.html'">Go to Homepage</button>
+                </div>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const unitSections = [
+            'section-grammar-1', 'section-grammar-2', 'section-grammar-3',
+            'section-vocab-1', 'section-vocab-2', 'section-vocab-3',
+            'section-pronunciation', 'section-reading', 'section-writing',
+            'section-listening', 'section-details'
+        ];
+
+        function nextUnitSection(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            if (idx >= unitSections.length) return;
+            document.getElementById(unitSections[idx]).classList.add('active');
+            updateUnitProgress(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateUnitProgress(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / unitSections.length * 100) + '%';
+            if (txt) txt.innerText = `Step ${idx + 1} of ${unitSections.length}`;
+        }
+
+        function normalize(s) {
+            if (!s) return '';
+            return s.toString().trim().toLowerCase()
+                .replace(/'m\b/g, ' am')
+                .replace(/'re\b/g, ' are')
+                .replace(/'s\b/g, ' is')
+                .replace(/n't\b/g, ' not')
+                .replace(/[?!.,;:'"()]/g, '')
+                .replace(/\s+/g, ' ');
+        }
+
+        async function submitTest() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const group = document.getElementById('regGroup').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+
+            if (!firstName || !lastName || !group || !phone) {
+                alert('Please fill in all required fields!');
+                return;
+            }
+
+            const btn = document.querySelector('.btn-submit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+
+            let score = 0;
+            const answers = new FormData(document.getElementById('unitTestForm'));
+            const key = {
+                g1_1: "isn't", g1_2: "'m not", g1_3: "Is", g1_4: "are", g1_5: "Do", g1_6: "is",
+                g2_1: "being", g2_2: "sitting", g2_3: "listening", g2_4: "dancing", g2_5: "cooking", g2_6: "doing",
+                g3_1: "them", g3_2: "her", g3_3: "their", g3_4: "you", g3_5: "my", g3_6: "her", g3_7: "us", g3_8: "me",
+                v1_1: "third", v1_2: "February", v1_3: "fifty-first", v1_4: "June", v1_5: "summer", v1_6: "eleventh", v1_7: "December", v1_8: "August",
+                v2_1: "desert", v2_2: "towards", v2_3: "strange", v2_4: "valuable", v2_5: "decide", v2_6: "inside",
+                v3_1: "trumpeter", v3_2: "choir", v3_3: "classical", v3_4: "concerts", v3_5: "accordionist", v3_6: "drummer",
+                p1_1: "2", p1_2: "2", p1_3: "2", p1_4: "1", p1_5: "1",
+                p2_1: "sixth", p2_2: "spring", p2_3: "fruit", p2_4: "ice", p2_5: "mind",
+                r1_1: "B", r1_2: "A", r1_3: "B", r1_4: "A", r1_5: "B",
+                r2_1: "500,000", r2_2: "30", r2_3: "no",
+                l1_1: "17th", l1_2: "Juliette", l1_3: "29th", l1_4: "summer", l1_5: "guitar",
+                l2_1: "B", l2_2: "B", l2_3: "B", l2_4: "A", l2_5: "A"
+            };
+
+            for (let id in key) {
+                let userVal = answers.get(id);
+                if (userVal) {
+                    userVal = normalize(userVal);
+                    let correctVal = normalize(key[id]);
+                    if (userVal === correctVal || userVal.includes(correctVal)) {
+                        score++;
+                    }
+                }
+            }
+
+            if (window.eduSupabase) {
+                await window.eduSupabase.from('submissions').insert([{
+                    student_name: `${firstName} ${lastName}`,
+                    test_type: 'Elementary Unit Test 6',
+                    score: score,
+                    group_name: group,
+                    phone: phone,
+                    raw_answers: Object.fromEntries(answers.entries())
+                }]);
+            }
+
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-result').classList.add('active');
+            document.getElementById('resultFeedback').innerText = `Congratulations ${firstName}! You completed Unit Test 6.`;
+            setTimeout(() => { window.location.href = 'index.html'; }, 5000);
+        }
+    </script>
+</body>
+</html>

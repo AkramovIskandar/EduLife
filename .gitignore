@@ -1,0 +1,22 @@
+# Secrets — hech qachon GitHub ga yuklanmasin
+.env
+.env.local
+.env.*.local
+*secret*keys*.txt
+Edulife secret keys.txt
+
+# Generated at build (Vercel env yoki lokal .env dan)
+# supabase-config.js Removed from gitignore
+
+node_modules/
+frontend/node_modules/
+
+# Dev-only / source archives (not served)
+Elementary Test (3)/
+frontend/
+
+# Local extraction artifacts
+unit*_test.txt
+unit*_key.txt
+unit*_extracted.txt
+unit*_answers_extracted.txt

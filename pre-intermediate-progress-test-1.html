@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-intermediate Progress Test 1 - EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --primary: #7C3AED; --primary-dark: #6D28D9; --primary-light: #EDE9FE; --text-muted: #64748B; }
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.6; }
+        .test-container { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+        .test-header { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; text-align: center; border-bottom: 4px solid var(--primary); }
+        .test-section { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; display: none; }
+        .test-section.active { display: block; }
+        .section-title { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #F1F5F9; }
+        .section-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; color: var(--primary-dark); margin: 0; }
+        .question-block h3, .reading-questions h3 { font-size: 1.05rem; margin: 0 0 1rem; color: var(--primary-dark); }
+        .q-item { margin-bottom: 1rem; padding: 1rem 1.25rem; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .q-item p { font-weight: 500; margin-bottom: 0.75rem; }
+        .test-section .answer-input:not(.inline-input), .test-section select.answer-input, .test-section textarea.answer-input {
+            display: block; width: 100% !important; max-width: 100% !important; box-sizing: border-box;
+            border: 2px solid #E2E8F0 !important; border-radius: 10px !important; background: #fff !important;
+            padding: 0.65rem 0.9rem !important; font-size: 1rem !important; letter-spacing: normal !important; margin-top: 0.35rem;
+        }
+        .test-section input.answer-input[type="text"]:not(.inline-input) { max-width: 28rem !important; }
+        .test-section .q-item > p .inline-input {
+            display: inline-block !important; width: auto !important; min-width: 3.5rem !important; max-width: 9rem !important;
+            margin: 0 0.1rem !important; padding: 0.15rem 0.35rem !important;
+            border: none !important; border-bottom: 2px solid var(--primary) !important; border-radius: 0 !important;
+            background: transparent !important; vertical-align: baseline; box-shadow: none !important;
+        }
+        .test-section .q-item > p .inline-input-wide { min-width: 6rem !important; max-width: 11rem !important; }
+        .test-section .q-item > p:has(.inline-input) { line-height: 2.1; margin-bottom: 0.35rem; }
+        .test-section textarea.writing-area { min-height: 8rem; max-height: 16rem; resize: vertical; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 1rem; background: #fff; border: 1px dashed var(--primary); border-radius: 10px; font-size: 0.95rem; }
+        .match-options { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; padding: 0.75rem 1rem; background: #fff; border-radius: 10px; border: 1px solid #E2E8F0; }
+        .match-options div { margin-bottom: 0.35rem; }
+        .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .radio-group label { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border: 2px solid #E2E8F0; border-radius: 10px; cursor: pointer; font-weight: 400; }
+        .radio-group label:hover { border-color: var(--primary); background: var(--primary-light); }
+        .radio-group input { width: 1.1rem; height: 1.1rem; accent-color: var(--primary); }
+        .reading-split { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(300px, 1fr); gap: 1.5rem; align-items: start; }
+        .reading-passages { background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary); max-height: min(70vh, 28rem); overflow-y: auto; line-height: 1.7; font-size: 1.02rem; }
+        .reading-questions { max-height: min(70vh, 28rem); overflow-y: auto; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; border: none; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-outline { background: #fff; border: 2px solid #E2E8F0; color: var(--text-muted); }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .progress-nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 1rem 0; z-index: 100; border-bottom: 1px solid #E2E8F0; }
+        .progress-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+        .progress-bg { flex-grow: 1; height: 10px; background: #E2E8F0; border-radius: 5px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        @media (max-width: 900px) { .reading-split { grid-template-columns: 1fr; } .reading-passages, .reading-questions { max-height: none; } }
+    </style>
+</head>
+<body>
+    <nav class="progress-nav">
+        <div class="progress-container">
+            <div class="progress-bg"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText" style="font-weight:600;color:var(--primary);">Step 1</span>
+        </div>
+    </nav>
+    <main class="test-container">
+        <div class="test-header">
+            <h1 style="color:var(--primary);">Pre-intermediate Progress Test 1</h1>
+            <p>Variant A — Files 1–6</p>
+        </div>
+        <form id="unitTestForm">
+
+            <section class="test-section active" id="section-grammar-1">
+                <div class="section-title">
+                    <h2>Grammar 1</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences. Use the correct form of the verb in brackets.</h3><div class="q-item"><p>1. ' ______ you ______ (wash) the car yet?' 'No, I haven't.'</p><input type="text" name="g1_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. I ______ (like) vegetarian food.</p><input type="text" name="g1_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Kate often ______ (go out) with Dinis, but they aren't a couple.</p><input type="text" name="g1_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Laila and Jumaid ______ (watch) TV at 10 o'clock last night.</p><input type="text" name="g1_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. I ______ (call) you in five minutes. Is that OK?</p><input type="text" name="g1_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. 'What ______ you ______ (do)?' 'I'm a shop assistant.'</p><input type="text" name="g1_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. 'I promise I ______ (make) the bed,' said Ricardo.</p><input type="text" name="g1_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. It ______ (rain) when Rachael arrived at her new office.</p><input type="text" name="g1_8" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>9. Faisal is over there. He ______ (stand) next to the tall man in the black hat.</p><input type="text" name="g1_9" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>10. Good news! Agnieska and Theo ______ (sold) their house.</p><input type="text" name="g1_10" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <span></span>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-2">
+                <div class="section-title">
+                    <h2>Grammar 2</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Put the words in the correct order.</h3><div class="q-item"><p>1. do you last what did weekend ?</p><input type="text" name="g2_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. you any pets do have ?</p><input type="text" name="g2_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. to do of you listen music kind what ?</p><input type="text" name="g2_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. speak you other can languages any ?</p><input type="text" name="g2_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. Hong Kong you have to ever been ?</p><input type="text" name="g2_5" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(0)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-3">
+                <div class="section-title">
+                    <h2>Grammar 3</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Tick the correct form.</h3><div class="q-item"><p>1. Lianne ______ to Sydney more than once.</p><div class="radio-group"><label><input type="radio" name="g3_1" value="has been"> has been</label><label><input type="radio" name="g3_1" value="has gone"> has gone</label></div></div>
+<div class="q-item"><p>2. I every day ______</p><div class="radio-group"><label><input type="radio" name="g3_2" value="exercise"> exercise</label><label><input type="radio" name="g3_2" value="exercise"> exercise</label></div></div>
+<div class="q-item"><p>3. When ______ my lunch.</p><div class="radio-group"><label><input type="radio" name="g3_3" value="you called, I ate"> you called, I ate</label><label><input type="radio" name="g3_3" value="was eating"> was eating</label></div></div>
+<div class="q-item"><p>4. Ali ______ to work every day.</p><div class="radio-group"><label><input type="radio" name="g3_4" value="is cycling"> is cycling</label><label><input type="radio" name="g3_4" value="cycles"> cycles</label></div></div>
+<div class="q-item"><p>5. What ______ this weekend?</p><div class="radio-group"><label><input type="radio" name="g3_5" value="are you doing"> are you doing</label><label><input type="radio" name="g3_5" value="do you do"> do you do</label></div></div>
+<div class="q-item"><p>6. This ______ his last one.</p><div class="radio-group"><label><input type="radio" name="g3_6" value="song isn't too good as"> song isn't too good as</label><label><input type="radio" name="g3_6" value="as good as"> as good as</label></div></div>
+<div class="q-item"><p>7. They're ______ Jan at the</p><div class="radio-group"><label><input type="radio" name="g3_7" value="meeting"> meeting</label><label><input type="radio" name="g3_7" value="They meet"> They meet</label></div></div>
+<div class="q-item"><p>8. My ______ a rest.</p><div class="radio-group"><label><input type="radio" name="g3_8" value="little brother is tired and he's needing"> little brother is tired and he's needing</label><label><input type="radio" name="g3_8" value="he needs"> he needs</label></div></div>
+<div class="q-item"><p>9. Look ______ late.</p><div class="radio-group"><label><input type="radio" name="g3_9" value="at the traffic. We're being"> at the traffic. We're being</label><label><input type="radio" name="g3_9" value="going to be"> going to be</label></div></div>
+<div class="q-item"><p>10. Vikram ______ an engineering course.</p><div class="radio-group"><label><input type="radio" name="g3_10" value="does"> does</label><label><input type="radio" name="g3_10" value="is doing"> is doing</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-4">
+                <div class="section-title">
+                    <h2>Grammar 4</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Write negative sentences.</h3><div class="q-item"><p>1. Dani went to Nigeria.</p><input type="text" name="g4_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. You've finished your homework.</p><input type="text" name="g4_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. They wrote those emails.</p><input type="text" name="g4_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. We'll see you later.</p><input type="text" name="g4_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. I'm going to climb a mountain.</p><input type="text" name="g4_5" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-5">
+                <div class="section-title">
+                    <h2>Grammar 5</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with one word.</h3><div class="q-item"><p>1. Mikhail and Sonya are going to the park and ______ that they're going for a meal.</p><input type="text" name="g5_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. ______ Bryony was frightened, she walked into the dark room.</p><input type="text" name="g5_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Is there ______ to leave our coats?</p><input type="text" name="g5_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Is that the hotel ______ your parents stayed?</p><input type="text" name="g5_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. My lunch wasn't big ______ . I'm still hungry.</p><input type="text" name="g5_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. I've eaten too ______ chocolate.</p><input type="text" name="g5_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. The problem started ______ I was downloading some new software.</p><input type="text" name="g5_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. There's ______ on TV tonight that I want to watch and I'm a bit bored. Shall we go to the cinema?</p><input type="text" name="g5_8" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>9. That was the loudest concert I've ______ been to.</p><input type="text" name="g5_9" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>10. A department store is a place ______ sells different types of products.</p><input type="text" name="g5_10" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-6">
+                <div class="section-title">
+                    <h2>Vocabulary 6</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Match 1–11 with a–k.</h3><div class="match-options"><div><strong>A</strong> work early</div><div><strong>B</strong> abroad</div><div><strong>C</strong> the dishwasher</div><div><strong>D</strong> something to the shop</div><div><strong>E</strong> for my friend</div><div><strong>F</strong> from a holiday</div><div><strong>G</strong> a mistake</div><div><strong>H</strong> a friend at the airport</div><div><strong>I</strong> some exercise</div><div><strong>J</strong> a wonderful time</div><div><strong>K</strong> a bus</div></div><div class="q-item"><p>1. wait</p><select name="v6_1" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>2. do</p><select name="v6_2" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>3. make</p><select name="v6_3" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>4. drop off</p><select name="v6_4" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>5. have</p><select name="v6_5" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>6. unload</p><select name="v6_6" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>7. come back</p><select name="v6_7" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>8. go</p><select name="v6_8" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>9. leave</p><select name="v6_9" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+<div class="q-item"><p>10. miss</p><select name="v6_10" class="answer-input"><option value="">— Select —</option><option value="a">A. work early</option><option value="b">B. abroad</option><option value="c">C. the dishwasher</option><option value="d">D. something to the shop</option><option value="e">E. for my friend</option><option value="f">F. from a holiday</option><option value="g">G. a mistake</option><option value="h">H. a friend at the airport</option><option value="i">I. some exercise</option><option value="j">J. a wonderful time</option><option value="k">K. a bus</option></select></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-7">
+                <div class="section-title">
+                    <h2>Vocabulary 7</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with the words from the box.</h3><div class="q-item"><p>1. I don't need a trolley. A ______ is big enough for my shopping today.</p><input type="text" name="v7_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. 'Are you going on holiday next week?' 'Yes, I'm very ______ .'</p><input type="text" name="v7_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Then we will cross the ______ to reach the historic centre of the town.</p><input type="text" name="v7_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. We need to get our ______ now. Which way is baggage reclaim?</p><input type="text" name="v7_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. It will arrive tomorrow because I paid for ______ delivery.</p><input type="text" name="v7_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. 'Can I help you, sir?' 'No, I'm just ______ , thank you.'</p><input type="text" name="v7_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. They're your shirts, so you can do the ______ .</p><input type="text" name="v7_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. The town is quite ______ , so they clean the dirt off the historic buildings every year.</p><input type="text" name="v7_8" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>9. It's a pretty town with colourful fishing boats in the ______ .</p><input type="text" name="v7_9" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>10. I'm so sorry. I've forgotten your ______ .</p><input type="text" name="v7_10" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(7)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-8">
+                <div class="section-title">
+                    <h2>Vocabulary 8</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with one word.</h3><div class="q-item"><p>1. 'Noor, we need to talk ______ your essay plan,' said the teacher.</p><input type="text" name="v8_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. I'm sorry. I don't agree ______ your opinion.</p><input type="text" name="v8_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Zeb arrived ______ the station and looked for a ticket machine.</p><input type="text" name="v8_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Yasmin belongs ______ a chess club. She plays regularly.</p><input type="text" name="v8_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. The plates are all ______ the sink. You need to do the washing up.</p><input type="text" name="v8_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. Please don't leave your dirty socks ______ the floor.</p><input type="text" name="v8_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. Waiting ______ a delayed flight is really boring.</p><input type="text" name="v8_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. Her birthday is on the 17th ______ June.</p><input type="text" name="v8_8" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>9. My house is ______ to a park. It's beautiful!</p><input type="text" name="v8_9" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>10. Oscar is in the ______ of that group of boys. Can you see him?</p><input type="text" name="v8_10" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(8)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-9">
+                <div class="section-title">
+                    <h2>Vocabulary 9</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with the correct word(s).</h3><div class="q-item"><p>1. Phoebe has ______ hair.</p><div class="radio-group"><label><input type="radio" name="v9_1" value="medium"> medium</label><label><input type="radio" name="v9_1" value="tall"> tall</label><label><input type="radio" name="v9_1" value="curly"> curly</label></div></div>
+<div class="q-item"><p>2. Javier often stays in bed all morning. He's a bit ______ .</p><div class="radio-group"><label><input type="radio" name="v9_2" value="lazy"> lazy</label><label><input type="radio" name="v9_2" value="hard-working"> hard-working</label><label><input type="radio" name="v9_2" value="relaxed"> relaxed</label></div></div>
+<div class="q-item"><p>3. I don't like people who tell ______ . We need to be honest with each other.</p><div class="radio-group"><label><input type="radio" name="v9_3" value="stories"> stories</label><label><input type="radio" name="v9_3" value="lies"> lies</label><label><input type="radio" name="v9_3" value="the"> the</label><label><input type="radio" name="v9_3" value="truth"> truth</label></div></div>
+<div class="q-item"><p>4. We don't laugh much in English class. It's quite a ______ place.</p><div class="radio-group"><label><input type="radio" name="v9_4" value="friendly"> friendly</label><label><input type="radio" name="v9_4" value="funny"> funny</label><label><input type="radio" name="v9_4" value="serious"> serious</label></div></div>
+<div class="q-item"><p>5. There are several ______ people in this class, but everyone's opinion is important.</p><input type="text" name="v9_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. People often say that yoga is ______ , but I find it stressful!</p><div class="radio-group"><label><input type="radio" name="v9_6" value="positive"> positive</label><label><input type="radio" name="v9_6" value="interested"> interested</label><label><input type="radio" name="v9_6" value="relaxing"> relaxing</label></div></div>
+<div class="q-item"><p>7. We ______ a boat and went around the lake.</p><div class="radio-group"><label><input type="radio" name="v9_7" value="sold"> sold</label><label><input type="radio" name="v9_7" value="hired"> hired</label><label><input type="radio" name="v9_7" value="came"> came</label></div></div>
+<div class="q-item"><p>8. Are they ______ in coming with us to the café?</p><div class="radio-group"><label><input type="radio" name="v9_8" value="exciting"> exciting</label><label><input type="radio" name="v9_8" value="interested"> interested</label><label><input type="radio" name="v9_8" value="hopeful"> hopeful</label></div></div>
+<div class="q-item"><p>9. The hotel was ______ and uncomfortable. What a disaster!</p><div class="radio-group"><label><input type="radio" name="v9_9" value="a"> a. a</label><label><input type="radio" name="v9_9" value="bit"> bit</label><label><input type="radio" name="v9_9" value="clean"> clean</label><label><input type="radio" name="v9_9" value="dirty"> dirty</label></div></div>
+<div class="q-item"><p>10. On Saturdays, the shopping centre is too ______ .</p><div class="radio-group"><label><input type="radio" name="v9_10" value="crowded"> crowded</label><label><input type="radio" name="v9_10" value="very"> very</label><label><input type="radio" name="v9_10" value="noisy"> noisy</label><label><input type="radio" name="v9_10" value="many"> many</label><label><input type="radio" name="v9_10" value="people"> people</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(9)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-pronunciation-10">
+                <div class="section-title">
+                    <h2>Pronunciation 10</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Which is the stressed syllable? Tick 1, 2, or 3.</h3><div class="q-item"><p>1. car|di|gan 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_1" value="1"> syllable 1</label><label><input type="radio" name="p10_1" value="2"> syllable 2</label><label><input type="radio" name="p10_1" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>2. ro|man|tic 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_2" value="1"> syllable 1</label><label><input type="radio" name="p10_2" value="2"> syllable 2</label><label><input type="radio" name="p10_2" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>3. ma|chine 	1  	2 </p><div class="radio-group"><label><input type="radio" name="p10_3" value="1"> syllable 1</label><label><input type="radio" name="p10_3" value="2"> syllable 2</label><label><input type="radio" name="p10_3" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>4. pho|to|graph 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_4" value="1"> syllable 1</label><label><input type="radio" name="p10_4" value="2"> syllable 2</label><label><input type="radio" name="p10_4" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>5. di|vorced 	1  	2 </p><div class="radio-group"><label><input type="radio" name="p10_5" value="1"> syllable 1</label><label><input type="radio" name="p10_5" value="2"> syllable 2</label><label><input type="radio" name="p10_5" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>6. to|mo|rrow 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_6" value="1"> syllable 1</label><label><input type="radio" name="p10_6" value="2"> syllable 2</label><label><input type="radio" name="p10_6" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>7. a|ttrac|tive 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_7" value="1"> syllable 1</label><label><input type="radio" name="p10_7" value="2"> syllable 2</label><label><input type="radio" name="p10_7" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>8. hand|some 	1  	2 </p><div class="radio-group"><label><input type="radio" name="p10_8" value="1"> syllable 1</label><label><input type="radio" name="p10_8" value="2"> syllable 2</label><label><input type="radio" name="p10_8" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>9. pre|fer 	1  	2 </p><div class="radio-group"><label><input type="radio" name="p10_9" value="1"> syllable 1</label><label><input type="radio" name="p10_9" value="2"> syllable 2</label><label><input type="radio" name="p10_9" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>10. Example: 	fu|ture 1 	 	2 </p><div class="radio-group"><label><input type="radio" name="p10_10" value="1"> syllable 1</label><label><input type="radio" name="p10_10" value="2"> syllable 2</label><label><input type="radio" name="p10_10" value="3"> syllable 3</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(8)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(10)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-reading">
+                <div class="section-title">
+                    <h2>Reading</h2>
+                </div>
+                
+                <div class="reading-split"><div class="reading-passages"><p>New year, old customs by travel editor, Lauren Briard Have you ever made a New Year's resolution? Perhaps you have decided to learn a new language, or take up more exercise? You are not alone. In many cultures, people choose to change something about their life at the beginning of the year. And all over the world, people celebrate the new year with interesting customs. My favourite traditions come from Mexico and other Latin American countries. For example, at midnight on New Year's Eve in many Spanish-speaking cultures, everyone eats twelve grapes – one grape for each month of the year. People say that eating the grapes brings good fortune for the new year. And don't be surprised if your friend from Peru wants to walk around the outside of his or her house with heavy luggage. Traditionally, if you complete this challenge you will be a successful traveller in the new year. Would you like to go on a dream holiday next year? Then try it! Cleaning the house is perhaps the most common New Year tradition. From Mexico to Japan, people sweep their homes from top to bottom. Some people believe this removes bad luck and allows good luck to enter the house. In other countries, such as Britain and Iran, the cleaning happens later in the year, so it's called 'spring cleaning'. In Iran, just before the March spring festival, people empty their houses of all their furniture. They clean the house from top to bottom, mend broken furniture or replace old items. People bring flowers and herbs indoors too, so their homes smell fresh and clean. New Year is often celebrated with friends, so my final story is from Denmark. If you are in Denmark at New Year, you will probably see piles of broken plates outside front doors. What's going on? Well, traditionally, people take their old or broken plates and smash them on their friend's front door. It brings good luck to your friend. It's great fun, too! So, a big pile of broken plates means you are a popular person. Enjoy the New Year festival, wherever you are in the world. I hope you are ready with your grapes, luggage, and plates!</p></div><div class="reading-questions">
+                <h3>Part 1</h3><div class="q-item"><p>1. activities that have been common for a long time ______</p><div class="radio-group"><label><input type="radio" name="r1_1" value="A"> A. True</label><label><input type="radio" name="r1_1" value="B"> B. False</label><label><input type="radio" name="r1_1" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>2. something that is difficult to do ______</p><div class="radio-group"><label><input type="radio" name="r1_2" value="A"> A. True</label><label><input type="radio" name="r1_2" value="B"> B. False</label><label><input type="radio" name="r1_2" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>3. takes something away ______</p><div class="radio-group"><label><input type="radio" name="r1_3" value="A"> A. True</label><label><input type="radio" name="r1_3" value="B"> B. False</label><label><input type="radio" name="r1_3" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>4. a special day of celebration ______</p><div class="radio-group"><label><input type="radio" name="r1_4" value="A"> A. True</label><label><input type="radio" name="r1_4" value="B"> B. False</label><label><input type="radio" name="r1_4" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>5. to break into lots of pieces ______</p><div class="radio-group"><label><input type="radio" name="r1_5" value="A"> A. True</label><label><input type="radio" name="r1_5" value="B"> B. False</label><label><input type="radio" name="r1_5" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>6. House cleaning is a very popular New Year tradition.</p><div class="radio-group"><label><input type="radio" name="r1_6" value="A"> A. True</label><label><input type="radio" name="r1_6" value="B"> B. False</label><label><input type="radio" name="r1_6" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>7. In Britain, people clean their homes at New Year.</p><div class="radio-group"><label><input type="radio" name="r1_7" value="A"> A. True</label><label><input type="radio" name="r1_7" value="B"> B. False</label><label><input type="radio" name="r1_7" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>8. In Iran, the first month of the calendar is March.</p><div class="radio-group"><label><input type="radio" name="r1_8" value="A"> A. True</label><label><input type="radio" name="r1_8" value="B"> B. False</label><label><input type="radio" name="r1_8" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>9. In Denmark, there is a special tradition between friends.</p><div class="radio-group"><label><input type="radio" name="r1_9" value="A"> A. True</label><label><input type="radio" name="r1_9" value="B"> B. False</label><label><input type="radio" name="r1_9" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>10. The most popular people have the most broken plates.</p><div class="radio-group"><label><input type="radio" name="r1_10" value="A"> A. True</label><label><input type="radio" name="r1_10" value="B"> B. False</label><label><input type="radio" name="r1_10" value="C"> C. Doesn't say</label></div></div><h3>Part 2</h3><div class="q-item"><p>1. Question 1</p><input type="text" name="r2_1" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>2. Question 2</p><input type="text" name="r2_2" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>3. Question 3</p><input type="text" name="r2_3" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>4. Question 4</p><input type="text" name="r2_4" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>5. Question 5</p><input type="text" name="r2_5" class="answer-input" placeholder="Short answer"></div>
+                </div></div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(9)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(11)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-writing">
+                <div class="section-title">
+                    <h2>Writing</h2>
+                </div>
+                
+                <div class="question-block">
+                <div class="question-block"><h3>Write your answer below (100–150 words).</h3><textarea name="writing" class="writing-area answer-input" rows="6" placeholder="Write here (100–150 words)..."></textarea><p style="font-size:0.85rem;color:#64748B;margin-top:0.5rem;">This section is reviewed manually.</p></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(10)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(12)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-1">
+                <div class="section-title">
+                    <h2>Listening 1</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/progress_1/listening_1.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to a tour guide talking about a town. Tick A or B.</h3><div class="q-item"><p>1. Turlton is a small town.</p><div class="radio-group"><label><input type="radio" name="l1_1" value="A"> A. True</label><label><input type="radio" name="l1_1" value="B"> B. False</label></div></div>
+<div class="q-item"><p>2. The church is famous because it is beautiful.</p><div class="radio-group"><label><input type="radio" name="l1_2" value="A"> A. True</label><label><input type="radio" name="l1_2" value="B"> B. False</label></div></div>
+<div class="q-item"><p>3. The Old School has a café in the garden.</p><div class="radio-group"><label><input type="radio" name="l1_3" value="A"> A. True</label><label><input type="radio" name="l1_3" value="B"> B. False</label></div></div>
+<div class="q-item"><p>4. You can visit a museum in the town hall.</p><div class="radio-group"><label><input type="radio" name="l1_4" value="A"> A. True</label><label><input type="radio" name="l1_4" value="B"> B. False</label></div></div>
+<div class="q-item"><p>5. The tourists who want to visit the old bridge need boots.</p><div class="radio-group"><label><input type="radio" name="l1_5" value="A"> A. True</label><label><input type="radio" name="l1_5" value="B"> B. False</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(11)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(13)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-2">
+                <div class="section-title">
+                    <h2>Listening 2</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/progress_1/listening_2.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to five conversations. Where are the people? Match them with places A–E.</h3><div class="match-options"><div><strong>A</strong> in a</div><div><strong>B</strong> in a hotel</div><div><strong>C</strong> in traffic</div><div><strong>D</strong> in a</div><div><strong>E</strong> in a cinema</div></div><div class="q-item"><p>1. Item 1</p><select name="l2_1" class="answer-input"><option value="">— Select —</option><option value="A">A. in a</option><option value="B">B. in a hotel</option><option value="C">C. in traffic</option><option value="D">D. in a</option><option value="E">E. in a cinema</option></select></div>
+<div class="q-item"><p>2. Item 2</p><select name="l2_2" class="answer-input"><option value="">— Select —</option><option value="A">A. in a</option><option value="B">B. in a hotel</option><option value="C">C. in traffic</option><option value="D">D. in a</option><option value="E">E. in a cinema</option></select></div>
+<div class="q-item"><p>3. Item 3</p><select name="l2_3" class="answer-input"><option value="">— Select —</option><option value="A">A. in a</option><option value="B">B. in a hotel</option><option value="C">C. in traffic</option><option value="D">D. in a</option><option value="E">E. in a cinema</option></select></div>
+<div class="q-item"><p>4. Item 4</p><select name="l2_4" class="answer-input"><option value="">— Select —</option><option value="A">A. in a</option><option value="B">B. in a hotel</option><option value="C">C. in traffic</option><option value="D">D. in a</option><option value="E">E. in a cinema</option></select></div>
+<div class="q-item"><p>5. Item 5</p><select name="l2_5" class="answer-input"><option value="">— Select —</option><option value="A">A. in a</option><option value="B">B. in a hotel</option><option value="C">C. in traffic</option><option value="D">D. in a</option><option value="E">E. in a cinema</option></select></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(12)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(14)">Final Step <i class="fa-solid fa-user-check"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">First Name *</label><input type="text" id="regFirstName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Last Name *</label><input type="text" id="regLastName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Proposed Group *</label><input type="text" id="regGroup" class="answer-input" value="Pre-intermediate Progress Test 1" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Phone Number *</label><input type="tel" id="regPhone" class="answer-input" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(13)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary btn-submit" onclick="submitTest()">Finish & Submit <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </section>
+            <section class="test-section" id="section-result">
+                <div style="text-align:center;padding:3rem 0;">
+                    <i class="fa-solid fa-circle-check" style="font-size:5rem;color:var(--primary);margin-bottom:2rem;"></i>
+                    <h2>Test Submitted!</h2>
+                    <p id="resultFeedback" style="color:#64748B;">Calculating your score...</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='tests.html'">Back to Tests</button>
+                </div>
+            </section>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) { window.location.href = 'login.html'; }
+        const unitSections = ["section-grammar-1","section-grammar-2","section-grammar-3","section-grammar-4","section-grammar-5","section-vocab-6","section-vocab-7","section-vocab-8","section-vocab-9","section-pronunciation-10","section-reading","section-writing","section-listening-1","section-listening-2","section-details"];
+        const answerKey = {"g1_1":["have washed"],"g1_2":["like"],"g1_3":["goes out"],"g1_4":["were watching"],"g1_5":["’ll","will call"],"g1_6":["do do"],"g1_7":["’ll","will make"],"g1_8":["was raining"],"g1_9":["’s","is standing"],"g1_10":["have sold"],"g2_1":["what did you do last weekend"],"g2_2":["do you have any pets"],"g2_3":["what kind of music do you listen to"],"g2_4":["can you speak any other languages"],"g2_5":["have you ever been to hong kong"],"g3_1":["has been"],"g3_2":["exercise every day"],"g3_3":["was eating"],"g3_4":["cycles"],"g3_5":["are you doing"],"g3_6":["as good as"],"g3_7":["they’re meeting"],"g3_8":["he needs"],"g3_9":["going to be"],"g3_10":["is doing"],"g4_1":["dani didn’t","did not go to nigeria"],"g4_2":["you haven’t","have not finished your homework"],"g4_3":["they didn’t","did not write those emails"],"g4_4":["we won’t","will not see you later"],"g4_5":["i’m","i am not going to climb a mountain"],"g5_1":["after"],"g5_2":["although"],"g5_3":["anywhere"],"g5_4":["where"],"g5_5":["enough"],"g5_6":["much"],"g5_7":["when"],"g5_8":["nothing"],"g5_9":["ever"],"g5_10":["which","that"],"v6_1":["i"],"v6_2":["g"],"v6_3":["h"],"v6_4":["j"],"v6_5":["c"],"v6_6":["f"],"v6_7":["b"],"v6_8":["a"],"v6_9":["k"],"v6_10":["d"],"v7_1":["basket"],"v7_2":["excited"],"v7_3":["bridge"],"v7_4":["luggage"],"v7_5":["next-day"],"v7_6":["looking"],"v7_7":["ironing"],"v7_8":["polluted"],"v7_9":["harbour"],"v7_10":["name"],"v8_1":["about"],"v8_2":["with"],"v8_3":["at"],"v8_4":["to"],"v8_5":["in"],"v8_6":["on"],"v8_7":["for"],"v8_8":["of"],"v8_9":["next"],"v8_10":["middle"],"v9_1":["curly"],"v9_2":["lazy"],"v9_3":["lies"],"v9_4":["serious"],"v9_5":["talkative"],"v9_6":["relaxing"],"v9_7":["hired"],"v9_8":["interested"],"v9_9":["dirty"],"v9_10":["crowded"],"p10_1":["1"],"p10_2":["2"],"p10_3":["2"],"p10_4":["1"],"p10_5":["2"],"p10_6":["2"],"p10_7":["2"],"p10_8":["1"],"p10_9":["2"],"p10_10":["2"],"r1_1":["a"],"r1_2":["b"],"r1_3":["c"],"r1_4":["a"],"r1_5":["b"],"r1_6":["a"],"r1_7":["b"],"r1_8":["c"],"r1_9":["a"],"r1_10":["a"],"r2_1":["customs"],"r2_2":["challenge"],"r2_3":["removes"],"r2_4":["festival"],"r2_5":["smash"],"l1_1":["a"],"l1_2":["b"],"l1_3":["a"],"l1_4":["b"],"l1_5":["a"],"l2_1":["e"],"l2_2":["c"],"l2_3":["b"],"l2_4":["a"],"l2_5":["d"]};
+
+        function nextUnitSection(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            if (idx >= unitSections.length) return;
+            document.getElementById(unitSections[idx]).classList.add('active');
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / unitSections.length * 100) + '%';
+            if (txt) txt.innerText = 'Step ' + (idx + 1) + ' of ' + unitSections.length;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function normalize(s) {
+            if (!s) return '';
+            return s.toString().trim().toLowerCase()
+                .replace(/['']/g, "'").replace(/[?!.,;:"()]/g, '').replace(/\s+/g, ' ');
+        }
+
+        function checkAnswer(userVal, accepted) {
+            const u = normalize(userVal);
+            if (!u) return false;
+            return accepted.some((a) => {
+                const c = normalize(a);
+                if (u === c) return true;
+                if (/^[a-gtflh]$/.test(c) && u === c) return true;
+                const parts = a.replace(/…/g, '...').split(/\s*\.\.\.\s*/).map((p) => normalize(p)).filter(Boolean);
+                if (parts.length >= 2 && parts.every((p) => u.includes(p))) return true;
+                if (c.length >= 4 && (u.includes(c) || c.includes(u))) return true;
+                return false;
+            });
+        }
+
+        async function submitTest() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const group = document.getElementById('regGroup').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            if (!firstName || !lastName || !group || !phone) { alert('Please fill in all required fields!'); return; }
+
+            const btn = document.querySelector('.btn-submit');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...'; }
+
+            let score = 0;
+            const answers = new FormData(document.getElementById('unitTestForm'));
+            for (const id in answerKey) {
+                const userVal = answers.get(id);
+                if (checkAnswer(userVal, answerKey[id])) score++;
+            }
+
+            if (window.eduSupabase) {
+                await window.eduSupabase.from('submissions').insert([{
+                    student_name: firstName + ' ' + lastName,
+                    test_type: "Pre-intermediate Progress Test 1",
+                    score: score,
+                    group_name: group,
+                    phone: phone,
+                    raw_answers: Object.fromEntries(answers.entries())
+                }]);
+            }
+
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-result').classList.add('active');
+            document.getElementById('resultFeedback').innerText = 'Thank you, ' + firstName + '! Auto-graded score: ' + score + ' points (writing reviewed separately).';
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+    </script>
+</body>
+</html>

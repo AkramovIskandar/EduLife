@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Test 1 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .full-input,
+        .word-input,
+        .writing-area,
+        .reg-form-container input {
+            background-color: var(--white) !important;
+            color: var(--text-main) !important;
+            border: 2px solid #E2E8F0 !important;
+            padding: 12px 15px !important;
+            border-radius: 8px !important;
+            width: 100%;
+            margin-top: 5px;
+            font-size: 1rem;
+            outline: none;
+            display: block;
+        }
+
+        .q-item .word-input {
+            display: inline-block;
+            width: 70px !important;
+            min-width: 56px;
+            max-width: 100%;
+            margin: 0 4px;
+            padding: 6px 8px !important;
+            vertical-align: baseline;
+            border-radius: 7px !important;
+            letter-spacing: 0;
+        }
+
+        .q-item .full-input {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            margin-bottom: 10px;
+        }
+
+        .writing-area {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .step-badge {
+            background: #DBEAFE;
+            color: #1E40AF;
+            border-radius: 999px;
+            padding: 0.2rem 0.65rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .instruction {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle-q {
+            margin-top: 1rem;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 1.03rem;
+        }
+
+        .info-box-sm {
+            padding: 0.7rem 1rem;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            background: #F8FAFC;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .reading-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 3px solid #F59E0B;
+            border-radius: 0 8px 8px 0;
+            padding: 1rem;
+            line-height: 1.55;
+        }
+
+        .reading-panel p {
+            margin-bottom: 0.9rem;
+        }
+
+        .reading-panel p:last-child {
+            margin-bottom: 0;
+        }
+
+        .compact-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .compact-item p {
+            margin-bottom: 0.45rem;
+        }
+
+        .stress-list p {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .stress-list p > span {
+            min-width: 120px;
+            font-weight: 600;
+        }
+
+        .stress-list label {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 0.25rem;
+            margin: 0 0.35rem 0 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+        }
+
+        .question-block {
+            background: var(--white);
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-box-sm {
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #CBD5E1;
+            border-radius: 10px;
+            background: #F8FAFC;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        body.dark-theme .info-box-sm {
+            background: #1e293b;
+            border-color: #334155;
+            color: var(--primary-light);
+        }
+
+        .question-block+.question-block {
+            margin-top: 1rem;
+        }
+
+        .q-item {
+            border-radius: 10px;
+            border: 1px solid #D1DCEB;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        }
+
+        body.dark-theme .question-block {
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.95), rgba(15, 23, 42, 0.95));
+            border-color: #1F2937;
+        }
+
+        body.dark-theme .q-item {
+            border-color: #334155;
+            box-shadow: none;
+        }
+
+        @media (max-width: 992px) {
+            .reading-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .q-item .word-input {
+                width: 58px !important;
+                min-width: 52px;
+                margin: 0 3px;
+                padding: 5px 6px !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Step 1 of 9</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Progress Test 1</h1>
+            <p>Please complete all sections. Writing and speaking are checked manually by teachers.</p>
+        </div>
+
+        <form id="progress1Form">
+            <section class="test-section active" id="p1-grammar">
+                <div class="section-title"><h2><span class="step-badge">Part 1</span>Grammar</h2></div>
+                <div class="question-block">
+                    <p class="instruction">1. Tick (✔) A, B, or C to complete the sentences.</p>
+                    <div class="q-item"><p>1. A: Are you from Brazil? B: No, ________.</p><label><input type="radio" name="pg1" value="A"> A I'm</label><label><input type="radio" name="pg1" value="B"> B I not</label><label><input type="radio" name="pg1" value="C"> C I'm not</label></div>
+                    <div class="q-item"><p>2. A: Do you want a chicken sandwich? B: No, thank you. I ________ eat meat.</p><label><input type="radio" name="pg2" value="A"> A don't</label><label><input type="radio" name="pg2" value="B"> B doesn't</label><label><input type="radio" name="pg2" value="C"> C not</label></div>
+                    <div class="q-item"><p>3. A: ________ they Italian? B: Yes, they are.</p><label><input type="radio" name="pg3" value="A"> A Am</label><label><input type="radio" name="pg3" value="B"> B Are</label><label><input type="radio" name="pg3" value="C"> C Is</label></div>
+                    <div class="q-item"><p>4. A: ________ are you? B: Fine, thanks.</p><label><input type="radio" name="pg4" value="A"> A How</label><label><input type="radio" name="pg4" value="B"> B Who</label><label><input type="radio" name="pg4" value="C"> C Where</label></div>
+                    <div class="q-item"><p>5. I ________ lunch in the cafe at work.</p><label><input type="radio" name="pg5" value="A"> A always</label><label><input type="radio" name="pg5" value="B"> B always eat</label><label><input type="radio" name="pg5" value="C"> C eat always</label></div>
+                    <div class="q-item"><p>6. A: ________ your last name? B: R-O-B-S-O-N</p><label><input type="radio" name="pg6" value="A"> A How do you spell</label><label><input type="radio" name="pg6" value="B"> B How spell you</label><label><input type="radio" name="pg6" value="C"> C How you spell</label></div>
+                    <div class="q-item"><p>7. ________ surname is Patel.</p><label><input type="radio" name="pg7" value="A"> A Our</label><label><input type="radio" name="pg7" value="B"> B They</label><label><input type="radio" name="pg7" value="C"> C We</label></div>
+                    <div class="q-item"><p>8. New York and Tokyo are ________.</p><label><input type="radio" name="pg8" value="A"> A bigs cities</label><label><input type="radio" name="pg8" value="B"> B bigs city</label><label><input type="radio" name="pg8" value="C"> C big cities</label></div>
+                    <div class="q-item"><p>9. A: Are those your ________? B: Yes, they are.</p><label><input type="radio" name="pg9" value="A"> A child</label><label><input type="radio" name="pg9" value="B"> B children</label><label><input type="radio" name="pg9" value="C"> C childrens</label></div>
+                    <div class="q-item"><p>10. Are ________ your sunglasses?</p><label><input type="radio" name="pg10" value="A"> A this</label><label><input type="radio" name="pg10" value="B"> B that</label><label><input type="radio" name="pg10" value="C"> C these</label></div>
+                    <div class="q-item"><p>11. A: Does he have a car? B: ________. It's that white car.</p><label><input type="radio" name="pg11" value="A"> A Yes, he doesn't</label><label><input type="radio" name="pg11" value="B"> B Yes, does he</label><label><input type="radio" name="pg11" value="C"> C Yes, he does</label></div>
+                    <div class="q-item"><p>12. Where ________?</p><label><input type="radio" name="pg12" value="A"> A Ana is from</label><label><input type="radio" name="pg12" value="B"> B is Ana from</label><label><input type="radio" name="pg12" value="C"> C Ana from is</label></div>
+                    <div class="q-item"><p>13. Marco ________ French and Italian.</p><label><input type="radio" name="pg13" value="A"> A speak</label><label><input type="radio" name="pg13" value="B"> B is speak</label><label><input type="radio" name="pg13" value="C"> C speaks</label></div>
+                    <div class="q-item"><p>14. A: ________ your postcode? B: It's YO6 4PX.</p><label><input type="radio" name="pg14" value="A"> A How's</label><label><input type="radio" name="pg14" value="B"> B Where's</label><label><input type="radio" name="pg14" value="C"> C What's</label></div>
+                    <div class="q-item"><p>15. My ________ car is very expensive.</p><label><input type="radio" name="pg15" value="A"> A parents'</label><label><input type="radio" name="pg15" value="B"> B parent's</label><label><input type="radio" name="pg15" value="C"> C parents</label></div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">2. Put the words in the correct order to make sentences and questions.</p>
+                    <div class="q-item"><p>1. T-shirt this is your ?</p><input type="text" name="pg2_1" class="full-input"></div>
+                    <div class="q-item"><p>2. daughter Ellie Joanna's is .</p><input type="text" name="pg2_2" class="full-input"></div>
+                    <div class="q-item"><p>3. red it's shirt football a .</p><input type="text" name="pg2_3" class="full-input"></div>
+                    <div class="q-item"><p>4. a is meal this terrible .</p><input type="text" name="pg2_4" class="full-input"></div>
+                    <div class="q-item"><p>5. work they at don't weekend the .</p><input type="text" name="pg2_5" class="full-input"></div>
+                    <div class="q-item"><p>6. you do university business at study ?</p><input type="text" name="pg2_6" class="full-input"></div>
+                    <div class="q-item"><p>7. morning goes gym the Petra to never in the .</p><input type="text" name="pg2_7" class="full-input"></div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">3. Tick (✔) the correct word.</p>
+                    <div class="q-item"><p>1. A: Are you French? B: No / Yes, I'm not.</p><label><input type="radio" name="pg3_1" value="No"> No</label><label><input type="radio" name="pg3_1" value="Yes"> Yes</label></div>
+                    <div class="q-item"><p>2. They / They're speak English.</p><label><input type="radio" name="pg3_2" value="They"> They</label><label><input type="radio" name="pg3_2" value="They're"> They're</label></div>
+                    <div class="q-item"><p>3. Is this / these your key?</p><label><input type="radio" name="pg3_3" value="this"> this</label><label><input type="radio" name="pg3_3" value="these"> these</label></div>
+                    <div class="q-item"><p>4. A: How much is this? B: Its / It's £2.50.</p><label><input type="radio" name="pg3_4" value="Its"> Its</label><label><input type="radio" name="pg3_4" value="It's"> It's</label></div>
+                    <div class="q-item"><p>5. Her / She's name is Daniella.</p><label><input type="radio" name="pg3_5" value="Her"> Her</label><label><input type="radio" name="pg3_5" value="She's"> She's</label></div>
+                    <div class="q-item"><p>6. A: Do you live near here? B: No, I not / don't.</p><label><input type="radio" name="pg3_6" value="not"> not</label><label><input type="radio" name="pg3_6" value="don't"> don't</label></div>
+                    <div class="q-item"><p>7. He don't / doesn't usually go to bed late.</p><label><input type="radio" name="pg3_7" value="don't"> don't</label><label><input type="radio" name="pg3_7" value="doesn't"> doesn't</label></div>
+                    <div class="q-item"><p>8. Do you have an / a ID card?</p><label><input type="radio" name="pg3_8" value="an"> an</label><label><input type="radio" name="pg3_8" value="a"> a</label></div>
+                </div>
+                <div class="form-actions right"><button type="button" class="btn btn-primary" onclick="nextP1(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p1-vocab">
+                <div class="section-title"><h2><span class="step-badge">Part 2</span>Vocabulary</h2></div>
+                <div class="question-block">
+                    <p class="instruction">1. Tick (✔) A, B, or C to complete the sentences.</p>
+                    <div class="q-item"><p>1. Vanessa is ________.</p><label><input type="radio" name="pv1" value="A"> A France</label><label><input type="radio" name="pv1" value="B"> B Italy</label><label><input type="radio" name="pv1" value="C"> C Italian</label></div>
+                    <div class="q-item"><p>2. Do you ________ Spanish?</p><label><input type="radio" name="pv2" value="A"> A do</label><label><input type="radio" name="pv2" value="B"> B say</label><label><input type="radio" name="pv2" value="C"> C speak</label></div>
+                    <div class="q-item"><p>3. Nice to ________ you.</p><label><input type="radio" name="pv3" value="A"> A hello</label><label><input type="radio" name="pv3" value="B"> B meet</label><label><input type="radio" name="pv3" value="C"> C say</label></div>
+                    <div class="q-item"><p>4. My phone ________ is 07700 900831.</p><label><input type="radio" name="pv4" value="A"> A address</label><label><input type="radio" name="pv4" value="B"> B name</label><label><input type="radio" name="pv4" value="C"> C number</label></div>
+                    <div class="q-item"><p>5. Esma lives in ________.</p><label><input type="radio" name="pv5" value="A"> A flat</label><label><input type="radio" name="pv5" value="B"> B Turkiye</label><label><input type="radio" name="pv5" value="C"> C Turkish</label></div>
+                    <div class="q-item"><p>6. My bank card is in my ________.</p><label><input type="radio" name="pv6" value="A"> A book</label><label><input type="radio" name="pv6" value="B"> B purse</label><label><input type="radio" name="pv6" value="C"> C umbrella</label></div>
+                    <div class="q-item"><p>7. A: How much is that football ________? B: It's £5.</p><label><input type="radio" name="pv7" value="A"> A scarf</label><label><input type="radio" name="pv7" value="B"> B plate</label><label><input type="radio" name="pv7" value="C"> C T-shirts</label></div>
+                    <div class="q-item"><p>8. I have six brothers and sisters. It's a big ________.</p><label><input type="radio" name="pv8" value="A"> A child</label><label><input type="radio" name="pv8" value="B"> B family</label><label><input type="radio" name="pv8" value="C"> C parents</label></div>
+                    <div class="q-item"><p>9. What's your email ________?</p><label><input type="radio" name="pv9" value="A"> A address</label><label><input type="radio" name="pv9" value="B"> B name</label><label><input type="radio" name="pv9" value="C"> C number</label></div>
+                    <div class="q-item"><p>10. A: Is it a fast car? B: No, it isn't. It's ________.</p><label><input type="radio" name="pv10" value="A"> A cheap</label><label><input type="radio" name="pv10" value="B"> B old</label><label><input type="radio" name="pv10" value="C"> C slow</label></div>
+                    <div class="q-item"><p>11. This test is very ________.</p><label><input type="radio" name="pv11" value="A"> A difficult</label><label><input type="radio" name="pv11" value="B"> B dirty</label><label><input type="radio" name="pv11" value="C"> C yellow</label></div>
+                    <div class="q-item"><p>12. A: Would you like a glass of orange ________? B: Yes, please.</p><label><input type="radio" name="pv12" value="A"> A fruit</label><label><input type="radio" name="pv12" value="B"> B juice</label><label><input type="radio" name="pv12" value="C"> C milk</label></div>
+                    <div class="q-item"><p>13. I need a glass of water. I'm ________.</p><label><input type="radio" name="pv13" value="A"> A hungry</label><label><input type="radio" name="pv13" value="B"> B thirsty</label><label><input type="radio" name="pv13" value="C"> C tired</label></div>
+                    <div class="q-item"><p>14. A: What time do you ________ work? B: At five o'clock in the afternoon.</p><label><input type="radio" name="pv14" value="A"> A don't</label><label><input type="radio" name="pv14" value="B"> B finish</label><label><input type="radio" name="pv14" value="C"> C go</label></div>
+                    <div class="q-item"><p>15. Elaine ________ dinner in the evening.</p><label><input type="radio" name="pv15" value="A"> A does</label><label><input type="radio" name="pv15" value="B"> B goes</label><label><input type="radio" name="pv15" value="C"> C makes</label></div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">2. Complete the sentences. Write one word in each gap.</p>
+                    <p class="subtitle-q">Typical activities</p>
+                    <div class="q-item">
+                        <p>1. What time do you g<input type="text" name="pv2_1a" class="word-input" style="width:56px"> u<input type="text" name="pv2_1b" class="word-input" style="width:56px"> in the morning?</p>
+                        <p>2. I have a sh<input type="text" name="pv2_2" class="word-input" style="width:70px"> every morning.</p>
+                        <p>3. Sonia and Greg are nurses at the hospital. They g<input type="text" name="pv2_3a" class="word-input" style="width:56px"> t<input type="text" name="pv2_3b" class="word-input" style="width:56px"> w<input type="text" name="pv2_3c" class="word-input" style="width:56px"> by train.</p>
+                        <p>4. I finish school at 3:30 and then I g<input type="text" name="pv2_4a" class="word-input" style="width:56px"> h<input type="text" name="pv2_4b" class="word-input" style="width:56px"> and do my homework in my bedroom.</p>
+                    </div>
+                    <p class="subtitle-q">Family</p>
+                    <div class="q-item">
+                        <p>5. This is my g<input type="text" name="pv2_5" class="word-input" style="width:56px">. She's 21 and her name is Alejandra.</p>
+                        <p>6. I'm married. My w<input type="text" name="pv2_6" class="word-input" style="width:56px"> name is Gloria.</p>
+                        <p>7. My parents' parents are my gr<input type="text" name="pv2_7" class="word-input" style="width:72px">.</p>
+                        <p>8. Do you have br<input type="text" name="pv2_8" class="word-input" style="width:60px"> and sisters?</p>
+                    </div>
+                    <p class="subtitle-q">Food</p>
+                    <div class="q-item">
+                        <p>9. Sonia doesn't eat m<input type="text" name="pv2_9" class="word-input" style="width:56px">. She's a vegetarian.</p>
+                        <p>10. I always have a big br<input type="text" name="pv2_10" class="word-input" style="width:60px"> at the weekend.</p>
+                        <p>11. Do you want milk and s<input type="text" name="pv2_11" class="word-input" style="width:56px"> in your coffee?</p>
+                        <p>12. Pizza and p<input type="text" name="pv2_12" class="word-input" style="width:56px"> are Italian.</p>
+                    </div>
+                    <p class="subtitle-q">Jobs</p>
+                    <div class="q-item">
+                        <p>13. My sister is a w<input type="text" name="pv2_13" class="word-input" style="width:56px">. She works in a cafe.</p>
+                        <p>14. Jose works in his car. He's a t<input type="text" name="pv2_14a" class="word-input" style="width:56px"> dr<input type="text" name="pv2_14b" class="word-input" style="width:56px">.</p>
+                        <p>15. She's a receptionist. She works in an o<input type="text" name="pv2_15" class="word-input" style="width:56px">.</p>
+                    </div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">3. Match the words / phrases with the correct verb from the box.</p>
+                    <div class="info-box-sm">live, finish, eat, drink, do, play, read, speak, work, have, listen, go</div>
+                    <div class="q-item compact-item">
+                        <p>1. <input type="text" name="pv3_1" class="word-input" style="width:120px"> the newspaper</p>
+                        <p>2. <input type="text" name="pv3_2" class="word-input" style="width:120px"> in a factory</p>
+                        <p>3. <input type="text" name="pv3_3" class="word-input" style="width:120px"> in a flat</p>
+                        <p>4. <input type="text" name="pv3_4" class="word-input" style="width:120px"> work</p>
+                        <p>5. <input type="text" name="pv3_5" class="word-input" style="width:120px"> a shower</p>
+                        <p>6. <input type="text" name="pv3_6" class="word-input" style="width:120px"> to the radio</p>
+                        <p>7. <input type="text" name="pv3_7" class="word-input" style="width:120px"> housework</p>
+                        <p>8. <input type="text" name="pv3_8" class="word-input" style="width:120px"> to the cinema</p>
+                        <p>9. <input type="text" name="pv3_9" class="word-input" style="width:120px"> tea</p>
+                        <p>10. <input type="text" name="pv3_10" class="word-input" style="width:120px"> Polish</p>
+                    </div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP1(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP1(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p1-pron">
+                <div class="section-title"><h2><span class="step-badge">Part 3</span>Pronunciation</h2></div>
+                <div class="question-block">
+                    <p class="instruction">1. Tick (✔) the word with a different sound.</p>
+                    <div class="q-item"><p>1. want / have / work</p><label><input type="radio" name="pp1" value="want"> want</label><label><input type="radio" name="pp1" value="have"> have</label><label><input type="radio" name="pp1" value="work"> work</label></div>
+                    <div class="q-item"><p>2. two / six / bike</p><label><input type="radio" name="pp2" value="two"> two</label><label><input type="radio" name="pp2" value="six"> six</label><label><input type="radio" name="pp2" value="bike"> bike</label></div>
+                    <div class="q-item"><p>3. say / city / Russia</p><label><input type="radio" name="pp3" value="say"> say</label><label><input type="radio" name="pp3" value="city"> city</label><label><input type="radio" name="pp3" value="Russia"> Russia</label></div>
+                    <div class="q-item"><p>4. waitress / nurse / phones</p><label><input type="radio" name="pp4" value="waitress"> waitress</label><label><input type="radio" name="pp4" value="nurse"> nurse</label><label><input type="radio" name="pp4" value="phones"> phones</label></div>
+                    <div class="q-item"><p>5. yes / usually / beautiful</p><label><input type="radio" name="pp5" value="yes"> yes</label><label><input type="radio" name="pp5" value="usually"> usually</label><label><input type="radio" name="pp5" value="beautiful"> beautiful</label></div>
+                    <div class="q-item"><p>6. small / awful / fast</p><label><input type="radio" name="pp6" value="small"> small</label><label><input type="radio" name="pp6" value="awful"> awful</label><label><input type="radio" name="pp6" value="fast"> fast</label></div>
+                    <div class="q-item"><p>7. father / son / husband</p><label><input type="radio" name="pp7" value="father"> father</label><label><input type="radio" name="pp7" value="son"> son</label><label><input type="radio" name="pp7" value="husband"> husband</label></div>
+                    <div class="q-item"><p>8. yoghurt / eggs / orange</p><label><input type="radio" name="pp8" value="yoghurt"> yoghurt</label><label><input type="radio" name="pp8" value="eggs"> eggs</label><label><input type="radio" name="pp8" value="orange"> orange</label></div>
+                    <div class="q-item"><p>9. goes / writes / lives</p><label><input type="radio" name="pp9" value="goes"> goes</label><label><input type="radio" name="pp9" value="writes"> writes</label><label><input type="radio" name="pp9" value="lives"> lives</label></div>
+                    <div class="q-item"><p>10. those / thirty / they</p><label><input type="radio" name="pp10" value="those"> those</label><label><input type="radio" name="pp10" value="thirty"> thirty</label><label><input type="radio" name="pp10" value="they"> they</label></div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">2. Which is the stressed syllable? Tick (✔) 1, 2, or 3.</p>
+                    <div class="q-item compact-item stress-list">
+                        <p><span>1. Brazil</span> <label><input type="radio" name="pps1" value="1">1</label> <label><input type="radio" name="pps1" value="2">2</label></p>
+                        <p><span>2. eleven</span> <label><input type="radio" name="pps2" value="1">1</label> <label><input type="radio" name="pps2" value="2">2</label> <label><input type="radio" name="pps2" value="3">3</label></p>
+                        <p><span>3. window</span> <label><input type="radio" name="pps3" value="1">1</label> <label><input type="radio" name="pps3" value="2">2</label></p>
+                        <p><span>4. wallet</span> <label><input type="radio" name="pps4" value="1">1</label> <label><input type="radio" name="pps4" value="2">2</label></p>
+                        <p><span>5. fifteen</span> <label><input type="radio" name="pps5" value="1">1</label> <label><input type="radio" name="pps5" value="2">2</label></p>
+                        <p><span>6. Mexico</span> <label><input type="radio" name="pps6" value="1">1</label> <label><input type="radio" name="pps6" value="2">2</label> <label><input type="radio" name="pps6" value="3">3</label></p>
+                        <p><span>7. umbrella</span> <label><input type="radio" name="pps7" value="1">1</label> <label><input type="radio" name="pps7" value="2">2</label> <label><input type="radio" name="pps7" value="3">3</label></p>
+                        <p><span>8. husband</span> <label><input type="radio" name="pps8" value="1">1</label> <label><input type="radio" name="pps8" value="2">2</label></p>
+                        <p><span>9. expensive</span> <label><input type="radio" name="pps9" value="1">1</label> <label><input type="radio" name="pps9" value="2">2</label> <label><input type="radio" name="pps9" value="3">3</label></p>
+                        <p><span>10. office</span> <label><input type="radio" name="pps10" value="1">1</label> <label><input type="radio" name="pps10" value="2">2</label></p>
+                    </div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP1(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP1(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p1-practical">
+                <div class="section-title"><h2><span class="step-badge">Part 4</span>Practical English</h2></div>
+                <div class="question-block">
+                    <p class="instruction">1. Match questions and sentences 1-10 to answers b-k.</p>
+                    <div class="q-item compact-item">
+                        <p>1. Sorry I'm late. <input type="text" name="pe1_1" class="word-input" style="width:40px"></p>
+                        <p>2. What time is it? <input type="text" name="pe1_2" class="word-input" style="width:40px"></p>
+                        <p>3. How much is it? <input type="text" name="pe1_3" class="word-input" style="width:40px"></p>
+                        <p>4. What's your surname? <input type="text" name="pe1_4" class="word-input" style="width:40px"></p>
+                        <p>5. What time's your bus? <input type="text" name="pe1_5" class="word-input" style="width:40px"></p>
+                        <p>6. Anything else? <input type="text" name="pe1_6" class="word-input" style="width:40px"></p>
+                        <p>7. How do you spell it? <input type="text" name="pe1_7" class="word-input" style="width:40px"></p>
+                        <p>8. How can I help you? <input type="text" name="pe1_8" class="word-input" style="width:40px"></p>
+                        <p>9. Are we late? <input type="text" name="pe1_9" class="word-input" style="width:40px"></p>
+                        <p>10. Here's your change. <input type="text" name="pe1_10" class="word-input" style="width:40px"></p>
+                        <hr style="margin:1rem 0; border:none; border-top:1px solid #CBD5E1;">
+                        <p>b. I have a reservation here.</p>
+                        <p>c. Yes, we need to hurry.</p>
+                        <p>d. Thank you.</p>
+                        <p>e. That's OK. Sit down, please.</p>
+                        <p>f. H-C-T-E-L.</p>
+                        <p>g. It's £5.35.</p>
+                        <p>h. It's a quarter to six.</p>
+                        <p>i. It's Perez.</p>
+                        <p>j. At 8 o'clock.</p>
+                        <p>k. No, thank you.</p>
+                    </div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP1(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP1(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p1-reading">
+                <div class="section-title"><h2><span class="step-badge">Part 5</span>Reading</h2></div>
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">Read the text and tick (✔) True or False.</p>
+                        <div class="reading-panel">
+                            <p><strong>A banker's life</strong></p>
+                            <p>Itsuki Nakamura is a banker. He is from a small town in Japan, but now he lives and works in New York. American journalist, Manny Valdez, talks to Itsuki about his life and job.</p>
+                            <p><strong>How do you start a typical work day, Itsuki?</strong></p>
+                            <p>Well, I get up at five in the morning and go to the gym. Then I go home, have a shower and make breakfast. I live with my wife in a flat in New York, so we have breakfast together. We always have yoghurt and cereal and I usually drink orange juice. I go to work at 8 o'clock and take the subway to the office. I always use this time to read the news on my tablet.</p>
+                            <p><strong>Where do you work?</strong></p>
+                            <p>I don't work in a bank in the street. I work in an office. I do a lot of work for big multinational companies. I usually start work at 9 o'clock and finish at 6 o'clock in the evening. I sometimes have lunch in the office or at a small cafe.</p>
+                            <p><strong>Do you like your job?</strong></p>
+                            <p>I love it. I meet a lot of people from all over the world and I need to speak a lot of different languages. I speak Japanese, English, French, and Italian. When I'm not at work, I study Spanish.</p>
+                            <p><strong>What about your family?</strong></p>
+                            <p>I'm married. My wife's name is Isabella and she's American. We don't have children. My wife is from a big family. She has three sisters and two brothers. They all live in New York.</p>
+                            <p><strong>What do you do after work?</strong></p>
+                            <p>I usually get home at quarter past seven. I always cook dinner. My wife likes Japanese food and she never cooks! Then I read a book or speak to my mother on the phone. She lives in Japan.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">1. True or False?</p>
+                            <div class="q-item"><p>1. Itsuki lives in Japan.</p><label><input type="radio" name="pr1" value="True"> True</label><label><input type="radio" name="pr1" value="False"> False</label></div>
+                            <div class="q-item"><p>2. He gets up at five o'clock in the morning.</p><label><input type="radio" name="pr2" value="True"> True</label><label><input type="radio" name="pr2" value="False"> False</label></div>
+                            <div class="q-item"><p>3. He doesn't have breakfast.</p><label><input type="radio" name="pr3" value="True"> True</label><label><input type="radio" name="pr3" value="False"> False</label></div>
+                            <div class="q-item"><p>4. He lives in a flat with his wife.</p><label><input type="radio" name="pr4" value="True"> True</label><label><input type="radio" name="pr4" value="False"> False</label></div>
+                            <div class="q-item"><p>5. He usually walks to work.</p><label><input type="radio" name="pr5" value="True"> True</label><label><input type="radio" name="pr5" value="False"> False</label></div>
+                            <div class="q-item"><p>6. He works in a bank.</p><label><input type="radio" name="pr6" value="True"> True</label><label><input type="radio" name="pr6" value="False"> False</label></div>
+                            <div class="q-item"><p>7. He always has lunch in the office.</p><label><input type="radio" name="pr7" value="True"> True</label><label><input type="radio" name="pr7" value="False"> False</label></div>
+                            <div class="q-item"><p>8. He speaks four different languages.</p><label><input type="radio" name="pr8" value="True"> True</label><label><input type="radio" name="pr8" value="False"> False</label></div>
+                            <div class="q-item"><p>9. His wife is from the USA.</p><label><input type="radio" name="pr9" value="True"> True</label><label><input type="radio" name="pr9" value="False"> False</label></div>
+                            <div class="q-item"><p>10. His mother is in Japan.</p><label><input type="radio" name="pr10" value="True"> True</label><label><input type="radio" name="pr10" value="False"> False</label></div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2. Read the text again and answer the questions.</p>
+                            <div class="q-item">
+                                <p>1. What does Itsuki have for breakfast?</p><input type="text" name="pr2_1" class="full-input">
+                                <p>2. What does Itsuki do when he goes to work?</p><input type="text" name="pr2_2" class="full-input">
+                                <p>3. What time does Itsuki finish work?</p><input type="text" name="pr2_3" class="full-input">
+                                <p>4. Do Itsuki and Isabella have children?</p><input type="text" name="pr2_4" class="full-input">
+                                <p>5. Does Itsuki's wife cook?</p><input type="text" name="pr2_5" class="full-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP1(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP1(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p1-writing">
+                <div class="section-title"><h2><span class="step-badge">Part 6</span>Writing</h2></div>
+                <div class="question-block">
+                    <p class="instruction">Answer the questions and write about your life.</p>
+                    <ul>
+                        <li>Do you have a big or small family? Who is in your family? What do they do?</li>
+                        <li>What do you do? Are you a student or do you work? Where do you work/study?</li>
+                        <li>Describe your typical day.</li>
+                    </ul>
+                    <textarea id="p1Writing" class="writing-area" placeholder="Write your text here..."></textarea>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP1(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP1(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p1-listening">
+                <div class="section-title"><h2><span class="step-badge">Part 7</span>Listening</h2></div>
+                <div class="question-block">
+                    <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/progress 1/ef5e_beginner_test_item_ 025.mp3" type="audio/mpeg"></audio>
+                    <p class="instruction">1. Listen to Li Mei and Pedro talking about their typical day. Tick (✔) the correct person.</p>
+                    <div class="q-item"><p>1. Who drinks tea for breakfast?</p><label><input type="radio" name="pl1" value="Li Mei"> Li Mei</label><label><input type="radio" name="pl1" value="Pedro"> Pedro</label></div>
+                    <div class="q-item"><p>2. Who works in a restaurant?</p><label><input type="radio" name="pl2" value="Li Mei"> Li Mei</label><label><input type="radio" name="pl2" value="Pedro"> Pedro</label></div>
+                    <div class="q-item"><p>3. Who listens to the radio in the morning?</p><label><input type="radio" name="pl3" value="Li Mei"> Li Mei</label><label><input type="radio" name="pl3" value="Pedro"> Pedro</label></div>
+                    <div class="q-item"><p>4. Who works at the weekend?</p><label><input type="radio" name="pl4" value="Li Mei"> Li Mei</label><label><input type="radio" name="pl4" value="Pedro"> Pedro</label></div>
+                    <div class="q-item"><p>5. Who makes dinner at the weekend?</p><label><input type="radio" name="pl5" value="Li Mei"> Li Mei</label><label><input type="radio" name="pl5" value="Pedro"> Pedro</label></div>
+                </div>
+                <div class="question-block">
+                    <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/progress 1/ef5e_beginner_test_item_ 026.mp3" type="audio/mpeg"></audio>
+                    <p class="instruction">2. Listen to five conversations and answer the questions. Choose the correct answer.</p>
+                    <div class="q-item"><p>1. What country is the man from?</p><label><input type="radio" name="pl6" value="A"> A Russia</label><label><input type="radio" name="pl6" value="B"> B Poland</label><label><input type="radio" name="pl6" value="C"> C England</label></div>
+                    <div class="q-item"><p>2. What is Stacey's phone number?</p><label><input type="radio" name="pl7" value="A"> A 020 7958 0372</label><label><input type="radio" name="pl7" value="B"> B 020 7946 0372</label><label><input type="radio" name="pl7" value="C"> C 020 7956 0372</label></div>
+                    <div class="q-item"><p>3. What does the woman have in the cafe?</p><label><input type="radio" name="pl8" value="A"> A coffee with milk and sugar, and a cheese sandwich</label><label><input type="radio" name="pl8" value="B"> B coffee with milk, and a chicken sandwich</label><label><input type="radio" name="pl8" value="C"> C coffee with milk, and a cheese sandwich</label></div>
+                    <div class="q-item"><p>4. Who is Jemma?</p><label><input type="radio" name="pl9" value="A"> A the woman's sister</label><label><input type="radio" name="pl9" value="B"> B the woman's daughter</label><label><input type="radio" name="pl9" value="C"> C the woman</label></div>
+                    <div class="q-item"><p>5. What does Milo's father do?</p><label><input type="radio" name="pl10" value="A"> A He's a doctor.</label><label><input type="radio" name="pl10" value="B"> B He's a nurse.</label><label><input type="radio" name="pl10" value="C"> C He's a journalist.</label></div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP1(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-submit" onclick="finalP1()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button></div>
+            </section>
+
+            <section class="test-section" id="p1-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item reg-form-container">
+                    <div class="reg-grid">
+                        <div class="input-group"><label>First Name *</label><input type="text" id="p1FirstName" required></div>
+                        <div class="input-group"><label>Last Name *</label><input type="text" id="p1LastName" required></div>
+                        <div class="input-group"><label>Group / Level *</label><input type="text" id="p1Group" required></div>
+                        <div class="input-group"><label>Phone Number *</label><input type="tel" id="p1Phone" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="form-actions right"><button type="button" class="btn btn-submit btn-large" onclick="submitProgress1()" style="width:100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button></div>
+            </section>
+
+            <section class="test-section" id="p1-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) {
+            window.location.href = 'login.html';
+        }
+        const p1ExamMode = localStorage.getItem('edu_exam_mode_progress1');
+        if (p1ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const p1Sections = ['p1-grammar', 'p1-vocab', 'p1-pron', 'p1-practical', 'p1-reading', 'p1-writing', 'p1-listening', 'p1-details'];
+        const p1Total = p1Sections.length;
+
+        function updateP1Progress(idx) {
+            document.getElementById('progressBar').style.width = ((idx + 1) / p1Total * 100) + '%';
+            document.getElementById('progressText').innerText = `Step ${idx + 1} of ${p1Total}`;
+        }
+
+        function showP1(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(p1Sections[idx]);
+            if (target) target.classList.add('active');
+            updateP1Progress(idx);
+            window.scrollTo(0, 0);
+        }
+
+        function nextP1(current) { showP1(current); }
+        function prevP1(current) { showP1(current - 2); }
+        function finalP1() { showP1(7); }
+
+        async function submitProgress1() {
+            const first = document.getElementById('p1FirstName').value.trim();
+            const last = document.getElementById('p1LastName').value.trim();
+            const group = document.getElementById('p1Group').value.trim();
+            const phone = document.getElementById('p1Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const normalize = s => (s || '').toLowerCase().trim().replace(/[.,?!]/g, '').replace(/\s+/g, ' ');
+
+            const gradingKey = {
+                // Grammar 1
+                pg1:'C', pg2:'A', pg3:'B', pg4:'A', pg5:'B', pg6:'A', pg7:'A', pg8:'C', pg9:'B', pg10:'C', pg11:'C', pg12:'B', pg13:'C', pg14:'C', pg15:'A',
+                // Grammar 2
+                pg2_1: 'Is this your T-shirt?',
+                pg2_2: 'Ellie is Joanna\'s daughter.',
+                pg2_3: 'It\'s a red football shirt.',
+                pg2_4: 'This is a terrible meal.',
+                pg2_5: 'They don\'t work at the weekend.',
+                pg2_6: 'Do you study business at university?',
+                pg2_7: 'Petra never goes to the gym in the morning.',
+                // Grammar 3
+                pg3_1:'No', pg3_2:'They', pg3_3:'this', pg3_4:"It's", pg3_5:'Her', pg3_6:'don\'t', pg3_7:'doesn\'t', pg3_8:'an',
+                // Vocabulary 1
+                pv1:'C', pv2:'C', pv3:'B', pv4:'C', pv5:'B', pv6:'B', pv7:'A', pv8:'B', pv9:'A', pv10:'C', pv11:'A', pv12:'B', pv13:'B', pv14:'B', pv15:'C',
+                // Vocabulary 2
+                pv2_1a: 'get', pv2_1b: 'up', pv2_2: 'shower', pv2_3a: 'go', pv2_3b: 'to', pv2_3c: 'work', pv2_4a: 'go', pv2_4b: 'home',
+                pv2_5: 'girlfriend', pv2_6: 'wife\'s', pv2_7: 'grandparents', pv2_8: 'brothers', pv2_9: 'meat', pv2_10: 'breakfast', pv2_11: 'sugar', pv2_12: 'pasta', pv2_13: 'waiter', pv2_14a: 'taxi', pv2_14b: 'driver', pv2_15: 'office',
+                // Vocabulary 3
+                pv3_1: 'read', pv3_2: 'work', pv3_3: 'live', pv3_4: 'finish', pv3_5: 'have', pv3_6: 'listen', pv3_7: 'do', pv3_8: 'go', pv3_9: 'drink', pv3_10: 'speak',
+                // Pronunciation 1
+                pp1:'work', pp2:'six', pp3:'Russia', pp4:'phones', pp5:'yes', pp6:'fast', pp7:'father', pp8:'orange', pp9:'writes', pp10:'thirty',
+                // Pronunciation 2
+                pps1:'2', pps2:'2', pps3:'1', pps4:'1', pps5:'2', pps6:'1', pps7:'2', pps8:'1', pps9:'2', pps10:'1',
+                // Practical English 1
+                pe1_1: 'e', pe1_2: 'h', pe1_3: 'g', pe1_4: 'i', pe1_5: 'j', pe1_6: 'k', pe1_7: 'f', pe1_8: 'b', pe1_9: 'c', pe1_10: 'd',
+                // Reading 1
+                pr1:'False', pr2:'True', pr3:'False', pr4:'True', pr5:'False', pr6:'False', pr7:'False', pr8:'True', pr9:'True', pr10:'True',
+                // Reading 2
+                pr2_1: ['yoghurt cereal and orange juice', 'yoghurt, cereal and orange juice'],
+                pr2_2: ['reads news on tablet', 'reads news on his tablet', 'he reads the news on his tablet'],
+                pr2_3: ['six o\'clock', 'at six o\'clock'],
+                pr2_4: ['no they don\'t', 'no they do not'],
+                pr2_5: ['no she doesn\'t', 'no she does not'],
+                // Listening 1
+                pl1:'Li Mei', pl2:'Pedro', pl3:'Li Mei', pl4:'Pedro', pl5:'Li Mei',
+                // Listening 2
+                pl6:'A', pl7:'B', pl8:'C', pl9:'B', pl10:'B',
+                // Speaking 3 (Belinda table)
+                ps3_1: 'Belinda Mayer', ps3_2: 'German', ps3_3: '01623 960527', ps3_4: ['doesn\'t work', 'student'], ps3_5: 'Studies at university', ps3_6: 'Gets up at 7:30, has a coffee'
+            };
+
+            let score = 0;
+            let totalPossible = 0;
+
+            Object.keys(gradingKey).forEach(name => {
+                const expected = gradingKey[name];
+                let userVal = '';
+                const radios = document.getElementsByName(name);
+                
+                if (radios.length > 0 && radios[0].type === 'radio') {
+                    const selected = Array.from(radios).find(r => r.checked);
+                    userVal = selected ? selected.value : '';
+                } else {
+                    const el = document.getElementsByName(name)[0];
+                    userVal = el ? el.value : '';
+                }
+
+                totalPossible++;
+                const normalizedUser = normalize(userVal);
+                if (Array.isArray(expected)) {
+                    if (expected.some(e => normalize(e) === normalizedUser)) score++;
+                } else {
+                    if (normalizedUser === normalize(expected)) score++;
+                }
+            });
+
+            function sectionStats(sectionId) {
+                const section = document.getElementById(sectionId);
+                if (!section) return { answered: 0, total: 0, percent: 0 };
+                const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]')).reduce((acc, r) => {
+                    acc.add(r.name);
+                    return acc;
+                }, new Set());
+                const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+                const textInputs = Array.from(section.querySelectorAll('input[type="text"]'));
+                const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+                const textareas = Array.from(section.querySelectorAll('textarea'));
+                const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+                const total = radioGroups.size + textInputs.length + textareas.length;
+                const answered = radioAnswered + textAnswered + taAnswered;
+                return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+            }
+
+            // Scale to 125
+            const finalScore = Math.round((score / totalPossible) * 125);
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Progress Test 1',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                group, phone, timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: finalScore },
+                sectionCompletion: {
+                    grammar: sectionStats('p1-grammar'),
+                    vocabulary: sectionStats('p1-vocab'),
+                    pronunciation: sectionStats('p1-pron'),
+                    practicalEnglish: sectionStats('p1-practical'),
+                    reading: sectionStats('p1-reading'),
+                    writing: sectionStats('p1-writing'),
+                    listening: sectionStats('p1-listening')
+                },
+                rawAnswers: {
+                    writing: document.getElementById('p1Writing').value || ''
+                }
+            };
+
+            const existing = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            existing.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(existing));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('progress1Form').style.display = 'none';
+            const res = document.getElementById('p1-result');
+            res.style.display = 'block';
+            res.classList.add('active');
+            res.querySelector('h2').innerText = `${sub.type} Submitted Successfully!`;
+            res.querySelector('p').innerText = `Congratulations! Your objective score: ${finalScore} / 125. Redirecting to homepage in 5 seconds...`;
+            document.querySelector('.test-progress').style.display = 'none';
+            document.querySelector('.test-header').style.display = 'none';
+            window.scrollTo(0, 0);
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateP1Progress(0);
+            const p = document.getElementById('p1Phone');
+            p.addEventListener('input', function () {
+                if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

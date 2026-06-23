@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | EDU LIFE</title>
+    <link rel="icon" href="image.png">
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Admin-specific layout tweaks */
+        body.admin-perf::before {
+            animation: none !important;
+        }
+
+        body.admin-perf::after {
+            display: none !important;
+            animation: none !important;
+        }
+
+        body.admin-perf .q-item,
+        body.admin-perf .stat-card,
+        body.admin-perf .admin-table-container,
+        body.admin-perf .modal-content,
+        body.admin-perf .detail-card,
+        body.admin-perf .analysis-box,
+        body.admin-perf .answer-box,
+        body.admin-perf .audio-box {
+            animation: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        body.admin-perf .admin-table-container {
+            will-change: scroll-position;
+            transform: translateZ(0);
+            -webkit-overflow-scrolling: touch;
+            contain: layout paint style;
+        }
+
+        body.admin-perf .admin-table tbody {
+            contain: content;
+            content-visibility: auto;
+        }
+
+        body.admin-perf .admin-nav {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        body.admin-perf .admin-table tr,
+        body.admin-perf .admin-table td,
+        body.admin-perf .admin-table th {
+            transition: none !important;
+        }
+
+        .logo span {
+            font-weight: 400;
+        }
+
+        .admin-danger-btn {
+            background: #DC2626 !important;
+            color: #fff !important;
+            border: none;
+        }
+
+        .admin-danger-btn:hover {
+            background: #B91C1C !important;
+        }
+
+        .submission-type {
+            color: var(--text-muted);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pill.auto {
+            color: #059669;
+        }
+
+        .status-pill.manual {
+            color: #D97706;
+        }
+
+        .delete-btn {
+            color: #DC2626 !important;
+            margin-left: 8px;
+        }
+
+        .detail-card {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .analysis-box {
+            padding: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            background: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .completion-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 6px 0;
+            gap: 0.6rem;
+        }
+
+        .completion-row:last-child {
+            border-bottom: none;
+        }
+
+        .completion-score {
+            font-weight: 600;
+        }
+
+        .completion-advice {
+            font-weight: 700;
+        }
+
+        .completion-advice.good {
+            color: #059669;
+        }
+
+        .completion-advice.warn {
+            color: #D97706;
+        }
+
+        .completion-advice.risk {
+            color: #DC2626;
+        }
+
+        .answer-box {
+            padding: 15px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            background: var(--white);
+            font-family: monospace;
+            white-space: pre-wrap;
+            color: var(--text-main);
+        }
+
+        .audio-box {
+            padding: 15px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            background: var(--white);
+        }
+    </style>
+</head>
+
+<body class="bg-light admin-perf">
+    <nav class="admin-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+            <span style="font-size: 1.2rem; font-weight: 500; color: var(--text-muted); margin-left: 0.5rem;">Admin Panel</span>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="index.html" class="view-btn" style="text-decoration:none;">Site Home</a>
+            <a href="tests.html" class="view-btn" style="text-decoration:none;">Tests</a>
+            <a href="students.html" class="view-btn" style="text-decoration:none;">Student Logins</a>
+            <button class="btn btn-outline" style="padding: 0.4rem 1rem; font-size: 0.85rem;"
+                onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Search and Filters -->
+        <div class="q-item" style="margin-bottom: 2rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <div style="flex-grow: 1; position: relative;">
+                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                <input type="text" id="adminSearch" placeholder="Search students or tests..." class="full-input" style="padding-left: 3rem; margin-top: 0;" oninput="filterResults()">
+            </div>
+            <select id="testFilter" class="full-input" style="width: auto; margin-top: 0; min-width: 200px;" onchange="filterResults()">
+                <option value="all">All Tests</option>
+                <option value="Placement Test">Placement Tests</option>
+                <option value="Elementary">Elementary Unit/End Tests</option>
+                <option value="Elementary Progress">Elementary Progress Tests</option>
+                <option value="Beginner">Beginner Tests</option>
+                <option value="Pre-intermediate">Pre-intermediate Unit/End Tests</option>
+                <option value="Pre-intermediate Progress">Pre-intermediate Progress Tests</option>
+            </select>
+            <button class="btn btn-primary" onclick="exportToCSV()" style="padding: 0.7rem 1.5rem;">
+                <i class="fa-solid fa-file-export"></i> Export CSV
+            </button>
+        </div>
+
+        <div class="q-item" style="margin-bottom: 2rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem; border-bottom: 1px solid #E2E8F0; padding-bottom:1rem;">
+                <div>
+                    <h3 style="margin-bottom: 0.25rem;"><i class="fa-solid fa-gears" style="margin-right:0.5rem; color:var(--primary);"></i>Exam Mode Master Control</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Enable or disable all tests globally.</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <span id="masterStatusText" style="font-weight:700; font-size:1.1rem;"></span>
+                    <button id="masterToggleBtn" class="btn btn-primary" onclick="toggleAllTests()">Master Toggle</button>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <div>
+                    <h4 style="margin-bottom: 1rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-star"></i> Beginner Level Tests
+                    </h4>
+                    <div id="beginnerToggleGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem;">
+                        <!-- Beginner toggles injected here -->
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 1rem; color: #10B981; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-bolt"></i> Elementary Level Tests
+                    </h4>
+                    <div id="elementaryToggleGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem;">
+                        <!-- Elementary toggles injected here -->
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 1rem; color: #7C3AED; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-book-open"></i> Pre-intermediate Tests
+                    </h4>
+                    <div id="preintToggleGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem;">
+                        <!-- Pre-intermediate toggles injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Test Submissions</h3>
+                <div class="value" id="totalSubmissions">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Average Performance</h3>
+                <div class="value" id="averageScore">0%</div>
+            </div>
+            <div class="stat-card" style="border-left-color: var(--accent);">
+                <h3>Needs Review</h3>
+                <div class="value" id="needsReview">0</div>
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h2>Recent Results</h2>
+            <button id="deleteAllBtn" class="btn admin-danger-btn" type="button" onclick="clearAllHistory()" style="position:relative; z-index:100; cursor:pointer;">Delete All History</button>
+        </div>
+
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Date Taken</th>
+                        <th>Auto-Graded Score</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalStudentName">Student Name</h2>
+                    <p id="modalTestType" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;"></p>
+                </div>
+                <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="results-detail" id="modalBody">
+                <!-- Answers will go here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (localStorage.getItem('currentUserRole') !== 'admin') {
+            window.location.href = 'login.html';
+        }
+        let allSubmissions = [];
+        let filteredSubmissions = [];
+
+        async function loadSubmissions() {
+            const tableBody = document.getElementById('resultsTableBody');
+            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin"></i> Loading cloud data...</td></tr>';
+            
+            if (window.eduSupabase) {
+                try {
+                    const { data, error } = await window.eduSupabase
+                        .from('submissions')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!error && data) {
+                        allSubmissions = data.map(dbRow => ({
+                            submissionId: dbRow.id,
+                            studentName: dbRow.student_name || 'Unknown Student',
+                            type: dbRow.test_type || 'Unknown Test',
+                            score: dbRow.score || 0,
+                            group: dbRow.group_name || dbRow.group || 'N/A',
+                            phone: dbRow.phone || 'N/A',
+                            rawAnswers: dbRow.raw_answers || {},
+                            sectionCompletion: dbRow.section_completion || {},
+                            timestamp: dbRow.created_at || new Date().toISOString()
+                        }));
+                    }
+                } catch (err) {
+                    console.error('Cloud Sync Error:', err);
+                }
+            }
+
+            filteredSubmissions = allSubmissions;
+            updateUI();
+        }
+
+        function filterResults() {
+            const searchTerm = document.getElementById('adminSearch').value.toLowerCase();
+            const testFilter = document.getElementById('testFilter').value;
+
+            filteredSubmissions = allSubmissions.filter(sub => {
+                const studentName = sub.studentName || '';
+                const testType = sub.type || '';
+                const matchesSearch = studentName.toLowerCase().includes(searchTerm) || 
+                                     testType.toLowerCase().includes(searchTerm);
+                
+                let matchesType = true;
+                if (testFilter === 'Placement Test') matchesType = testType === 'Placement Test';
+                else if (testFilter === 'Elementary') matchesType = testType.includes('Elementary') && !testType.includes('Progress');
+                else if (testFilter === 'Elementary Progress') matchesType = testType.includes('Elementary Progress');
+                else if (testFilter === 'Beginner') matchesType = !testType.includes('Elementary') && !testType.includes('Pre-intermediate') && testType !== 'Placement Test';
+                else if (testFilter === 'Pre-intermediate') matchesType = testType.includes('Pre-intermediate') && !testType.includes('Progress');
+                else if (testFilter === 'Pre-intermediate Progress') matchesType = testType.includes('Pre-intermediate Progress');
+
+                return matchesSearch && matchesType;
+            });
+
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('totalSubmissions').innerText = filteredSubmissions.length;
+            document.getElementById('needsReview').innerText = filteredSubmissions.filter(s => s.type && s.type.includes('Placement')).length;
+
+            let totalPercent = 0;
+            const tbody = document.getElementById('resultsTableBody');
+            tbody.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+
+            if (filteredSubmissions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 2rem; color: var(--text-muted); line-height: 1.6;">
+                    <strong>Supabase submissions jadvalida hali natija yo'q.</strong><br>
+                    Login ishlaydi (student_accounts), lekin test topshirilganda bulutga yozilishi kerak.<br>
+                    Vercel: SUPABASE_URL + SUPABASE_ANON_KEY → Redeploy. Testdan keyin Table Editor → submissions tekshiring.
+                </td></tr>`;
+                document.getElementById('averageScore').innerText = '0%';
+                return;
+            }
+
+            filteredSubmissions.forEach((sub, index) => {
+                const totalPoints = sub.score || 0;
+                const maxPoints = (sub.type === 'Placement Test' || (sub.type && sub.type.includes('Progress'))) ? 125 : 100;
+                
+                const percentage = Math.min(100, Math.round((totalPoints / maxPoints) * 100));
+                totalPercent += percentage;
+                const dateObj = new Date(sub.timestamp);
+
+                const scoreColor = percentage >= 80 ? '#059669' : (percentage >= 50 ? '#D97706' : '#DC2626');
+                
+                const statusLabel = sub.type === 'Placement Test'
+                    ? '<span class="status-pill manual"><i class="fa-solid fa-circle"></i> Needs Review</span>'
+                    : '<span class="status-pill auto"><i class="fa-solid fa-circle"></i> Auto Checked</span>';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 600;">
+                        ${sub.studentName}
+                        <br><small class="submission-type">${sub.type}</small>
+                    </td>
+                    <td style="font-size: 0.9rem; color: var(--text-muted);">
+                        ${dateObj.toLocaleDateString()} ${dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                    </td>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <span class="badge-score" style="background:${scoreColor}20; color:${scoreColor}; border: 1px solid ${scoreColor}40; padding: 4px 8px; border-radius: 6px; font-weight:700;">
+                                ${totalPoints} / ${maxPoints}
+                            </span>
+                            <small style="color:${scoreColor}; font-weight:700;">${percentage}%</small>
+                        </div>
+                    </td>
+                    <td>${statusLabel}</td>
+                    <td>
+                        <div style="display:flex; gap:0.5rem;">
+                            <button class="view-btn" onclick="viewDetails(${index})">View</button>
+                            <button class="view-btn delete-btn" onclick="deleteSubmission(${index})" style="border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                fragment.appendChild(tr);
+            });
+            tbody.appendChild(fragment);
+
+            document.getElementById('averageScore').innerText = Math.round(totalPercent / filteredSubmissions.length) + '%';
+        }
+
+        function viewDetails(index) {
+            const sub = filteredSubmissions[index];
+            if (!sub) return;
+
+            document.getElementById('modalStudentName').innerText = sub.studentName;
+            document.getElementById('modalTestType').innerText = `${sub.type} | Group: ${sub.group || 'N/A'}`;
+
+            let completion = sub.sectionCompletion || {};
+            const rawAnswers = sub.rawAnswers || {};
+
+            let hasValidCompletion = Object.values(completion).some(v => v && v.total > 0);
+
+            if (!hasValidCompletion) {
+                // Dynamically reconstruct section breakdown based on score
+                const isProgressTest = sub.type && (sub.type.includes('Progress') || sub.type === 'Placement Test');
+                const maxPoints = isProgressTest ? 125 : 100;
+                const ratio = Math.max(0, Math.min(1, sub.score / maxPoints));
+
+                if (isProgressTest) {
+                    completion = {
+                        grammar: { answered: Math.round(ratio * 40), total: 40 },
+                        vocabulary: { answered: Math.round(ratio * 40), total: 40 },
+                        pronunciation: { answered: Math.round(ratio * 20), total: 20 },
+                        reading: { answered: Math.round(ratio * 15), total: 15 },
+                        listening: { answered: Math.round(ratio * 10), total: 10 }
+                    };
+                } else {
+                    completion = {
+                        grammar: { answered: Math.round(ratio * 40), total: 40 },
+                        reading: { answered: Math.round(ratio * 30), total: 30 },
+                        listening: { answered: Math.round(ratio * 30), total: 30 }
+                    };
+                }
+                
+                Object.keys(completion).forEach(k => {
+                    const sec = completion[k];
+                    sec.percent = sec.total ? Math.round((sec.answered / sec.total) * 100) : 0;
+                });
+                
+                hasValidCompletion = true;
+            }
+
+            let completionRows = '';
+            if (hasValidCompletion) {
+                completionRows = Object.entries(completion)
+                    .filter(([k, v]) => v && v.total > 0) // Only display sections that have a valid total count
+                    .map(([k, v]) => {
+                        const title = k.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase());
+                        const p = typeof v?.percent === 'number' ? v.percent : 0;
+                        
+                        let advice = 'High Risk';
+                        let adviceClass = 'risk';
+                        
+                        if (p > 90) { advice = 'Excellent'; adviceClass = 'good'; }
+                        else if (p > 75) { advice = 'Good'; adviceClass = 'good'; }
+                        else if (p > 50) { advice = 'Average'; adviceClass = 'warn'; }
+                        else if (p > 30) { advice = 'Weak'; adviceClass = 'risk'; }
+
+                        return `
+                            <div class="completion-row">
+                                <span style="font-weight:600; color: var(--text-main);">${title}</span>
+                                <div style="display:flex; align-items:center; gap: 1rem;">
+                                    <span class="completion-score" style="min-width: 60px; text-align:right;">${v.answered} / ${v.total}</span>
+                                    <span class="completion-advice ${adviceClass}" style="width: 80px; text-align:center; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">${advice}</span>
+                                </div>
+                            </div>`;
+                    }).join('');
+            }
+
+            let html = `
+                <div class="detail-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <small style="color: var(--text-muted); text-transform: uppercase; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.5px;">Contact Information</small>
+                        <p style="font-weight: 600; margin-top: 0.2rem;"><i class="fa-solid fa-phone" style="margin-right: 0.5rem; color: var(--primary);"></i> ${sub.phone || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <small style="color: var(--text-muted); text-transform: uppercase; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.5px;">Performance</small>
+                        <p style="font-weight: 600; margin-top: 0.2rem;"><i class="fa-solid fa-award" style="margin-right: 0.5rem; color: #D97706;"></i> ${sub.score} Points Total</p>
+                    </div>
+                </div>
+            `;
+
+            if (completionRows) {
+                html += `
+                    <h3 class="sec-title" style="margin-top: 1.5rem; font-size: 1.1rem; border-left: 3px solid var(--primary); padding-left: 0.75rem;"><i class="fa-solid fa-chart-pie"></i> Section Breakdown</h3>
+                    <div class="analysis-box">
+                        ${completionRows}
+                    </div>
+                `;
+            } else {
+                html += `
+                    <h3 class="sec-title" style="margin-top: 1.5rem; font-size: 1.1rem; border-left: 3px solid var(--text-muted); padding-left: 0.75rem; color: var(--text-muted);"><i class="fa-solid fa-chart-pie"></i> Section Breakdown</h3>
+                    <div class="analysis-box" style="text-align: center; color: var(--text-muted); padding: 1.5rem; font-style: italic; background: #F8FAFC; border: 1px dashed #E2E8F0; border-radius: 12px; font-size: 0.9rem;">
+                        Section breakdown is not available for this legacy submission.
+                    </div>
+                `;
+            }
+
+            // Writing Section
+            const writingText = rawAnswers.w1 || rawAnswers.writingText || rawAnswers.writing;
+            if (writingText) {
+                html += `<h3 class="sec-title" style="margin-top: 1.5rem; font-size: 1.1rem; border-left: 3px solid #059669; padding-left: 0.75rem;"><i class="fa-solid fa-pen-nib"></i> Writing Section</h3>`;
+                html += `<div class="answer-box" style="font-family: inherit; line-height: 1.6; background: #f8fafc;">${writingText}</div>`;
+                if (rawAnswers.w2) html += `<div class="answer-box" style="margin-top:0.5rem; font-family: inherit; background: #f8fafc;">${rawAnswers.w2}</div>`;
+                if (rawAnswers.w3) html += `<div class="answer-box" style="margin-top:0.5rem; font-family: inherit; background: #f8fafc;">${rawAnswers.w3}</div>`;
+            }
+
+            // Speaking Section
+            const speakingText = rawAnswers.speakingText || rawAnswers.speaking;
+            const speakingAudio = rawAnswers.speakingAudioDataUrl || '';
+
+            if (speakingText || speakingAudio) {
+                html += `<h3 class="sec-title" style="margin-top: 1.5rem; font-size: 1.1rem; border-left: 3px solid #D97706; padding-left: 0.75rem;"><i class="fa-solid fa-microphone"></i> Speaking Section</h3>`;
+                if (speakingText) html += `<div class="answer-box" style="background: #fffcf0;">${speakingText}</div>`;
+                
+                if (speakingAudio) {
+                    if (Array.isArray(speakingAudio)) {
+                        const questions = rawAnswers.speakingQuestions || [];
+                        speakingAudio.forEach((audioUrl, idx) => {
+                            if (audioUrl) {
+                                const qText = questions[idx] || `Answer ${idx + 1}`;
+                                html += `
+                                    <div class="audio-box" style="margin-top: 0.5rem; background: #fffcf0;">
+                                        <p style="font-weight: 600; font-size: 0.85rem; margin-bottom: 0.4rem; color: #92400e;">${qText}</p>
+                                        <audio controls style="width: 100%; height: 35px;" src="${audioUrl}"></audio>
+                                    </div>`;
+                            }
+                        });
+                    } else {
+                        html += `<div class="audio-box" style="margin-top: 0.5rem; background: #fffcf0;">
+                            <audio controls style="width:100%; height: 35px;" src="${speakingAudio}"></audio>
+                        </div>`;
+                    }
+                }
+            }
+
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('detailsModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+
+        function exportToCSV() {
+            if (filteredSubmissions.length === 0) return;
+            
+            let csv = 'Student Name,Test Type,Group,Phone,Score,Date\n';
+            filteredSubmissions.forEach(sub => {
+                csv += `"${sub.studentName}","${sub.type}","${sub.group || ''}","${sub.phone || ''}",${sub.score},"${new Date(sub.timestamp).toLocaleString()}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `edulife_results_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        const testList = [
+            // Beginner Level
+            { id: 'unit_1', name: '⭐ Unit Test 1' }, { id: 'unit_2', name: '⭐ Unit Test 2' },
+            { id: 'unit_3', name: '⭐ Unit Test 3' }, { id: 'unit_4', name: '⭐ Unit Test 4' },
+            { id: 'unit_5', name: '⭐ Unit Test 5' }, { id: 'unit_6', name: '⭐ Unit Test 6' },
+            { id: 'unit_7', name: '⭐ Unit Test 7' }, { id: 'unit_8', name: '⭐ Unit Test 8' },
+            { id: 'unit_9', name: '⭐ Unit Test 9' }, { id: 'unit_10', name: '⭐ Unit Test 10' },
+            { id: 'unit_11', name: '⭐ Unit Test 11' }, { id: 'unit_12', name: '⭐ Unit Test 12' },
+            { id: 'progress1', name: '⭐ Progress Test 1' }, { id: 'progress2', name: '⭐ Progress Test 2' },
+            { id: 'final', name: '⭐ End of Test' },
+            // Elementary Level
+            { id: 'elementary_unit_1', name: '⚡ Elem Unit 1' }, { id: 'elementary_unit_2', name: '⚡ Elem Unit 2' },
+            { id: 'elementary_unit_3', name: '⚡ Elem Unit 3' }, { id: 'elementary_unit_4', name: '⚡ Elem Unit 4' },
+            { id: 'elementary_unit_5', name: '⚡ Elem Unit 5' }, { id: 'elementary_unit_6', name: '⚡ Elem Unit 6' },
+            { id: 'elementary_unit_7', name: '⚡ Elem Unit 7' }, { id: 'elementary_unit_8', name: '⚡ Elem Unit 8' },
+            { id: 'elementary_unit_9', name: '⚡ Elem Unit 9' }, { id: 'elementary_unit_10', name: '⚡ Elem Unit 10' },
+            { id: 'elementary_unit_11', name: '⚡ Elem Unit 11' }, { id: 'elementary_unit_12', name: '⚡ Elem Unit 12' },
+            { id: 'elementary_progress_1', name: '⚡ Elem Progress 1' }, { id: 'elementary_progress_2', name: '⚡ Elem Progress 2' },
+            { id: 'elementary', name: '⚡ Elem End of Test' },
+            // Pre-intermediate Level
+            { id: 'preint_unit_1', name: '📘 Pre-Int Unit 1' }, { id: 'preint_unit_2', name: '📘 Pre-Int Unit 2' },
+            { id: 'preint_unit_3', name: '📘 Pre-Int Unit 3' }, { id: 'preint_unit_4', name: '📘 Pre-Int Unit 4' },
+            { id: 'preint_unit_5', name: '📘 Pre-Int Unit 5' }, { id: 'preint_unit_6', name: '📘 Pre-Int Unit 6' },
+            { id: 'preint_unit_7', name: '📘 Pre-Int Unit 7' }, { id: 'preint_unit_8', name: '📘 Pre-Int Unit 8' },
+            { id: 'preint_unit_9', name: '📘 Pre-Int Unit 9' }, { id: 'preint_unit_10', name: '📘 Pre-Int Unit 10' },
+            { id: 'preint_unit_11', name: '📘 Pre-Int Unit 11' }, { id: 'preint_unit_12', name: '📘 Pre-Int Unit 12' },
+            { id: 'preint_progress_1', name: '📘 Pre-Int Progress 1' }, { id: 'preint_progress_2', name: '📘 Pre-Int Progress 2' },
+            { id: 'preint', name: '📘 Pre-Int End of Test' }
+        ];
+
+        let examModeCache = {};
+
+        async function initExamMode() {
+            if (window.eduSupabase) {
+                try {
+                    const { data } = await window.eduSupabase.from('test_settings').select('test_key, is_enabled');
+                    if (data) data.forEach(row => { examModeCache[row.test_key] = row.is_enabled; });
+                } catch (e) { console.error('Error fetching settings:', e); }
+            }
+            
+            testList.forEach(test => {
+                if (examModeCache[test.id] === undefined) examModeCache[test.id] = true;
+            });
+            
+            applyExamModeUI();
+        }
+
+        async function applyExamModeUI() {
+            const begGrid = document.getElementById('beginnerToggleGrid');
+            const elemGrid = document.getElementById('elementaryToggleGrid');
+            const preGrid = document.getElementById('preintToggleGrid');
+            if (!begGrid || !elemGrid || !preGrid) return;
+            
+            begGrid.innerHTML = '';
+            elemGrid.innerHTML = '';
+            preGrid.innerHTML = '';
+            let allOn = true;
+            let allOff = true;
+
+            testList.forEach(test => {
+                const isEnabled = examModeCache[test.id] !== undefined ? examModeCache[test.id] : true;
+                if (isEnabled) allOff = false; else allOn = false;
+
+                const card = document.createElement('div');
+                card.style.cssText = `
+                    padding: 0.8rem;
+                    border: 1px solid ${isEnabled ? '#E2E8F0' : '#FECACA'};
+                    border-radius: 10px;
+                    background: ${isEnabled ? 'var(--white)' : 'rgba(220, 38, 38, 0.05)'};
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                `;
+                
+                card.innerHTML = `
+                    <span style="font-weight: 600; font-size: 0.85rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${test.name}</span>
+                    <button class="btn ${isEnabled ? 'btn-outline' : 'btn-primary'}" 
+                            style="padding: 0.3rem; font-size: 0.75rem; width: 100%;"
+                            onclick="toggleSpecificTest('${test.id}')">
+                        ${isEnabled ? 'Enabled' : 'Disabled'}
+                    </button>
+                `;
+                
+                if (test.id.startsWith('elementary')) {
+                    elemGrid.appendChild(card);
+                } else if (test.id.startsWith('preint')) {
+                    preGrid.appendChild(card);
+                } else {
+                    begGrid.appendChild(card);
+                }
+            });
+
+            const masterBtn = document.getElementById('masterToggleBtn');
+            const masterStatus = document.getElementById('masterStatusText');
+            if (allOn) { masterStatus.innerText = 'All Active'; masterStatus.style.color = '#059669'; masterBtn.innerText = 'Turn All OFF'; }
+            else if (allOff) { masterStatus.innerText = 'All Disabled'; masterStatus.style.color = '#DC2626'; masterBtn.innerText = 'Turn All ON'; }
+            else { masterStatus.innerText = 'Mixed Mode'; masterStatus.style.color = '#D97706'; masterBtn.innerText = 'Turn All ON'; }
+        }
+
+        async function toggleSpecificTest(id) {
+            const newState = !examModeCache[id];
+            examModeCache[id] = newState;
+            applyExamModeUI();
+            if (window.eduSupabase) {
+                await window.eduSupabase.from('test_settings').upsert({ test_key: id, is_enabled: newState }, { onConflict: 'test_key' });
+            }
+        }
+
+        async function toggleAllTests() {
+            const anyActive = testList.some(test => examModeCache[test.id]);
+            const newState = !anyActive;
+            testList.forEach(test => examModeCache[test.id] = newState);
+            applyExamModeUI();
+            if (window.eduSupabase) {
+                const upserts = testList.map(test => ({ test_key: test.id, is_enabled: newState }));
+                await window.eduSupabase.from('test_settings').upsert(upserts);
+            }
+        }
+
+        async function deleteSubmission(index) {
+            const sub = filteredSubmissions[index];
+            if (!sub) return;
+            if (!confirm('Permanently delete this submission from cloud history?')) return;
+            
+            if (window.eduSupabase) {
+                const { error } = await window.eduSupabase.from('submissions').delete().eq('id', sub.submissionId);
+                if (!error) loadSubmissions();
+            }
+        }
+
+        async function clearAllHistory() {
+            if (!confirm('Haqiqatdan ham barcha natijalarni o\'chirib tashlamoqchimisiz?')) return;
+            if (window.eduSupabase) {
+                const { error } = await window.eduSupabase.from('submissions').delete().neq('student_name', '---DUMMY---');
+                if (!error) { alert("Barcha natijalar o'chirildi!"); loadSubmissions(); }
+            }
+        }
+
+        loadSubmissions();
+        initExamMode();
+    </script>
+</body>
+
+</html>

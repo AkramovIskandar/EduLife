@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 6 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 992px) { 
+            .sheet-grid { grid-template-columns: 1fr; } 
+            .reading-layout { grid-template-columns:1fr; } 
+        }
+        body.dark-theme .table-custom th,
+        body.dark-theme .table-custom td {
+            border-color: #334155;
+            color: #cbd5e1;
+        }
+
+        body.dark-theme .table-custom th {
+            background: #1e293b;
+            color: var(--white);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 6</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit6Form">
+            <!-- PART 1: Grammar, Vocabulary, Pronunciation -->
+            <section class="test-section active" id="u6-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>GRAMMAR</h3>
+                            <p class="instruction">1 Read about Pavel's activities. Complete the sentences with <em>always, usually, sometimes,</em> or <em>never</em>.</p>
+                            <div class="q-item">
+                                <table class="table-custom">
+                                    <tr><th></th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
+                                    <tr><td>eat fast food</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                                    <tr><td>watch TV</td><td></td><td></td><td></td><td></td><td></td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td></tr>
+                                    <tr><td>drink coffee</td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td></tr>
+                                    <tr><td>work late</td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td><td><span class="tick-icon">✓</span></td><td></td><td></td><td></td></tr>
+                                </table>
+                                <p>1 Pavel <input type="text" name="u6g1_1" class="small-input"> eats fast food.</p>
+                                <p>2 Pavel <input type="text" name="u6g1_2" class="small-input"> watches TV.</p>
+                                <p>3 Pavel <input type="text" name="u6g1_3" class="small-input"> drinks coffee.</p>
+                                <p>4 Pavel <input type="text" name="u6g1_4" class="small-input"> works late.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Tick (✔) the correct word.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <label><input type="radio" checked disabled> Does</label> / <label><input type="radio" disabled> Do</label> Mike work on Saturday?</p>
+                                <p>1 What <label><input type="radio" name="u6g1" value="does"> does</label> / <label><input type="radio" name="u6g1" value="do"> do</label> your wife do?</p>
+                                <p>2 They <label><input type="radio" name="u6g2" value="don't"> don't</label> / <label><input type="radio" name="u6g2" value="doesn't"> doesn't</label> work late every evening.</p>
+                                <p>3 My son <label><input type="radio" name="u6g3" value="go"> go</label> / <label><input type="radio" name="u6g3" value="goes"> goes</label> to university every day.</p>
+                                <p>4 Martina and her husband <label><input type="radio" name="u6g4" value="speak"> speak</label> / <label><input type="radio" name="u6g4" value="speaks"> speaks</label> French, English, and Italian.</p>
+                                <p>5 José and Maria <label><input type="radio" name="u6g5" value="watch"> watch</label> / <label><input type="radio" name="u6g5" value="watches"> watches</label> TV in the evening.</p>
+                                <p>6 Amy <label><input type="radio" name="u6g6" value="finish"> finish</label> / <label><input type="radio" name="u6g6" value="finishes"> finishes</label> work at 5.00.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>VOCABULARY</h3>
+                            <p class="instruction">3 Match the places in the box with the jobs.</p>
+                            <div class="word-bank">office, hospital, factory, street, restaurant, school</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> factory worker - <u>factory</u></p>
+                                <p>1 waiter <input type="text" name="u6v3_1" class="small-input"></p>
+                                <p>2 police officer <input type="text" name="u6v3_2" class="small-input"></p>
+                                <p>3 teacher <input type="text" name="u6v3_3" class="small-input"></p>
+                                <p>4 receptionist <input type="text" name="u6v3_4" class="small-input"></p>
+                                <p>5 doctor <input type="text" name="u6v3_5" class="small-input"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">4 Complete the sentences about Sara with the correct form of the verbs in the box.</p>
+                            <div class="word-bank">have, watch, finish, go, work, make</div>
+                            <div class="q-item">
+                                <p>Sara <u>works</u> in an office. She always <sup>1</sup><input type="text" name="u6v4_1" class="small-input"> a shower in the morning. She <sup>2</sup><input type="text" name="u6v4_2" class="small-input"> to work by bus. She starts work at 9.00 in the morning and <sup>3</sup><input type="text" name="u6v4_3" class="small-input"> at 4.00 in the afternoon. Sara <sup>4</sup><input type="text" name="u6v4_4" class="small-input"> a salad for dinner. At night, Sara <sup>5</sup><input type="text" name="u6v4_5" class="small-input"> TV.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRONUNCIATION</h3>
+                            <p class="instruction">5 Which is the stressed syllable? Tick (✔) 1, 2, 3, or 4.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> tea|cher <strong>1</strong> ✓</p>
+                                <p>1 hos|pi|tal <label><input type="radio" name="u6p1" value="1"> 1</label> <label><input type="radio" name="u6p1" value="2"> 2</label> <label><input type="radio" name="u6p1" value="3"> 3</label></p>
+                                <p>2 a|ssis|tant <label><input type="radio" name="u6p2" value="1"> 1</label> <label><input type="radio" name="u6p2" value="2"> 2</label> <label><input type="radio" name="u6p2" value="3"> 3</label></p>
+                                <p>3 jour|na|list <label><input type="radio" name="u6p3" value="1"> 1</label> <label><input type="radio" name="u6p3" value="2"> 2</label> <label><input type="radio" name="u6p3" value="3"> 3</label></p>
+                                <p>4 res|tau|rant <label><input type="radio" name="u6p4" value="1"> 1</label> <label><input type="radio" name="u6p4" value="2"> 2</label> <label><input type="radio" name="u6p4" value="3"> 3</label></p>
+                                <p>5 wai|ter <label><input type="radio" name="u6p5" value="1"> 1</label> <label><input type="radio" name="u6p5" value="2"> 2</label></p>
+                                <p>6 re|cep|tion|ist <label><input type="radio" name="u6p6" value="1"> 1</label> <label><input type="radio" name="u6p6" value="2"> 2</label> <label><input type="radio" name="u6p6" value="3"> 3</label> <label><input type="radio" name="u6p6" value="4"> 4</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">6 Tick (✔) the word in each group that has a different sound.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <label><input type="radio" disabled> does</label> &nbsp; <label><input type="radio" disabled> goes</label> &nbsp; <label><input type="radio" checked disabled> teaches</label> &nbsp; <label><input type="radio" disabled> lives</label></p>
+                                <p>1 <label><input type="radio" name="u6p7" value="takes"> takes</label> &nbsp; <label><input type="radio" name="u6p7" value="writes"> writes</label> &nbsp; <label><input type="radio" name="u6p7" value="does"> does</label> &nbsp; <label><input type="radio" name="u6p7" value="likes"> likes</label></p>
+                                <p>2 <label><input type="radio" name="u6p8" value="usually"> usually</label> &nbsp; <label><input type="radio" name="u6p8" value="yellow"> yellow</label> &nbsp; <label><input type="radio" name="u6p8" value="beautiful"> beautiful</label> &nbsp; <label><input type="radio" name="u6p8" value="music"> music</label></p>
+                                <p>3 <label><input type="radio" name="u6p9" value="finishes"> finishes</label> &nbsp; <label><input type="radio" name="u6p9" value="watches"> watches</label> &nbsp; <label><input type="radio" name="u6p9" value="teaches"> teaches</label> &nbsp; <label><input type="radio" name="u6p9" value="likes"> likes</label></p>
+                                <p>4 <label><input type="radio" name="u6p10" value="beautiful"> beautiful</label> &nbsp; <label><input type="radio" name="u6p10" value="student"> student</label> &nbsp; <label><input type="radio" name="u6p10" value="young"> young</label> &nbsp; <label><input type="radio" name="u6p10" value="usually"> usually</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU6(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 2: Reading -->
+            <section class="test-section" id="u6-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Read the text. Complete the sentences with the correct name.</p>
+                        <div class="reading-panel">
+                            <p><strong>The two Sams</strong></p>
+                            <p>Sam Thurton is 27 and he lives in Sydney, Australia. He's from England. He's married and has one daughter. His wife's name is Ellie and she is 25. Their daughter, Megan, is two years old. Sam works as a taxi driver and his wife is a teacher in a school.</p>
+                            <p>Sam works at night. He starts work at 9 p.m. and he usually finishes work at 6 o'clock in the morning. When he gets home, he always has breakfast with his family. He never watches TV, but he sometimes likes to listen to music on the radio. Sam doesn't work at the weekend. He relaxes at home with his family.</p>
+                            <p>Sam Chen is a student and she's 21. She lives in China. She isn't married and she lives with her parents in a small flat. Sam usually gets up at half past six in the morning and she walks to the gym. Then, at 8 o'clock she goes to university. She studies business at university and she wants to work in a bank when she finishes her studies. In the evening, Sam does her homework and makes dinner.</p>
+                            <p>Sam speaks good English, but her parents don't speak English. Her parents have a restaurant and Sam sometimes works there at the weekend.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <u>Sam Thurton</u> lives in Sydney.</p>
+                                <p>1 <input type="text" name="u6r1_1" class="small-input"> is Sam's wife.</p>
+                                <p>2 <input type="text" name="u6r1_2" class="small-input"> is a student.</p>
+                                <p>3 <input type="text" name="u6r1_3" class="small-input"> works at night.</p>
+                                <p>4 <input type="text" name="u6r1_4" class="small-input"> lives in China.</p>
+                                <p>5 <input type="text" name="u6r1_5" class="small-input"> is Sam's daughter.</p>
+                                <p>6 <input type="text" name="u6r1_6" class="small-input"> doesn't work at the weekend.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Read the text again. Tick (✔) the correct answers.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> How old is Sam Thurton?<br><label><input type="radio" disabled> A 21</label> &nbsp; <label><input type="radio" disabled> B 25</label> &nbsp; <label><input type="radio" checked disabled> C 27</label></p>
+                                <p>1 What does Sam Thurton do?<br><label><input type="radio" name="u6r1" value="A"> A student</label> &nbsp; <label><input type="radio" name="u6r1" value="B"> B taxi driver</label> &nbsp; <label><input type="radio" name="u6r1" value="C"> C teacher</label></p>
+                                <p>2 How many children do Sam and Ellie have?<br><label><input type="radio" name="u6r2" value="A"> A one</label> &nbsp; <label><input type="radio" name="u6r2" value="B"> B two</label> &nbsp; <label><input type="radio" name="u6r2" value="C"> C three</label></p>
+                                <p>3 What does Sam Thurton's wife do?<br><label><input type="radio" name="u6r3" value="A"> A business woman</label> &nbsp; <label><input type="radio" name="u6r3" value="B"> B student</label> &nbsp; <label><input type="radio" name="u6r3" value="C"> C teacher</label></p>
+                                <p>4 What time does he start work?<br><label><input type="radio" name="u6r4" value="A"> A 6 o'clock in the morning</label> &nbsp; <label><input type="radio" name="u6r4" value="B"> B 8 o'clock in the morning</label> &nbsp; <label><input type="radio" name="u6r4" value="C"> C 9 o'clock in the evening</label></p>
+                                <p>5 What does Sam Thurton always do in the morning?<br><label><input type="radio" name="u6r5" value="A"> A has breakfast with his family</label> &nbsp; <label><input type="radio" name="u6r5" value="B"> B listens to the radio</label> &nbsp; <label><input type="radio" name="u6r5" value="C"> C watches TV</label></p>
+                                <p>6 What time does Sam Chen get up?<br><label><input type="radio" name="u6r6" value="A"> A 6 o'clock</label> &nbsp; <label><input type="radio" name="u6r6" value="B"> B 6:30</label> &nbsp; <label><input type="radio" name="u6r6" value="C"> C 8 o'clock</label></p>
+                                <p>7 What does Sam Chen usually do in the morning?<br><label><input type="radio" name="u6r7" value="A"> A works in a restaurant</label> &nbsp; <label><input type="radio" name="u6r7" value="B"> B studies English</label> &nbsp; <label><input type="radio" name="u6r7" value="C"> C goes to the gym</label></p>
+                                <p>8 What does Sam Chen study at university?<br><label><input type="radio" name="u6r8" value="A"> A business</label> &nbsp; <label><input type="radio" name="u6r8" value="B"> B English</label> &nbsp; <label><input type="radio" name="u6r8" value="C"> C teaching</label></p>
+                                <p>9 Where does she want to work?<br><label><input type="radio" name="u6r9" value="A"> A in a bank</label> &nbsp; <label><input type="radio" name="u6r9" value="B"> B in a school</label> &nbsp; <label><input type="radio" name="u6r9" value="C"> C in a restaurant</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU6(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU6(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 3: Writing -->
+            <section class="test-section" id="u6-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="question-block">
+                    <p class="instruction">Answer the questionnaire about a woman you know - a family member or friend.</p>
+                    <div class="q-item">
+                        <p style="font-weight:bold; font-size: 1.1rem; margin-top: 10px;">QUESTIONNAIRE</p>
+                        
+                        <p style="font-weight:bold; margin-top:15px">Work</p>
+                        <p>Where does she work? <input type="text" class="full-input"></p>
+                        <p>What does she do? <input type="text" class="full-input"></p>
+                        <p>What time does she start work? <input type="text" class="full-input"></p>
+                        <p>What time does she finish work? <input type="text" class="full-input"></p>
+                        <p>Does she like her job? <input type="text" class="full-input"></p>
+                        
+                        <p style="font-weight:bold; margin-top:20px">Home</p>
+                        <p>Where does she live? <input type="text" class="full-input"></p>
+                        <p>Who does she live with? <input type="text" class="full-input"></p>
+                        <p>What does she do in the evening? <input type="text" class="full-input"></p>
+                        <p>What does she do at the weekend? <input type="text" class="full-input"></p>
+                        <p>What does she usually watch on TV? <input type="text" class="full-input"></p>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU6(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU6(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 4: Listening -->
+            <section class="test-section" id="u6-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 6/ef5e_beginner_test_item_ 011.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">1 Listen to an interview with Ana-Maria about her job and daily routine. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 Ana-Maria works on TV.<br><label><input type="radio" name="u6l1" value="True"> True</label> &nbsp; <label><input type="radio" name="u6l1" value="False"> False</label></p>
+                                <p>2 She usually gets up at six o'clock in the morning.<br><label><input type="radio" name="u6l2" value="True"> True</label> &nbsp; <label><input type="radio" name="u6l2" value="False"> False</label></p>
+                                <p>3 She always walks to work.<br><label><input type="radio" name="u6l3" value="True"> True</label> &nbsp; <label><input type="radio" name="u6l3" value="False"> False</label></p>
+                                <p>4 She always works at the weekend.<br><label><input type="radio" name="u6l4" value="True"> True</label> &nbsp; <label><input type="radio" name="u6l4" value="False"> False</label></p>
+                                <p>5 After work she usually goes to the gym.<br><label><input type="radio" name="u6l5" value="True"> True</label> &nbsp; <label><input type="radio" name="u6l5" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 6/ef5e_beginner_test_item_ 012.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">2 Listen to five conversations and answer the questions. Tick (✔) the correct answer.</p>
+                            <div class="q-item">
+                                <p>1 What does the woman have for lunch?<br>
+                                    <label><input type="radio" name="u6l6" value="A"> A A sandwich.</label> &nbsp; <label><input type="radio" name="u6l6" value="B"> B A salad.</label> &nbsp; <label><input type="radio" name="u6l6" value="C"> C Fruit.</label>
+                                </p>
+                                <p>2 Where does Emily's husband work?<br>
+                                    <label><input type="radio" name="u6l7" value="A"> A At home.</label> &nbsp; <label><input type="radio" name="u6l7" value="B"> B In a school.</label> &nbsp; <label><input type="radio" name="u6l7" value="C"> C At the university.</label>
+                                </p>
+                                <p>3 What time do Alex and Elmira go to the cinema?<br>
+                                    <label><input type="radio" name="u6l8" value="A"> A Half past four.</label> &nbsp; <label><input type="radio" name="u6l8" value="B"> B Five o'clock.</label> &nbsp; <label><input type="radio" name="u6l8" value="C"> C Six o'clock.</label>
+                                </p>
+                                <p>4 What time is the tour today?<br>
+                                    <label><input type="radio" name="u6l9" value="A"> A Ten o'clock.</label> &nbsp; <label><input type="radio" name="u6l9" value="B"> B Half past one.</label> &nbsp; <label><input type="radio" name="u6l9" value="C"> C Three o'clock.</label>
+                                </p>
+                                <p>5 How does the man usually go to work?<br>
+                                    <label><input type="radio" name="u6l10" value="A"> A He walks.</label> &nbsp; <label><input type="radio" name="u6l10" value="B"> B By train.</label> &nbsp; <label><input type="radio" name="u6l10" value="C"> C By car.</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU6(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU6()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <!-- Final Step: Details -->
+            <section class="test-section" id="u6-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                
+                <div class="question-block">
+                    <div class="q-item" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">First Name *</label>
+                            <input type="text" id="u6First" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Last Name *</label>
+                            <input type="text" id="u6Last" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Group / Level *</label>
+                            <input type="text" id="u6Group" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Phone Number *</label>
+                            <input type="tel" id="u6Phone" class="full-input" value="+998 " style="margin-bottom: 0;" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit6()" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u6-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u6ExamMode = localStorage.getItem('edu_exam_mode_unit6');
+        if (u6ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u6Sections = ['u6-part1', 'u6-reading', 'u6-writing', 'u6-listening', 'u6-details'];
+        const u6Total = u6Sections.length;
+
+        function updateU6(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u6Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u6Total}`;
+        }
+
+        function showU6(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u6Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU6(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU6(current) { showU6(current); }
+        function prevU6(current) { showU6(current - 2); }
+        function finalU6() { showU6(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]:not([disabled])')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]:not([disabled])'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]:not([disabled])'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit6() {
+            const first = document.getElementById('u6First').value.trim();
+            const last = document.getElementById('u6Last').value.trim();
+            const group = document.getElementById('u6Group').value.trim();
+            const phone = document.getElementById('u6Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1 (Pavel)
+                u6g1_1: 'never', u6g1_2: 'sometimes', u6g1_3: 'always', u6g1_4: 'usually',
+                // Grammar 2
+                u6g1: 'does', u6g2: 'don\'t', u6g3: 'goes', u6g4: 'speak', u6g5: 'watch', u6g6: 'finishes',
+                // Vocabulary 3
+                u6v3_1: 'restaurant', u6v3_2: 'street', u6v3_3: 'school', u6v3_4: 'office', u6v3_5: 'hospital',
+                // Vocabulary 4 (Sara)
+                u6v4_1: 'has', u6v4_2: 'goes', u6v4_3: 'finishes', u6v4_4: 'makes', u6v4_5: 'watches',
+                // Pronunciation 5
+                u6p1: '1', u6p2: '2', u6p3: '1', u6p4: '1', u6p5: '1', u6p6: '2',
+                // Pronunciation 6
+                u6p7: 'does', u6p8: 'yellow', u6p9: 'likes', u6p10: 'young',
+                // Reading 1
+                u6r1_1: 'Ellie', u6r1_2: ['Sam Chen', 'Sam'], u6r1_3: ['Sam Thurton', 'Sam'], u6r1_4: ['Sam Chen', 'Sam'], u6r1_5: 'Megan', u6r1_6: ['Sam Thurton', 'Sam'],
+                // Reading 2
+                u6r1: 'B', u6r2: 'A', u6r3: 'C', u6r4: 'C', u6r5: 'A', u6r6: 'B', u6r7: 'C', u6r8: 'A', u6r9: 'A',
+                // Listening 1
+                u6l1: 'False', u6l2: 'False', u6l3: 'True', u6l4: 'False', u6l5: 'True',
+                // Listening 2
+                u6l6: 'A', u6l7: 'A', u6l8: 'B', u6l9: 'A', u6l10: 'C'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    let actual = '';
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else {
+                        actual = field[0].value;
+                    }
+
+                    const normalizedActual = normalize(actual);
+                    if (Array.isArray(expected)) {
+                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
+                    } else if (normalizedActual === normalize(expected)) {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u6-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 6',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPron: sectionStats('u6-part1'),
+                    reading: sectionStats('u6-reading'),
+                    writing: sectionStats('u6-writing'),
+                    listening: sectionStats('u6-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit6Form').style.display = 'none';
+            const res = document.getElementById('u6-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU6(0);
+            const p = document.getElementById('u6Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+

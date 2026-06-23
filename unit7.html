@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 7 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 992px) { 
+            .sheet-grid { grid-template-columns: 1fr; } 
+            .reading-layout { grid-template-columns:1fr; } 
+        }
+        body.dark-theme .word-bank { background: #1F2937; border-color: #475569; color: #E2E8F0; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 7</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, practical English, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit7Form">
+            <!-- PART 1: Grammar, Vocabulary, Pronunciation, Practical English -->
+            <section class="test-section active" id="u7-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation, Practical English</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>GRAMMAR</h3>
+                            <p class="instruction">1 Complete the sentences with <em>me, you, him, her, it, us,</em> or <em>them</em>.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> A Do you know Susie's mother?<br>&nbsp; &nbsp; B No, I don't know <u>her</u>.</p>
+                                <p>1 A Please call <input type="text" name="u7g1_1" class="small-input"> tomorrow. I want to talk to you.<br>&nbsp; &nbsp; B OK. Is 10 o'clock a good time?</p>
+                                <p>2 A Do people in your family eat a lot of cheese?<br>&nbsp; &nbsp; B Yes, they do. They like <input type="text" name="u7g1_2" class="small-input"> a lot.</p>
+                                <p>3 A You work with your husband, right?<br>&nbsp; &nbsp; B Yes, I work with <input type="text" name="u7g1_3" class="small-input">.</p>
+                                <p>4 A What's that? Is it for <input type="text" name="u7g1_4" class="small-input">?<br>&nbsp; &nbsp; B Yes, coffee for you and me.</p>
+                                <p>5 A Are the children in the garden?<br>&nbsp; &nbsp; B I don't see <input type="text" name="u7g1_5" class="small-input">.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Put the words in the correct order to make questions.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> do you lunch where have ?<br><em>Where do you have lunch?</em></p>
+                                <p>1 favourite is your day what of part the ?<br><input type="text" name="u7g2_1" class="full-input"></p>
+                                <p>2 you on up what Saturday time do get ?<br><input type="text" name="u7g2_2" class="full-input"></p>
+                                <p>3 go out Friday you on nights do ?<br><input type="text" name="u7g2_3" class="full-input"></p>
+                                <p>4 relax you at how weekend do the ?<br><input type="text" name="u7g2_4" class="full-input"></p>
+                                <p>5 Marcus does Sundays when on have breakfast ?<br><input type="text" name="u7g2_5" class="full-input"></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>VOCABULARY</h3>
+                            <p class="instruction">3 Choose a verb from the box to complete the phrases.</p>
+                            <div class="word-bank">do, go, go out, meet, play, stay</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <u>play</u> computer games</p>
+                                <p>1 <input type="text" name="u7v3_1" class="small-input"> at night</p>
+                                <p>2 <input type="text" name="u7v3_2" class="small-input"> friends</p>
+                                <p>3 <input type="text" name="u7v3_3" class="small-input"> to the beach</p>
+                                <p>4 <input type="text" name="u7v3_4" class="small-input"> sport</p>
+                                <p>5 <input type="text" name="u7v3_5" class="small-input"> at home</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">4 Complete the sentences. Write one word in each gap. The words are all related to kinds of films.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> It was a very funny co<u>medy</u>.</p>
+                                <p>1 In a we<input type="text" name="u7v4_1" class="small-input">, there are people on horses.</p>
+                                <p>2 Do you like dr<input type="text" name="u7v4_2" class="small-input">?</p>
+                                <p>3 Lots of sc<input type="text" name="u7v4_3" class="tiny-input"> f<input type="text" name="u7v4_4" class="tiny-input"> films are set in space.</p>
+                                <p>4 My brother doesn't watch ho<input type="text" name="u7v4_5" class="small-input"> films; they are too scary.</p>
+                                <p>5 <em>Top Gun: Maverick</em> and <em>Mission Impossible</em> are ac<input type="text" name="u7v4_6" class="small-input"> films.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRONUNCIATION</h3>
+                            <p class="instruction">5 Match the words with the same sound.</p>
+                            <div class="word-bank">always, home, how, Thursday, town, where</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> husband - <u>home</u></p>
+                                <p>1 who <input type="text" name="u7p5_1" class="tiny-input"></p>
+                                <p>2 sixth <input type="text" name="u7p5_2" class="tiny-input"></p>
+                                <p>3 chair <input type="text" name="u7p5_3" class="tiny-input"></p>
+                                <p>4 what <input type="text" name="u7p5_4" class="tiny-input"></p>
+                                <p>5 out <input type="text" name="u7p5_5" class="tiny-input"></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRACTICAL ENGLISH</h3>
+                            <p class="instruction">6 Look at the dates and write them in words.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> 18/4 - <u>the eighteenth of April</u></p>
+                                <p>1 22/7 <input type="text" name="u7e6_1" class="full-input"></p>
+                                <p>2 12/12 <input type="text" name="u7e6_2" class="full-input"></p>
+                                <p>3 31/8 <input type="text" name="u7e6_3" class="full-input"></p>
+                                <p>4 05/11 <input type="text" name="u7e6_4" class="full-input"></p>
+                                <p>5 23/2 <input type="text" name="u7e6_5" class="full-input"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU7(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 2: Reading -->
+            <section class="test-section" id="u7-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Read the report. Tick (✔) the correct option.</p>
+                        <div class="reading-panel">
+                            <p><strong>Your free time</strong></p>
+                            <p>How do 18- to 24-year-olds in the UK spend their free time? A new study shows that a lot of young people stay at home in their free time.</p>
+                            <p>So, what do they do in their free time at home? 55% play computer games and some of them spend time online. A lot of young people also watch films, but not on TV. In fact, 47% of people in the age group never watch TV!</p>
+                            <p>When young people go out, they do different activities. Friends are very important to them and they meet friends for 24% of their free time. The cinema is a favourite place and 72% of 18- to 24-year-olds go to the cinema to watch films. People like different kinds of films - science fiction, comedies, horror - but 47% of them love animation films!</p>
+                            <p>People also do sport or exercise. A lot of young people are healthy because they go for walks or swim, but 40% of teenagers in the UK don't know how to swim!</p>
+                            <p>Young people also travel a lot and they usually buy their tickets online. 41% of all young people go to the beach on their holiday and 40% go on holiday with their family. Young people usually stay in a hotel when they are on holiday.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <div class="q-item compact-options">
+                                <p><strong>Example:</strong> A lot of 18- to 24-year-olds <label><input type="radio" disabled> <strong>go out</strong></label> / <label><input type="radio" checked disabled> <strong>stay at home</strong></label> in their free time.</p>
+                                <p>1 55% of young people <label><input type="radio" name="u7r1" value="play computer games"> <strong>play computer games</strong></label> / <label><input type="radio" name="u7r1" value="stay at home"> <strong>stay at home</strong></label>.</p>
+                                <p>2 Young people <label><input type="radio" name="u7r2" value="don't watch"> <strong>don't watch</strong></label> / <label><input type="radio" name="u7r2" value="watch"> <strong>watch</strong></label> films on TV.</p>
+                                <p>3 <label><input type="radio" name="u7r3" value="47%"> <strong>47%</strong></label> / <label><input type="radio" name="u7r3" value="72%"> <strong>72%</strong></label> of people love animation films.</p>
+                                <p>4 A lot of teenagers in the UK <label><input type="radio" name="u7r4" value="don't know how to swim"> <strong>don't know how to swim</strong></label> / <label><input type="radio" name="u7r4" value="don't go for walks"> <strong>don't go for walks</strong></label>.</p>
+                                <p>5 <label><input type="radio" name="u7r5" value="40%"> <strong>40%</strong></label> / <label><input type="radio" name="u7r5" value="41%"> <strong>41%</strong></label> of young people go to the beach for their holiday.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Read the report again. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> A new study looks at what young people do in their free time.<br><label><input type="radio" checked disabled> True</label> &nbsp; <label><input type="radio" disabled> False</label></p>
+                                <p>1 A lot of young people stay at home in their free time.<br><label><input type="radio" name="u7r6" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r6" value="False"> False</label></p>
+                                <p>2 47% of young people never watch TV.<br><label><input type="radio" name="u7r7" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r7" value="False"> False</label></p>
+                                <p>3 24% of people meet with their friends.<br><label><input type="radio" name="u7r8" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r8" value="False"> False</label></p>
+                                <p>4 47% of young people go to the cinema.<br><label><input type="radio" name="u7r9" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r9" value="False"> False</label></p>
+                                <p>5 Young people like all kinds of films.<br><label><input type="radio" name="u7r10" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r10" value="False"> False</label></p>
+                                <p>6 Young people aren't healthy.<br><label><input type="radio" name="u7r11" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r11" value="False"> False</label></p>
+                                <p>7 47% of young people can't swim.<br><label><input type="radio" name="u7r12" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r12" value="False"> False</label></p>
+                                <p>8 Young people like to travel.<br><label><input type="radio" name="u7r13" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r13" value="False"> False</label></p>
+                                <p>9 Young people never go on holiday with their family.<br><label><input type="radio" name="u7r14" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r14" value="False"> False</label></p>
+                                <p>10 Young people always stay in a hotel when they are on holiday.<br><label><input type="radio" name="u7r15" value="True"> True</label> &nbsp; <label><input type="radio" name="u7r15" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU7(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU7(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 3: Writing -->
+            <section class="test-section" id="u7-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="question-block">
+                    <p class="instruction">Answer the questions about your free time.</p>
+                    <div class="q-item">
+                        <p>1 Do you go out at the weekend? <input type="text" class="full-input"></p>
+                        <p>2 What time do you get up at the weekend? <input type="text" class="full-input"></p>
+                        <p>3 What do you do in your free time? <input type="text" class="full-input"></p>
+                        <p>4 What's your favourite part of the weekend? <input type="text" class="full-input"></p>
+                        <p>5 How do you relax? <input type="text" class="full-input"></p>
+                        <p>6 What sport or exercise do you do? <input type="text" class="full-input"></p>
+                        <p>7 What do you do on Saturday nights? <input type="text" class="full-input"></p>
+                        <p>8 Where do you meet your friends? <input type="text" class="full-input"></p>
+                        <p>9 What kind of films do you like? <input type="text" class="full-input"></p>
+                        <p>10 What's your favourite film and why? <input type="text" class="full-input"></p>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU7(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU7(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 4: Listening -->
+            <section class="test-section" id="u7-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 7/ef5e_beginner_test_item_ 013.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">1 Listen to an interview where two people talk about their weekends. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 The man and woman are married.<br><label><input type="radio" name="u7l1" value="True"> True</label> &nbsp; <label><input type="radio" name="u7l1" value="False"> False</label></p>
+                                <p>2 The man usually works at the weekend.<br><label><input type="radio" name="u7l2" value="True"> True</label> &nbsp; <label><input type="radio" name="u7l2" value="False"> False</label></p>
+                                <p>3 The woman never goes out at the weekend.<br><label><input type="radio" name="u7l3" value="True"> True</label> &nbsp; <label><input type="radio" name="u7l3" value="False"> False</label></p>
+                                <p>4 Her favourite part of the weekend is Saturday night.<br><label><input type="radio" name="u7l4" value="True"> True</label> &nbsp; <label><input type="radio" name="u7l4" value="False"> False</label></p>
+                                <p>5 The man usually gets up at 8 o'clock on Sunday mornings.<br><label><input type="radio" name="u7l5" value="True"> True</label> &nbsp; <label><input type="radio" name="u7l5" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 7/ef5e_beginner_test_item_ 014.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">2 Listen to five conversations. Tick (✔) the correct answer.</p>
+                            <div class="q-item">
+                                <p>1 What kind of film do the two people go to see?<br>
+                                    <label><input type="radio" name="u7l6" value="A"> A An action film.</label> &nbsp; <label><input type="radio" name="u7l6" value="B"> B A western.</label> &nbsp; <label><input type="radio" name="u7l6" value="C"> C A science fiction film.</label>
+                                </p>
+                                <p>2 What does the director ask the actor to say?<br>
+                                    <label><input type="radio" name="u7l7" value="A"> A Don't talk to her!</label> &nbsp; <label><input type="radio" name="u7l7" value="B"> B Don't talk to him!</label> &nbsp; <label><input type="radio" name="u7l7" value="C"> C Don't talk to me!</label>
+                                </p>
+                                <p>3 What does Juan usually do on Saturday?<br>
+                                    <label><input type="radio" name="u7l8" value="A"> A He plays tennis.</label> &nbsp; <label><input type="radio" name="u7l8" value="B"> B He works.</label> &nbsp; <label><input type="radio" name="u7l8" value="C"> C He goes to the mountains with his family.</label>
+                                </p>
+                                <p>4 What kind of films does the man like?<br>
+                                    <label><input type="radio" name="u7l9" value="A"> A American films.</label> &nbsp; <label><input type="radio" name="u7l9" value="B"> B French and Spanish films.</label> &nbsp; <label><input type="radio" name="u7l9" value="C"> C Chinese films.</label>
+                                </p>
+                                <p>5 When is Ben's birthday?<br>
+                                    <label><input type="radio" name="u7l10" value="A"> A 26th July</label> &nbsp; <label><input type="radio" name="u7l10" value="B"> B 5th August</label> &nbsp; <label><input type="radio" name="u7l10" value="C"> C 6th August</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU7(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU7()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <!-- Final Step: Details -->
+            <section class="test-section" id="u7-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                
+                <div class="question-block">
+                    <div class="q-item" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">First Name *</label>
+                            <input type="text" id="u7First" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Last Name *</label>
+                            <input type="text" id="u7Last" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Group / Level *</label>
+                            <input type="text" id="u7Group" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Phone Number *</label>
+                            <input type="tel" id="u7Phone" class="full-input" value="+998 " style="margin-bottom: 0;" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit7()" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u7-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u7ExamMode = localStorage.getItem('edu_exam_mode_unit7');
+        if (u7ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u7Sections = ['u7-part1', 'u7-reading', 'u7-writing', 'u7-listening', 'u7-details'];
+        const u7Total = u7Sections.length;
+
+        function updateU7(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u7Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u7Total}`;
+        }
+
+        function showU7(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u7Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU7(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU7(current) { showU7(current); }
+        function prevU7(current) { showU7(current - 2); }
+        function finalU7() { showU7(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]:not([disabled])')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]:not([disabled])'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]:not([disabled])'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit7() {
+            const first = document.getElementById('u7First').value.trim();
+            const last = document.getElementById('u7Last').value.trim();
+            const group = document.getElementById('u7Group').value.trim();
+            const phone = document.getElementById('u7Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u7g1_1: 'me', u7g1_2: 'it', u7g1_3: 'him', u7g1_4: ['me / us', 'us'], u7g1_5: 'them',
+                // Grammar 2
+                u7g2_1: 'What is the favourite part of your day?', u7g2_2: 'What time do you get up on Saturday?', u7g2_3: 'Do you go out on Friday nights?', u7g2_4: 'How do you relax at the weekend?', u7g2_5: 'When does Marcus have breakfast on Sundays?',
+                // Vocabulary 3
+                u7v3_1: 'go out', u7v3_2: 'meet', u7v3_3: 'go', u7v3_4: 'do', u7v3_5: 'stay',
+                // Vocabulary 4
+                u7v4_1: 'western', u7v4_2: 'dramas', u7v4_3: 'science', u7v4_4: 'fiction', u7v4_5: 'horror', u7v4_6: 'action',
+                // Pronunciation 5
+                u7p5_1: 'how', u7p5_2: 'Thursday', u7p5_3: 'where', u7p5_4: 'always', u7p5_5: 'town',
+                // Practical English 6
+                u7e6_1: 'the twenty-second of July', u7e6_2: 'the twelfth of December', u7e6_3: 'the thirty-first of August', u7e6_4: 'the fifth of November', u7e6_5: 'the twenty-third of February',
+                // Reading 1
+                u7r1: 'play computer games', u7r2: 'don\'t watch', u7r3: '47%', u7r4: 'don\'t know how to swim', u7r5: '41%',
+                // Reading 2
+                u7r6: 'True', u7r7: 'True', u7r8: 'False', u7r9: 'False', u7r10: 'True', u7r11: 'False', u7r12: 'False', u7r13: 'True', u7r14: 'False', u7r15: 'False',
+                // Listening 1
+                u7l1: 'False', u7l2: 'True', u7l3: 'False', u7l4: 'False', u7l5: 'True',
+                // Listening 2
+                u7l6: 'C', u7l7: 'A', u7l8: 'C', u7l9: 'B', u7l10: 'B'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                let actual = '';
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else if (field[0].type === 'text') {
+                        actual = field[0].value.trim().toLowerCase();
+                    }
+                }
+
+                if (Array.isArray(expected)) {
+                    if (expected.some(e => actual === e.toLowerCase())) score++;
+                } else if (typeof expected === 'string' && actual === (key.includes('u7g2') || key.includes('u7e6') ? expected : expected.toLowerCase())) {
+                    // Case handling for long sentences/dates
+                    if (key.includes('u7g2') || key.includes('u7e6') || key.includes('u7s2')) {
+                        if (actual === expected.toLowerCase()) score++;
+                    } else {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u7-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 7',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPron: sectionStats('u7-part1'),
+                    reading: sectionStats('u7-reading'),
+                    writing: sectionStats('u7-writing'),
+                    listening: sectionStats('u7-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit7Form').style.display = 'none';
+            const res = document.getElementById('u7-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU7(0);
+            const p = document.getElementById('u7Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Test 2 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .full-input,
+        .word-input,
+        .writing-area,
+        .reg-form-container input {
+            background-color: var(--white) !important;
+            color: var(--text-main) !important;
+            border: 2px solid #E2E8F0 !important;
+            padding: 12px 15px !important;
+            border-radius: 8px !important;
+            width: 100%;
+            margin-top: 5px;
+            font-size: 1rem;
+            outline: none;
+            display: block;
+        }
+
+        .q-item .word-input {
+            display: inline-block;
+            width: 76px !important;
+            min-width: 58px;
+            margin: 0 4px;
+            padding: 6px 8px !important;
+            vertical-align: baseline;
+            border-radius: 7px !important;
+            letter-spacing: 0;
+        }
+
+        .q-item .full-input {
+            display: block;
+            width: 100%;
+            margin: 8px 0 10px;
+        }
+
+        .writing-area { min-height: 220px; resize: vertical; }
+        .step-badge { background:#DBEAFE; color:#1E40AF; border-radius:999px; padding:0.2rem 0.65rem; font-size:0.8rem; font-weight:700; margin-right:0.5rem; }
+        .instruction { font-weight:700; color:var(--primary); margin-bottom:1rem; }
+        .subtitle-q { margin-top:1rem; margin-bottom:0.6rem; font-weight:700; color:var(--text-main); }
+        .question-block {
+            background: var(--white);
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .question-block + .question-block { margin-top:1rem; }
+        .q-item { border-radius:10px; border:1px solid #D1DCEB; box-shadow:0 2px 8px rgba(15,23,42,.04); }
+
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+        .reading-panel p { margin-bottom:.9rem; }
+        .reading-panel p:last-child { margin-bottom:0; }
+
+        .table-lite { width:100%; border-collapse:collapse; margin-top:.5rem; }
+        .table-lite td, .table-lite th { border:1px solid #CBD5E1; padding:.35rem .5rem; font-size:.94rem; }
+        .table-lite th { background:#F1F5F9; text-align:left; }
+
+        body.dark-theme .question-block { background:linear-gradient(180deg, rgba(17,24,39,.95), rgba(15,23,42,.95)); border-color:#1F2937; }
+        body.dark-theme .q-item { border-color:#334155; box-shadow:none; }
+        body.dark-theme .info-box-sm { background:#111827; border-color:#334155; }
+        body.dark-theme .table-lite td, body.dark-theme .table-lite th { border-color:#334155; }
+        body.dark-theme .table-lite th { background:#1F2937; }
+
+        @media (max-width:992px){ .reading-layout { grid-template-columns:1fr; } }
+        @media (max-width:768px){ .q-item .word-input { width:60px !important; min-width:52px; margin:0 3px; padding:5px 6px !important; } }
+    </style>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks"><li><a href="index.html">Home</a></li><li><a href="tests.html">Tests</a></li></ul>
+        <div class="nav-actions"><button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button></div>
+        <div class="test-progress"><div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div><span id="progressText">Step 1 of 9</span></div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Progress Test 2</h1>
+            <p>Complete all sections carefully. Writing and speaking are manually reviewed.</p>
+        </div>
+
+        <form id="progress2Form">
+            <section class="test-section active" id="p2-grammar">
+                <div class="section-title"><h2><span class="step-badge">Part 1</span>Grammar</h2></div>
+                <div class="question-block">
+                    <p class="instruction">1. Tick (✔) A, B, or C to complete the sentences.</p>
+                    <div class="q-item"><p>1. What are you ________ at the moment?</p><label><input type="radio" name="g1" value="A"> A do</label><label><input type="radio" name="g1" value="B"> B doing</label><label><input type="radio" name="g1" value="C"> C did</label></div>
+                    <div class="q-item"><p>2. ________ your parents at the concert last night?</p><label><input type="radio" name="g2" value="A"> A Was</label><label><input type="radio" name="g2" value="B"> B Wasn't</label><label><input type="radio" name="g2" value="C"> C Were</label></div>
+                    <div class="q-item"><p>3. Khalid is in the kitchen ________ dinner.</p><label><input type="radio" name="g3" value="A"> A makes</label><label><input type="radio" name="g3" value="B"> B make</label><label><input type="radio" name="g3" value="C"> C making</label></div>
+                    <div class="q-item"><p>4. What ________ yesterday?</p><label><input type="radio" name="g4" value="A"> A Lucy was doing</label><label><input type="radio" name="g4" value="B"> B did Lucy do</label><label><input type="radio" name="g4" value="C"> C Lucy did do</label></div>
+                    <div class="q-item"><p>5. Rana always ________ computer games at home in the evening.</p><label><input type="radio" name="g5" value="A"> A play</label><label><input type="radio" name="g5" value="B"> B plays</label><label><input type="radio" name="g5" value="C"> C is playing</label></div>
+                    <div class="q-item"><p>6. My father hates ________ in the city.</p><label><input type="radio" name="g6" value="A"> A drive</label><label><input type="radio" name="g6" value="B"> B I drive</label><label><input type="radio" name="g6" value="C"> C driving</label></div>
+                    <div class="q-item"><p>7. I'm sorry, but you ________ park here.</p><label><input type="radio" name="g7" value="A"> A aren't</label><label><input type="radio" name="g7" value="B"> B can</label><label><input type="radio" name="g7" value="C"> C can't</label></div>
+                    <div class="q-item"><p>8. Jonas is a police officer in Munich, but ________ in Frankfurt today.</p><label><input type="radio" name="g8" value="A"> A he works</label><label><input type="radio" name="g8" value="B"> B he working</label><label><input type="radio" name="g8" value="C"> C he's working</label></div>
+                    <div class="q-item"><p>9. A: ________ their friends at the weekend? B: Yes, they did.</p><label><input type="radio" name="g9" value="A"> A They visited</label><label><input type="radio" name="g9" value="B"> B Did they visited</label><label><input type="radio" name="g9" value="C"> C Did they visit</label></div>
+                    <div class="q-item"><p>10. ________ in and sit down, please.</p><label><input type="radio" name="g10" value="A"> A Come</label><label><input type="radio" name="g10" value="B"> B Listen</label><label><input type="radio" name="g10" value="C"> C Walk</label></div>
+                    <div class="q-item"><p>11. Katarina loves ________ Mexican food.</p><label><input type="radio" name="g11" value="A"> A eat</label><label><input type="radio" name="g11" value="B"> B eats</label><label><input type="radio" name="g11" value="C"> C eating</label></div>
+                    <div class="q-item"><p>12. A: Let's meet at 8 o'clock. B: I'm sorry, I ________. I'm busy.</p><label><input type="radio" name="g12" value="A"> A aren't</label><label><input type="radio" name="g12" value="B"> B can't</label><label><input type="radio" name="g12" value="C"> C don't</label></div>
+                    <div class="q-item"><p>13. When Sonia went on holiday, she ________ in a hotel.</p><label><input type="radio" name="g13" value="A"> A didn't stay</label><label><input type="radio" name="g13" value="B"> B didn't stayed</label><label><input type="radio" name="g13" value="C"> C not staying</label></div>
+                    <div class="q-item"><p>14. Do you like ________?</p><label><input type="radio" name="g14" value="A"> A swim</label><label><input type="radio" name="g14" value="B"> B swiming</label><label><input type="radio" name="g14" value="C"> C swimming</label></div>
+                    <div class="q-item"><p>15. A: What did you buy at the bookshop?<br>B: I ________ some magazines and a present for my mother.</p><label><input type="radio" name="g15" value="A"> A buying</label><label><input type="radio" name="g15" value="B"> B buyed</label><label><input type="radio" name="g15" value="C"> C bought</label></div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">2. Put the words in the correct order to make questions.</p>
+                    <div class="q-item"><p>1. out you on go Saturday do night ?</p><input type="text" name="g2_1" class="full-input"></div>
+                    <div class="q-item"><p>2. you do at relax weekend how the ?</p><input type="text" name="g2_2" class="full-input"></div>
+                    <div class="q-item"><p>3. working you where today are ?</p><input type="text" name="g2_3" class="full-input"></div>
+                    <div class="q-item"><p>4. does office the Jamal how usually to travel ?</p><input type="text" name="g2_4" class="full-input"></div>
+                    <div class="q-item"><p>5. he teacher is the listening to ?</p><input type="text" name="g2_5" class="full-input"></div>
+                    <div class="q-item"><p>6. they on where holiday did year go last ?</p><input type="text" name="g2_6" class="full-input"></div>
+                    <div class="q-item"><p>7. the you doing do in yoga like morning ?</p><input type="text" name="g2_7" class="full-input"></div>
+                    <div class="q-item"><p>8. did you live and USA when in your family the ?</p><input type="text" name="g2_8" class="full-input"></div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">3. Complete the sentences with one word.</p>
+                    <div class="q-item"><p>1. ________ there a shower in the bathroom?</p><input type="text" name="g3_1" class="word-input" style="width:120px"></div>
+                    <div class="q-item"><p>2. There aren't ________ plates in the cupboard.</p><input type="text" name="g3_2" class="word-input" style="width:120px"></div>
+                    <div class="q-item"><p>3. Yes, I'd love to go and watch ________.</p><input type="text" name="g3_3" class="word-input" style="width:120px"></div>
+                    <div class="q-item"><p>4. There are ________ great views of the mountains from here.</p><input type="text" name="g3_4" class="word-input" style="width:120px"></div>
+                    <div class="q-item"><p>5. My parents moved to Turkiye last year, so I don't see ________ very often.</p><input type="text" name="g3_5" class="word-input" style="width:120px"></div>
+                    <div class="q-item"><p>6. A: Are there any chairs? B: No, there ________.</p><input type="text" name="g3_6" class="word-input" style="width:120px"></div>
+                    <div class="q-item"><p>7. Excuse me. Can you take a photo of ________?</p><input type="text" name="g3_7" class="word-input" style="width:120px"></div>
+                </div>
+                <div class="form-actions right"><button type="button" class="btn btn-primary" onclick="nextP2(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p2-vocab">
+                <div class="section-title"><h2><span class="step-badge">Part 2</span>Vocabulary</h2></div>
+                <div class="question-block">
+                    <p class="instruction">1. Tick (✔) the correct word A, B, or C.</p>
+                    <div class="q-item"><p>1. A strange woman sat down ________ me on the bus.</p><label><input type="radio" name="v1" value="A"> A on the left</label><label><input type="radio" name="v1" value="B"> B between</label><label><input type="radio" name="v1" value="C"> C opposite</label></div>
+                    <div class="q-item"><p>2. Darius loves ________ new clothes.</p><label><input type="radio" name="v2" value="A"> A buying</label><label><input type="radio" name="v2" value="B"> B paying</label><label><input type="radio" name="v2" value="C"> C shopping</label></div>
+                    <div class="q-item"><p>3. Are there any ________ in the bathroom?</p><label><input type="radio" name="v3" value="A"> A pillows</label><label><input type="radio" name="v3" value="B"> B towels</label><label><input type="radio" name="v3" value="C"> C showers</label></div>
+                    <div class="q-item"><p>4. Would you like to ________ dinner tonight?</p><label><input type="radio" name="v4" value="A"> A do</label><label><input type="radio" name="v4" value="B"> B go</label><label><input type="radio" name="v4" value="C"> C have</label></div>
+                    <div class="q-item"><p>5. I was ________ home with my wife.</p><label><input type="radio" name="v5" value="A"> A at</label><label><input type="radio" name="v5" value="B"> B in</label><label><input type="radio" name="v5" value="C"> C on</label></div>
+                    <div class="q-item"><p>6. Manuela and her boyfriend are ________ in the mountains.</p><label><input type="radio" name="v6" value="A"> A camping</label><label><input type="radio" name="v6" value="B"> B doing</label><label><input type="radio" name="v6" value="C"> C going out</label></div>
+                    <div class="q-item"><p>7. What time did you ________ at the hotel?</p><label><input type="radio" name="v7" value="A"> A arrive</label><label><input type="radio" name="v7" value="B"> B leave</label><label><input type="radio" name="v7" value="C"> C stay</label></div>
+                    <div class="q-item"><p>8. The bookshop is ________ the bank and the supermarket.</p><label><input type="radio" name="v8" value="A"> A on the left</label><label><input type="radio" name="v8" value="B"> B between</label><label><input type="radio" name="v8" value="C"> C next</label></div>
+                    <div class="q-item"><p>9. Louis and Elisa were ________ London last week.</p><label><input type="radio" name="v9" value="A"> A at</label><label><input type="radio" name="v9" value="B"> B in</label><label><input type="radio" name="v9" value="C"> C on</label></div>
+                    <div class="q-item"><p>10. We really like ________ different countries.</p><label><input type="radio" name="v10" value="A"> A doing</label><label><input type="radio" name="v10" value="B"> B travelling</label><label><input type="radio" name="v10" value="C"> C visiting</label></div>
+                    <div class="q-item"><p>11. It's raining. Come and stand ________ the umbrella.</p><label><input type="radio" name="v11" value="A"> A on</label><label><input type="radio" name="v11" value="B"> B in</label><label><input type="radio" name="v11" value="C"> C under</label></div>
+                    <div class="q-item"><p>12. When do you usually ________ your homework?</p><label><input type="radio" name="v12" value="A"> A do</label><label><input type="radio" name="v12" value="B"> B go</label><label><input type="radio" name="v12" value="C"> C make</label></div>
+                    <div class="q-item"><p>13. We were ________ the plane for 9 hours.</p><label><input type="radio" name="v13" value="A"> A at</label><label><input type="radio" name="v13" value="B"> B in</label><label><input type="radio" name="v13" value="C"> C on</label></div>
+                    <div class="q-item"><p>14. There's a nice Italian restaurant ________ of 5th Avenue.</p><label><input type="radio" name="v14" value="A"> A next to</label><label><input type="radio" name="v14" value="B"> B opposite</label><label><input type="radio" name="v14" value="C"> C on the corner</label></div>
+                    <div class="q-item"><p>15. I'm ________ for Beatriz. She's late!</p><label><input type="radio" name="v15" value="A"> A arriving</label><label><input type="radio" name="v15" value="B"> B leaving</label><label><input type="radio" name="v15" value="C"> C waiting</label></div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">2. Complete the sentences. Write one word in each gap.</p>
+                    <div class="q-item">
+                        <p>1. I like action films, but I prefer w<input type="text" name="v2_1" class="word-input">.</p>
+                        <p>2. Raul usually goes sw<input type="text" name="v2_2" class="word-input"> every morning.</p>
+                        <p>3. I like watching TV s<input type="text" name="v2_3" class="word-input"> in my free time.</p>
+                        <p>4. Johanna loves going for a w<input type="text" name="v2_4" class="word-input"> in the mountains.</p>
+                        <p>5. It's a sc<input type="text" name="v2_5a" class="word-input"> f<input type="text" name="v2_5b" class="word-input"> film.</p>
+                        <p>6. Would you like to go to the c<input type="text" name="v2_6" class="word-input"> this weekend?</p>
+                        <p>7. It's cold today. Please wear your c<input type="text" name="v2_7" class="word-input">.</p>
+                        <p>8. My father always wears a s<input type="text" name="v2_8" class="word-input"> and a shirt.</p>
+                        <p>9. Emily is wearing a long red sk<input type="text" name="v2_9" class="word-input">.</p>
+                        <p>10. I always wear shorts and tr<input type="text" name="v2_10" class="word-input">.</p>
+                        <p>11. Is there a l<input type="text" name="v2_11" class="word-input"> to the 5th floor?</p>
+                        <p>12. We bought souvenirs in the hotel g<input type="text" name="v2_12" class="word-input"> shop.</p>
+                        <p>13. A lot of people st<input type="text" name="v2_13" class="word-input"> in a hotel.</p>
+                        <p>14. Go to R<input type="text" name="v2_14" class="word-input"> to check in.</p>
+                        <p>15. Let's b<input type="text" name="v2_15" class="word-input"> our tickets online.</p>
+                    </div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">3. Match the words/phrases with the correct verb from the box.</p>
+                    <div class="info-box-sm">eat, carry, cook, have, walk, play, do, meet, phone, use, go, wait</div>
+                    <div class="q-item">
+                        <p>1. <input type="text" name="v3_1" class="word-input" style="width:120px"> housework</p>
+                        <p>2. <input type="text" name="v3_2" class="word-input" style="width:120px"> friends after work</p>
+                        <p>3. <input type="text" name="v3_3" class="word-input" style="width:120px"> for a flight</p>
+                        <p>4. <input type="text" name="v3_4" class="word-input" style="width:120px"> your mobile phone</p>
+                        <p>5. <input type="text" name="v3_5" class="word-input" style="width:120px"> the piano</p>
+                        <p>6. <input type="text" name="v3_6" class="word-input" style="width:120px"> a nice day</p>
+                        <p>7. <input type="text" name="v3_7" class="word-input" style="width:120px"> in the park</p>
+                        <p>8. <input type="text" name="v3_8" class="word-input" style="width:120px"> dinner</p>
+                        <p>9. <input type="text" name="v3_9" class="word-input" style="width:120px"> out</p>
+                        <p>10. <input type="text" name="v3_10" class="word-input" style="width:120px"> a suitcase</p>
+                    </div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP2(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP2(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p2-pron">
+                <div class="section-title"><h2><span class="step-badge">Part 3</span>Pronunciation</h2></div>
+                <div class="question-block">
+                    <p class="instruction">1. Tick (✔) the word that has a different sound.</p>
+                    <div class="q-item"><p>1. serve / work / dress</p><input type="text" name="pp1" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>2. know / town / coat</p><input type="text" name="pp2" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>3. why / who / husband</p><input type="text" name="pp3" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>4. there / here / airport</p><input type="text" name="pp4" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>5. about / father / actor</p><input type="text" name="pp5" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>6. car / can / can't</p><input type="text" name="pp6" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>7. book / good / soon</p><input type="text" name="pp7" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>8. fun / cooking / think</p><input type="text" name="pp8" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>9. rented / booked / decided</p><input type="text" name="pp9" class="word-input" style="width:130px"></div>
+                    <div class="q-item"><p>10. packed / travelled / stayed</p><input type="text" name="pp10" class="word-input" style="width:130px"></div>
+                </div>
+                <div class="question-block">
+                    <p class="instruction">2. Which is the stressed syllable? Tick (✔) 1, 2, 3, or 4.</p>
+                    <div class="q-item">
+                        <p>1. reception <label><input type="radio" name="ps1" value="1">1</label> <label><input type="radio" name="ps1" value="2">2</label> <label><input type="radio" name="ps1" value="3">3</label></p>
+                        <p>2. trousers <label><input type="radio" name="ps2" value="1">1</label> <label><input type="radio" name="ps2" value="2">2</label></p>
+                        <p>3. opposite <label><input type="radio" name="ps3" value="1">1</label> <label><input type="radio" name="ps3" value="2">2</label> <label><input type="radio" name="ps3" value="3">3</label></p>
+                        <p>4. October <label><input type="radio" name="ps4" value="1">1</label> <label><input type="radio" name="ps4" value="2">2</label> <label><input type="radio" name="ps4" value="3">3</label></p>
+                        <p>5. seventh <label><input type="radio" name="ps5" value="1">1</label> <label><input type="radio" name="ps5" value="2">2</label></p>
+                        <p>6. piano <label><input type="radio" name="ps6" value="1">1</label> <label><input type="radio" name="ps6" value="2">2</label> <label><input type="radio" name="ps6" value="3">3</label></p>
+                        <p>7. suitcase <label><input type="radio" name="ps7" value="1">1</label> <label><input type="radio" name="ps7" value="2">2</label></p>
+                        <p>8. animations <label><input type="radio" name="ps8" value="1">1</label> <label><input type="radio" name="ps8" value="2">2</label> <label><input type="radio" name="ps8" value="3">3</label> <label><input type="radio" name="ps8" value="4">4</label></p>
+                        <p>9. eleventh <label><input type="radio" name="ps9" value="1">1</label> <label><input type="radio" name="ps9" value="2">2</label> <label><input type="radio" name="ps9" value="3">3</label></p>
+                        <p>10. April <label><input type="radio" name="ps10" value="1">1</label> <label><input type="radio" name="ps10" value="2">2</label></p>
+                    </div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP2(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP2(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p2-practical">
+                <div class="section-title"><h2><span class="step-badge">Part 4</span>Practical English</h2></div>
+                <div class="question-block">
+                    <p class="instruction">Match questions and sentences 1-10 to answers b-k.</p>
+                    <div class="q-item">
+                        <p>1. What's the date today? <input type="text" name="pe1_1" class="word-input" style="width:40px"></p>
+                        <p>2. Would you like a burger? <input type="text" name="pe1_2" class="word-input" style="width:40px"></p>
+                        <p>3. Excuse me. Is there a bank near here? <input type="text" name="pe1_3" class="word-input" style="width:40px"></p>
+                        <p>4. Thank you very much. <input type="text" name="pe1_4" class="word-input" style="width:40px"></p>
+                        <p>5. Are you sure? <input type="text" name="pe1_5" class="word-input" style="width:40px"></p>
+                        <p>6. Would you like to come to the cinema with me? <input type="text" name="pe1_6" class="word-input" style="width:40px"></p>
+                        <p>7. Sorry, where is that? <input type="text" name="pe1_7" class="word-input" style="width:40px"></p>
+                        <p>8. Let's meet outside the theatre. <input type="text" name="pe1_8" class="word-input" style="width:40px"></p>
+                        <p>9. Talk to you on Monday. <input type="text" name="pe1_9" class="word-input" style="width:40px"></p>
+                        <p>10. Would you like to go out on Friday night? <input type="text" name="pe1_10" class="word-input" style="width:40px"></p>
+                        <hr style="margin:1rem 0; border:none; border-top:1px solid #CBD5E1;">
+                        <p>b. Yes, definitely.</p><p>c. You're welcome.</p><p>d. Sorry, I can't. I'm busy on Friday.</p>
+                        <p>e. No, thanks. I'm not hungry at the moment.</p><p>f. OK. See you there at 7:30.</p>
+                        <p>g. It's the fifth of July.</p><p>h. Yes, there's one on the corner of Park Street and King's Road.</p>
+                        <p>i. Yes, I'd love to. There's a really good comedy film on at the moment.</p><p>j. Go straight on and then turn right. It's on the right opposite the school.</p><p>k. Great. Talk to you then.</p>
+                    </div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP2(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP2(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p2-reading">
+                <div class="section-title"><h2><span class="step-badge">Part 5</span>Reading</h2></div>
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">Read the email and tick (✔) True or False.</p>
+                        <div class="reading-panel">
+                            <p><strong>To:</strong> Jemma<br><strong>From:</strong> Monica<br><strong>Subject:</strong> Holiday time</p>
+                            <p>Hi Jemma, I hope you're OK. We're having a wonderful time here in Mexico. Last week, we were in Mexico City. It's a really amazing city and there is a lot to do there. We didn't stay in a hotel because Mike has a friend, Jorge, who lives there. He lives in a big house outside the city. We stayed with him and his family. He is married, and he has three children and two dogs. It was great fun. Marisol, Jorge's wife, loves cooking. She cooked dinner for us on the first night and it was fantastic.</p>
+                            <p>When we were in Mexico City, we travelled by bus. It was very cheap and easy to use them. We visited a lot of interesting places, but my favourite was the Frida Kahlo Museum. She was a famous artist and you can see a lot of her paintings in the museum. I loved it.</p>
+                            <p>Yesterday, we left Mexico City and got a plane to Acapulco. Here we're staying in a small hotel. It's lovely. There's a balcony and we have fantastic views. The hotel is near a beautiful beach. Mike rented a car, so we can visit different places. Last night, after we checked into the hotel, we walked down to the beach and had dinner at a nice restaurant. I really like eating Mexican food.</p>
+                            <p>At the moment, Mike is swimming in the hotel's swimming pool. I'm sitting in our room watching TV and writing emails. I'm sending you some photos of the holiday. In the first one, you can see us arriving at Jorge's house in Mexico City. The second photo is me dancing last night! And the third photo is Mike relaxing next to the swimming pool this morning.</p>
+                            <p>I'm missing you all.<br>Love,<br>Monica</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">1. True or False?</p>
+                            <div class="q-item"><p>1. Monica is in Mexico on business.</p><label><input type="radio" name="r1" value="True"> True</label><label><input type="radio" name="r1" value="False"> False</label></div>
+                            <div class="q-item"><p>2. Last week, Monica and Mike were in Mexico City.</p><label><input type="radio" name="r2" value="True"> True</label><label><input type="radio" name="r2" value="False"> False</label></div>
+                            <div class="q-item"><p>3. Jorge lives in Mexico City.</p><label><input type="radio" name="r3" value="True"> True</label><label><input type="radio" name="r3" value="False"> False</label></div>
+                            <div class="q-item"><p>4. Marisol cooked a fantastic meal on the first night.</p><label><input type="radio" name="r4" value="True"> True</label><label><input type="radio" name="r4" value="False"> False</label></div>
+                            <div class="q-item"><p>5. In Mexico City, Monica and Mike travelled by taxi.</p><label><input type="radio" name="r5" value="True"> True</label><label><input type="radio" name="r5" value="False"> False</label></div>
+                            <div class="q-item"><p>6. Monica really liked the Frida Kahlo Museum.</p><label><input type="radio" name="r6" value="True"> True</label><label><input type="radio" name="r6" value="False"> False</label></div>
+                            <div class="q-item"><p>7. Yesterday, they went by plane to Acapulco.</p><label><input type="radio" name="r7" value="True"> True</label><label><input type="radio" name="r7" value="False"> False</label></div>
+                            <div class="q-item"><p>8. They are staying in a hotel near to the beach.</p><label><input type="radio" name="r8" value="True"> True</label><label><input type="radio" name="r8" value="False"> False</label></div>
+                            <div class="q-item"><p>9. Last night, they had a meal in the hotel.</p><label><input type="radio" name="r9" value="True"> True</label><label><input type="radio" name="r9" value="False"> False</label></div>
+                            <div class="q-item"><p>10. At the moment, Monica is relaxing next to the swimming pool.</p><label><input type="radio" name="r10" value="True"> True</label><label><input type="radio" name="r10" value="False"> False</label></div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2. Read the email again and complete the sentences with one word.</p>
+                            <div class="q-item">
+                                <p>1. Jorge is married and has two dogs and three <input type="text" name="pr2_1" class="word-input" style="width:110px">.</p>
+                                <p>2. It was <input type="text" name="pr2_2" class="word-input" style="width:110px"> and easy to use the buses in Mexico City.</p>
+                                <p>3. Monica and Mike have <input type="text" name="pr2_3" class="word-input" style="width:110px"> views from their hotel room.</p>
+                                <p>4. Monica likes eating <input type="text" name="pr2_4" class="word-input" style="width:110px"> food.</p>
+                                <p>5. Monica is sending Jemma three <input type="text" name="pr2_5" class="word-input" style="width:110px">.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP2(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP2(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p2-writing">
+                <div class="section-title"><h2><span class="step-badge">Part 6</span>Writing</h2></div>
+                <div class="question-block">
+                    <p class="instruction">Answer the questions and write about your last holiday.</p>
+                    <ul>
+                        <li>Where did you go?</li><li>When was it?</li><li>Who did you go with?</li><li>How did you travel there?</li><li>What did you do on the holiday?</li>
+                    </ul>
+                    <textarea id="p2Writing" class="writing-area" placeholder="Write your holiday story..."></textarea>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP2(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-primary" onclick="nextP2(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button></div>
+            </section>
+
+            <section class="test-section" id="p2-listening">
+                <div class="section-title"><h2><span class="step-badge">Part 7</span>Listening</h2></div>
+                <div class="question-block">
+                    <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/progress 2/ef5e_beginner_test_item_ 027.mp3" type="audio/mpeg"></audio>
+                    <p class="instruction">1. Listen to Demi and Rick. Tick (✔) A, B, or C.</p>
+                    <div class="q-item"><p>1. Where was Rick last night?</p><label><input type="radio" name="l1" value="A"> A He stayed at home.</label><label><input type="radio" name="l1" value="B"> B He went to a restaurant.</label><label><input type="radio" name="l1" value="C"> C He went to the cinema.</label></div>
+                    <div class="q-item"><p>2. What film did Rick want to see?</p><label><input type="radio" name="l2" value="A"> A a comedy</label><label><input type="radio" name="l2" value="B"> B a science-fiction film</label><label><input type="radio" name="l2" value="C"> C a western</label></div>
+                    <div class="q-item"><p>3. Who hates westerns?</p><label><input type="radio" name="l3" value="A"> A Demi</label><label><input type="radio" name="l3" value="B"> B Marjorie</label><label><input type="radio" name="l3" value="C"> C Rick</label></div>
+                    <div class="q-item"><p>4. What film did Rick and his girlfriend see?</p><label><input type="radio" name="l4" value="A"> A a comedy</label><label><input type="radio" name="l4" value="B"> B a science-fiction film</label><label><input type="radio" name="l4" value="C"> C a western</label></div>
+                    <div class="q-item"><p>5. Who directed the science fiction film that Rick saw?</p><label><input type="radio" name="l5" value="A"> A Steven Spielberg</label><label><input type="radio" name="l5" value="B"> B Meryl Streep</label><label><input type="radio" name="l5" value="C"> C Tom Hanks</label></div>
+                </div>
+                <div class="question-block">
+                    <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/progress 2/ef5e_beginner_test_item_ 028.mp3" type="audio/mpeg"></audio>
+                    <p class="instruction">2. Listen to five conversations and answer the questions.</p>
+                    <div class="q-item"><p>1. When is Jenni's dad's birthday?</p><label><input type="radio" name="l6" value="A"> A 13th November</label><label><input type="radio" name="l6" value="B"> B 14th November</label><label><input type="radio" name="l6" value="C"> C 16th November</label></div>
+                    <div class="q-item"><p>2. What does Matteo enjoy doing?</p><label><input type="radio" name="l7" value="A"> A running, cycling and camping</label><label><input type="radio" name="l7" value="B"> B cycling, running and yoga</label><label><input type="radio" name="l7" value="C"> C camping, cycling and yoga</label></div>
+                    <div class="q-item"><p>3. What is Grace wearing?</p><label><input type="radio" name="l8" value="A"> A a red dress and red shoes</label><label><input type="radio" name="l8" value="B"> B a red dress and black shoes</label><label><input type="radio" name="l8" value="C"> C jeans and a blue sweater</label></div>
+                    <div class="q-item"><p>4. Where's the car park?</p><label><input type="radio" name="l9" value="A"> A on the corner of North Street</label><label><input type="radio" name="l9" value="B"> B on the left next to the train station</label><label><input type="radio" name="l9" value="C"> C on the right next to the train station</label></div>
+                    <div class="q-item"><p>5. What did Angus think of the Chinese food?</p><label><input type="radio" name="l10" value="A"> A He didn't like it.</label><label><input type="radio" name="l10" value="B"> B It wasn't expensive.</label><label><input type="radio" name="l10" value="C"> C He always enjoys eating Chinese food.</label></div>
+                </div>
+                <div class="form-actions flex-between"><button type="button" class="btn btn-outline" onclick="prevP2(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button><button type="button" class="btn btn-submit" onclick="finalP2()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button></div>
+            </section>
+
+            <section class="test-section" id="p2-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item reg-form-container">
+                    <div class="reg-grid">
+                        <div class="input-group"><label>First Name *</label><input type="text" id="p2First" required></div>
+                        <div class="input-group"><label>Last Name *</label><input type="text" id="p2Last" required></div>
+                        <div class="input-group"><label>Group / Level *</label><input type="text" id="p2Group" required></div>
+                        <div class="input-group"><label>Phone Number *</label><input type="tel" id="p2Phone" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="form-actions right"><button type="button" class="btn btn-submit btn-large" onclick="submitProgress2()" style="width:100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button></div>
+            </section>
+
+            <section class="test-section" id="p2-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) { window.location.href = 'login.html'; }
+        const p2ExamMode = localStorage.getItem('edu_exam_mode_progress2');
+        if (p2ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const p2Sections = ['p2-grammar', 'p2-vocab', 'p2-pron', 'p2-practical', 'p2-reading', 'p2-writing', 'p2-listening', 'p2-details'];
+        
+        function showP2(index) {
+            p2Sections.forEach((id, i) => {
+                const el = document.getElementById(id);
+                if (el) el.classList.toggle('active', i === index);
+            });
+            updateP2Progress(index);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateP2Progress(index) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar && txt) {
+                const pct = ((index + 1) / p2Sections.length) * 100;
+                bar.style.width = pct + '%';
+                txt.innerText = `Step ${index + 1} of ${p2Sections.length}`;
+            }
+        }
+
+        function nextP2(current) { showP2(current); }
+        function prevP2(current) { showP2(current - 2); }
+        function finalP2() { showP2(7); }
+        async function submitProgress2() {
+            const first = document.getElementById('p2First').value.trim();
+            const last = document.getElementById('p2Last').value.trim();
+            const group = document.getElementById('p2Group').value.trim();
+            const phone = document.getElementById('p2Phone').value.trim();
+
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const normalize = s => (s || '').toLowerCase().trim().replace(/[.,?!]/g, '').replace(/\s+/g, ' ');
+
+            const gradingKey = {
+                // Grammar 1
+                g1:'B', g2:'C', g3:'C', g4:'B', g5:'B', g6:'C', g7:'C', g8:'C', g9:'C', g10:'A', g11:'C', g12:'B', g13:'A', g14:'C', g15:'C',
+                // Grammar 2
+                g2_1: 'Do you go out on Saturday night?',
+                g2_2: 'How do you relax at the weekend?',
+                g2_3: 'Where are you working today?',
+                g2_4: 'How does Jamal usually travel to the office?',
+                g2_5: 'Is he listening to the teacher?',
+                g2_6: 'Where did they go on holiday last year?',
+                g2_7: 'Do you like doing yoga in the morning?',
+                g2_8: 'When did you and your family live in the USA?',
+                // Grammar 3
+                g3_1: 'Is', g3_2: ['any', 'many'], g3_3: 'it', g3_4: ['some', 'a lot of'], g3_5: 'them', g3_6: 'aren\'t', g3_7: 'us',
+                // Vocabulary 1
+                v1:'C', v2:'A', v3:'B', v4:'C', v5:'A', v6:'A', v7:'A', v8:'B', v9:'B', v10:'C', v11:'C', v12:'A', v13:'C', v14:'C', v15:'C',
+                // Vocabulary 2
+                v2_1: 'westerns', v2_2: 'swimming', v2_3: 'series', v2_4: 'walk', v2_5a: 'science', v2_5b: 'fiction', v2_6: 'cinema', v2_7: 'coat', v2_8: 'suit', v2_9: 'skirt', v2_10: 'trainers', v2_11: 'lift', v2_12: 'gift', v2_13: 'stay', v2_14: 'Reception', v2_15: 'buy',
+                // Vocabulary 3
+                v3_1: 'do', v3_2: 'meet', v3_3: 'wait', v3_4: 'use', v3_5: 'play', v3_6: 'have', v3_7: 'walk', v3_8: 'cook', v3_9: 'go', v3_10: 'carry',
+                // Pronunciation 1
+                pp1: 'dress', pp2: 'town', pp3: 'why', pp4: 'here', pp5: 'father', pp6: 'can', pp7: 'soon', pp8: 'fun', pp9: 'booked', pp10: 'packed',
+                // Pronunciation 2
+                ps1:'2', ps2:'1', ps3:'1', ps4:'2', ps5:'1', ps6:'2', ps7:'1', ps8:'3', ps9:'2', ps10:'1',
+                // Practical English 1
+                pe1_1: 'g', pe1_2: 'e', pe1_3: 'h', pe1_4: 'c', pe1_5: 'b', pe1_6: 'i', pe1_7: 'j', pe1_8: 'f', pe1_9: 'k', pe1_10: 'd',
+                // Reading 1
+                r1: 'False', r2: 'True', r3: 'True', r4: 'True', r5: 'False', r6: 'True', r7: 'True', r8: 'True', r9: 'False', r10: 'False',
+                // Reading 2
+                pr2_1: 'children', pr2_2: 'cheap', pr2_3: 'fantastic', pr2_4: 'Mexican', pr2_5: 'photos',
+                // Listening 1
+                l1:'C', l2:'A', l3:'B', l4:'B', l5:'A',
+                // Listening 2
+                l6:'C', l7:'C', l8:'B', l9:'B', l10:'A',
+                // Speaking 3 Table
+                ps3_1: 'Had a big breakfast', ps3_2: 'Missed the bus', ps3_3: 'Phoned Mike', ps3_4: 'Played computer games', ps3_5: 'Last weekend'
+            };
+
+            let score = 0;
+            let totalPossible = 0;
+
+            Object.keys(gradingKey).forEach(name => {
+                const expected = gradingKey[name];
+                let userVal = '';
+                const radios = document.getElementsByName(name);
+
+                if (radios.length > 0 && radios[0].type === 'radio') {
+                    const selected = Array.from(radios).find(r => r.checked);
+                    userVal = selected ? selected.value : '';
+                } else {
+                    const el = document.getElementsByName(name)[0];
+                    userVal = el ? el.value : '';
+                }
+
+                totalPossible++;
+                const normalizedUser = normalize(userVal);
+                if (Array.isArray(expected)) {
+                    if (expected.some(e => normalize(e) === normalizedUser)) score++;
+                } else {
+                    if (normalizedUser === normalize(expected)) score++;
+                }
+            });
+
+            function sectionStats(sectionId) {
+                const section = document.getElementById(sectionId);
+                if (!section) return { answered: 0, total: 0, percent: 0 };
+                const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]')).reduce((acc, r) => {
+                    acc.add(r.name);
+                    return acc;
+                }, new Set());
+                const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+                const textInputs = Array.from(section.querySelectorAll('input[type="text"]'));
+                const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+                const textareas = Array.from(section.querySelectorAll('textarea'));
+                const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+                const total = radioGroups.size + textInputs.length + textareas.length;
+                const answered = radioAnswered + textAnswered + taAnswered;
+                return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+            }
+
+            const finalScore = Math.round((score / totalPossible) * 125);
+
+            const submission = {
+                submissionId: `sub_${Date.now()}_P2`,
+                type: 'Progress Test 2',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                group, phone, timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: finalScore },
+                sectionCompletion: {
+                    grammar: sectionStats('p2-grammar'),
+                    vocabulary: sectionStats('p2-vocab'),
+                    pronunciation: sectionStats('p2-pron'),
+                    practicalEnglish: sectionStats('p2-practical'),
+                    reading: sectionStats('p2-reading'),
+                    writing: sectionStats('p2-writing'),
+                    listening: sectionStats('p2-listening')
+                },
+                rawAnswers: {
+                    writing: document.getElementById('p2Writing').value || ''
+                }
+            };
+
+            const subs = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            subs.push(submission);
+            localStorage.setItem('edu_submissions', JSON.stringify(subs));
+
+            // Centralized Supabase sync
+            saveSubmissionToSupabase(submission);
+
+            document.getElementById('progress2Form').style.display = 'none';
+            const res = document.getElementById('p2-result');
+            res.style.display = 'block';
+            res.classList.add('active');
+            res.querySelector('h2').innerText = `${submission.type} Submitted!`;
+            res.querySelector('p').innerText = `Your objective score: ${finalScore} / 125. Redirecting...`;
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+        document.addEventListener('DOMContentLoaded', ()=>{ updateP2Progress(0); const p=document.getElementById('p2Phone'); p.addEventListener('input', function(){ if(!this.value.startsWith('+998 ')) this.value='+998 '; }); });
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

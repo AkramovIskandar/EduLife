@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-intermediate Progress Test 2 - EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --primary: #7C3AED; --primary-dark: #6D28D9; --primary-light: #EDE9FE; --text-muted: #64748B; }
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.6; }
+        .test-container { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+        .test-header { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; text-align: center; border-bottom: 4px solid var(--primary); }
+        .test-section { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; display: none; }
+        .test-section.active { display: block; }
+        .section-title { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #F1F5F9; }
+        .section-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; color: var(--primary-dark); margin: 0; }
+        .question-block h3, .reading-questions h3 { font-size: 1.05rem; margin: 0 0 1rem; color: var(--primary-dark); }
+        .q-item { margin-bottom: 1rem; padding: 1rem 1.25rem; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .q-item p { font-weight: 500; margin-bottom: 0.75rem; }
+        .test-section .answer-input:not(.inline-input), .test-section select.answer-input, .test-section textarea.answer-input {
+            display: block; width: 100% !important; max-width: 100% !important; box-sizing: border-box;
+            border: 2px solid #E2E8F0 !important; border-radius: 10px !important; background: #fff !important;
+            padding: 0.65rem 0.9rem !important; font-size: 1rem !important; letter-spacing: normal !important; margin-top: 0.35rem;
+        }
+        .test-section input.answer-input[type="text"]:not(.inline-input) { max-width: 28rem !important; }
+        .test-section .q-item > p .inline-input {
+            display: inline-block !important; width: auto !important; min-width: 3.5rem !important; max-width: 9rem !important;
+            margin: 0 0.1rem !important; padding: 0.15rem 0.35rem !important;
+            border: none !important; border-bottom: 2px solid var(--primary) !important; border-radius: 0 !important;
+            background: transparent !important; vertical-align: baseline; box-shadow: none !important;
+        }
+        .test-section .q-item > p .inline-input-wide { min-width: 6rem !important; max-width: 11rem !important; }
+        .test-section .q-item > p:has(.inline-input) { line-height: 2.1; margin-bottom: 0.35rem; }
+        .test-section textarea.writing-area { min-height: 8rem; max-height: 16rem; resize: vertical; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 1rem; background: #fff; border: 1px dashed var(--primary); border-radius: 10px; font-size: 0.95rem; }
+        .match-options { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; padding: 0.75rem 1rem; background: #fff; border-radius: 10px; border: 1px solid #E2E8F0; }
+        .match-options div { margin-bottom: 0.35rem; }
+        .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .radio-group label { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border: 2px solid #E2E8F0; border-radius: 10px; cursor: pointer; font-weight: 400; }
+        .radio-group label:hover { border-color: var(--primary); background: var(--primary-light); }
+        .radio-group input { width: 1.1rem; height: 1.1rem; accent-color: var(--primary); }
+        .reading-split { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(300px, 1fr); gap: 1.5rem; align-items: start; }
+        .reading-passages { background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary); max-height: min(70vh, 28rem); overflow-y: auto; line-height: 1.7; font-size: 1.02rem; }
+        .reading-questions { max-height: min(70vh, 28rem); overflow-y: auto; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; border: none; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-outline { background: #fff; border: 2px solid #E2E8F0; color: var(--text-muted); }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .progress-nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 1rem 0; z-index: 100; border-bottom: 1px solid #E2E8F0; }
+        .progress-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+        .progress-bg { flex-grow: 1; height: 10px; background: #E2E8F0; border-radius: 5px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        @media (max-width: 900px) { .reading-split { grid-template-columns: 1fr; } .reading-passages, .reading-questions { max-height: none; } }
+    </style>
+</head>
+<body>
+    <nav class="progress-nav">
+        <div class="progress-container">
+            <div class="progress-bg"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText" style="font-weight:600;color:var(--primary);">Step 1</span>
+        </div>
+    </nav>
+    <main class="test-container">
+        <div class="test-header">
+            <h1 style="color:var(--primary);">Pre-intermediate Progress Test 2</h1>
+            <p>Variant A — Files 7–12</p>
+        </div>
+        <form id="unitTestForm">
+
+            <section class="test-section active" id="section-grammar-1">
+                <div class="section-title">
+                    <h2>Grammar 1</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences. Use the correct form of the verb in brackets.</h3><div class="q-item"><p>1. Gus, that wasn't very polite. You mustn't ______ (speak) to your father like that.</p><input type="text" name="g1_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Always try ______ (get on) with your colleagues. That's good advice for anyone who is starting a new job.</p><input type="text" name="g1_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Mr Lee is a great teacher. If you watch his online videos, you ______ (understand) maths more easily.</p><input type="text" name="g1_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. A When ______ penicillin ______ (discover)?</p><input type="text" name="g1_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. ______ (wear) a suit and tie makes Louis feel uncomfortable.</p><input type="text" name="g1_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. Ada Lovelace ______ (write) the first computer program.</p><input type="text" name="g1_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. A ______ you ______ (eat) sushi before your trip to Japan?</p><input type="text" name="g1_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. That's an interesting question. If I ______ (know) the answer, I'd be rich.</p><input type="text" name="g1_8" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>9. Andrea ______ (write) two books and she plans to write more.</p><input type="text" name="g1_9" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>10. I ______ (not meet) Michael before I moved to this town.</p><input type="text" name="g1_10" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <span></span>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-2">
+                <div class="section-title">
+                    <h2>Grammar 2</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Tick the correct word or phrase.</h3><div class="q-item"><p>1. He's ______ has to leave in five minutes to catch a train</p><div class="radio-group"><label><input type="radio" name="g2_1" value="to"> to</label><label><input type="radio" name="g2_1" value="He"> He</label></div></div>
+<div class="q-item"><p>2. The ______ .</p><div class="radio-group"><label><input type="radio" name="g2_2" value="visitors looked round the city"> visitors looked round the city</label><label><input type="radio" name="g2_2" value="the city round"> the city round</label></div></div>
+<div class="q-item"><p>3. Mia ______ work.</p><div class="radio-group"><label><input type="radio" name="g2_3" value="moved to Lisbon for finding"> moved to Lisbon for finding</label><label><input type="radio" name="g2_3" value="to find"> to find</label></div></div>
+<div class="q-item"><p>4. A I can't swim very well.</p><input type="text" name="g2_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. Alejandro ______ the stairs.</p><div class="radio-group"><label><input type="radio" name="g2_5" value="ran along"> ran along</label><label><input type="radio" name="g2_5" value="up"> up</label></div></div>
+<div class="q-item"><p>6. Ada ______ 'the Mother of Computers'.</p><div class="radio-group"><label><input type="radio" name="g2_6" value="Lovelace often called"> Lovelace often called</label><label><input type="radio" name="g2_6" value="is often called"> is often called</label></div></div>
+<div class="q-item"><p>7. ______ do yoga twice a</p><div class="radio-group"><label><input type="radio" name="g2_7" value="I usually"> I usually</label><label><input type="radio" name="g2_7" value="used to"> used to</label></div></div>
+<div class="q-item"><p>8. A How long did they ______ they worked there?</p><div class="radio-group"><label><input type="radio" name="g2_8" value="work"> work</label><label><input type="radio" name="g2_8" value="have"> have</label></div></div>
+<div class="q-item"><p>9. Who ______ more cake?</p><div class="radio-group"><label><input type="radio" name="g2_9" value="wants"> wants</label><label><input type="radio" name="g2_9" value="does want"> does want</label></div></div>
+<div class="q-item"><p>10. That ______ .</p><div class="radio-group"><label><input type="radio" name="g2_10" value="table is ours"> table is ours</label><label><input type="radio" name="g2_10" value="the ours"> the ours</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(0)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-3">
+                <div class="section-title">
+                    <h2>Grammar 3</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Write the sentences in reported speech.</h3><div class="q-item"><p>1. 'We'll see you later, Fahad.'</p><input type="text" name="g3_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. 'I've bought a bicycle,' said Shaun.</p><input type="text" name="g3_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. 'I don't eat meat,' said Aisha.</p><input type="text" name="g3_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. 'We can see the sea.'</p><input type="text" name="g3_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. 'I want to believe you,' said Mum.</p><input type="text" name="g3_5" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-4">
+                <div class="section-title">
+                    <h2>Grammar 4</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with one word.</h3><div class="q-item"><p>1. I think you ______ take a break. You're too tired to carry on working.</p><input type="text" name="g4_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Marcus has known Kaito ______ 2012.</p><input type="text" name="g4_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Please come ______ my office. I need to speak to you.</p><input type="text" name="g4_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. ______ you use to go out with Felix?</p><input type="text" name="g4_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. A I love salsa dancing.</p><input type="text" name="g4_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. Joanna ______ to have brown hair, but now it's blonde.</p><input type="text" name="g4_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. If I ______ you, I'd apply for the job.</p><input type="text" name="g4_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. Kattrina ______ move to Oslo. She's thinking about it.</p><input type="text" name="g4_8" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>9. The music is too loud. Please turn it ______ so it's quieter.</p><input type="text" name="g4_9" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>10. You ______ talk in the library. That's the rule.</p><input type="text" name="g4_10" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-5">
+                <div class="section-title">
+                    <h2>Grammar 5</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Write negative sentences.</h3><div class="q-item"><p>1. I think you should leave.</p><input type="text" name="g5_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Gabriela's lived in Mexico City for five years.</p><input type="text" name="g5_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Nicolai used to enjoy skiing.</p><input type="text" name="g5_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Skateboards were invented in the 1970s.</p><input type="text" name="g5_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. You ought to say things like that.</p><input type="text" name="g5_5" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-6">
+                <div class="section-title">
+                    <h2>Vocabulary 6</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Match 1–11 with a–k.</h3><div class="match-options"><div><strong>A</strong> her holiday photos.</div><div><strong>B</strong> to turn off the radio.</div><div><strong>C</strong> in the form.</div><div><strong>D</strong> I would call.</div><div><strong>E</strong> after his cat.</div><div><strong>F</strong> out the rubbish.</div><div><strong>G</strong> our English class last week.</div><div><strong>H</strong> home before you.</div><div><strong>I</strong> him I would call.</div><div><strong>J</strong> the match on TV.</div><div><strong>K</strong> to fail.</div></div><div class="q-item"><p>2. I watched</p><select name="v6_2" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>3. I took</p><select name="v6_3" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>4. I said</p><select name="v6_4" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>5. I got</p><select name="v6_5" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>6. I expected</p><select name="v6_6" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>7. I told</p><select name="v6_7" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>8. I looked</p><select name="v6_8" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>9. I missed</p><select name="v6_9" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>10. I forgot</p><select name="v6_10" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+<div class="q-item"><p>11. I looked at</p><select name="v6_11" class="answer-input"><option value="">— Select —</option><option value="a">A. her holiday photos.</option><option value="b">B. to turn off the radio.</option><option value="c">C. in the form.</option><option value="d">D. I would call.</option><option value="e">E. after his cat.</option><option value="f">F. out the rubbish.</option><option value="g">G. our English class last week.</option><option value="h">H. home before you.</option><option value="i">I. him I would call.</option><option value="j">J. the match on TV.</option><option value="k">K. to fail.</option></select></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-7">
+                <div class="section-title">
+                    <h2>Vocabulary 7</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Tick the correct preposition.</h3><div class="q-item"><p>1. Elsa is good ______</p><div class="radio-group"><label><input type="radio" name="v7_1" value="for"> for</label><label><input type="radio" name="v7_1" value="at"> at</label><label><input type="radio" name="v7_1" value="about"> about</label><label><input type="radio" name="v7_1" value="memory games."> memory games.</label></div></div>
+<div class="q-item"><p>2. Milos gets angry ______</p><div class="radio-group"><label><input type="radio" name="v7_2" value="with"> with</label><label><input type="radio" name="v7_2" value="from"> from</label><label><input type="radio" name="v7_2" value="by"> by</label><label><input type="radio" name="v7_2" value="cyclists who don't stop at traffic lights."> cyclists who don't stop at traffic lights.</label></div></div>
+<div class="q-item"><p>3. In basketball, you throw the ball ______</p><div class="radio-group"><label><input type="radio" name="v7_3" value="over"> over</label><label><input type="radio" name="v7_3" value="round"> round</label><label><input type="radio" name="v7_3" value="through"> through</label><label><input type="radio" name="v7_3" value="a hoop."> a hoop.</label></div></div>
+<div class="q-item"><p>4. The ball went ______</p><div class="radio-group"><label><input type="radio" name="v7_4" value="along"> along</label><label><input type="radio" name="v7_4" value="down"> down</label><label><input type="radio" name="v7_4" value="past"> past</label><label><input type="radio" name="v7_4" value="the goalie."> the goalie.</label></div></div>
+<div class="q-item"><p>5. ______ of the sea.</p><div class="radio-group"><label><input type="radio" name="v7_5" value="Lisa suffers of"> Lisa suffers of</label><label><input type="radio" name="v7_5" value="from"> from</label><label><input type="radio" name="v7_5" value="to"> to</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(7)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-8">
+                <div class="section-title">
+                    <h2>Vocabulary 8</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with the correct word(s).</h3><div class="q-item"><p>1. Hugh was stung by a ______ in his garden.</p><div class="radio-group"><label><input type="radio" name="v8_1" value="fly"> fly</label><label><input type="radio" name="v8_1" value="butterfly"> butterfly</label><label><input type="radio" name="v8_1" value="wasp"> wasp</label></div></div>
+<div class="q-item"><p>2. Fang made a ______ and bought the red flowers.</p><div class="radio-group"><label><input type="radio" name="v8_2" value="decide"> decide</label><label><input type="radio" name="v8_2" value="decision"> decision</label><label><input type="radio" name="v8_2" value="deciding"> deciding</label></div></div>
+<div class="q-item"><p>3. Dominic is a ______ teacher. He teaches sport to children.</p><div class="radio-group"><label><input type="radio" name="v8_3" value="maths"> maths</label><label><input type="radio" name="v8_3" value="PE"> PE</label><label><input type="radio" name="v8_3" value="science"> science</label></div></div>
+<div class="q-item"><p>4. 'Give it back!' she shouted ______ .</p><div class="radio-group"><label><input type="radio" name="v8_4" value="lazily"> lazily</label><label><input type="radio" name="v8_4" value="quietly"> quietly</label><label><input type="radio" name="v8_4" value="angrily"> angrily</label></div></div>
+<div class="q-item"><p>5. Manos said the answer ______ . It</p><div class="radio-group"><label><input type="radio" name="v8_5" value="to"> to</label><label><input type="radio" name="v8_5" value="do"> do</label><label><input type="radio" name="v8_5" value="the"> the</label><label><input type="radio" name="v8_5" value="maths."> maths.</label></div></div>
+<div class="q-item"><p>6. Chocolate cake or ice cream? It's a difficult ______ !</p><div class="radio-group"><label><input type="radio" name="v8_6" value="choice"> choice</label><label><input type="radio" name="v8_6" value="advice"> advice</label><label><input type="radio" name="v8_6" value="confusion"> confusion</label></div></div>
+<div class="q-item"><p>7. The scientist's new ______ saved many lives.</p><div class="radio-group"><label><input type="radio" name="v8_7" value="invitation"> invitation</label><label><input type="radio" name="v8_7" value="competition"> competition</label><label><input type="radio" name="v8_7" value="invention"> invention</label></div></div>
+<div class="q-item"><p>8. The company first opened ______ .</p><div class="radio-group"><label><input type="radio" name="v8_8" value="by"> by</label><label><input type="radio" name="v8_8" value="Swedish"> Swedish</label><label><input type="radio" name="v8_8" value="Swedish"> Swedish</label><label><input type="radio" name="v8_8" value="in"> in</label><label><input type="radio" name="v8_8" value="Sweden"> Sweden</label></div></div>
+<div class="q-item"><p>9. Mum! I've just seen two ______ in the kitchen.</p><div class="radio-group"><label><input type="radio" name="v8_9" value="mouse"> mouse</label><label><input type="radio" name="v8_9" value="mice"> mice</label><label><input type="radio" name="v8_9" value="bird"> bird</label></div></div>
+<div class="q-item"><p>10. Can you ______ me your phone? Mine has no battery.</p><div class="radio-group"><label><input type="radio" name="v8_10" value="lend"> lend</label><label><input type="radio" name="v8_10" value="rent"> rent</label><label><input type="radio" name="v8_10" value="borrow"> borrow</label></div></div>
+<div class="q-item"><p>11. Julie enjoys all types of science: biology, ______ , and chemistry.</p><div class="radio-group"><label><input type="radio" name="v8_11" value="physics"> physics</label><label><input type="radio" name="v8_11" value="geography"> geography</label><label><input type="radio" name="v8_11" value="history"> history</label></div></div>
+<div class="q-item"><p>12. Jodie ______ to study in England next summer.</p><div class="radio-group"><label><input type="radio" name="v8_12" value="looks"> looks</label><label><input type="radio" name="v8_12" value="waits"> waits</label><label><input type="radio" name="v8_12" value="hopes"> hopes</label></div></div>
+<div class="q-item"><p>13. Don't lose your ______ ! It's only a very small spider.</p><div class="radio-group"><label><input type="radio" name="v8_13" value="panic"> panic</label><label><input type="radio" name="v8_13" value="mad"> mad</label><label><input type="radio" name="v8_13" value="cool"> cool</label></div></div>
+<div class="q-item"><p>14. Please ______ £2 to class tomorrow for Wilhelm's present.</p><div class="radio-group"><label><input type="radio" name="v8_14" value="earn"> earn</label><label><input type="radio" name="v8_14" value="bring"> bring</label><label><input type="radio" name="v8_14" value="carry"> carry</label></div></div>
+<div class="q-item"><p>15. Philippa is scared of ______ . She hates being close to so many people.</p><div class="radio-group"><label><input type="radio" name="v8_15" value="birds"> birds</label><label><input type="radio" name="v8_15" value="heights"> heights</label><label><input type="radio" name="v8_15" value="crowds"> crowds</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(8)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-9">
+                <div class="section-title">
+                    <h2>Vocabulary 9</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with one word.</h3><div class="q-item"><p>1. The box jellyfish can give you a bad and painful ______ if it touches you.</p><input type="text" name="v9_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Don't throw ______ that plastic bottle. We can recycle it.</p><input type="text" name="v9_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. My grandmother ______ school when she was 16 and worked in a shop.</p><input type="text" name="v9_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. The classroom printer has run ______ of ink.</p><input type="text" name="v9_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. Jess and Kayleigh could be ______ twins. They look just the same.</p><input type="text" name="v9_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. Jon was born in Poland, so that means his nationality is ______ .</p><input type="text" name="v9_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. Lars and Miles are very ______ . They listen to the same music and like the same films.</p><input type="text" name="v9_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. My brother is really afraid ______ heights.</p><input type="text" name="v9_8" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>9. Halil and Anoushka got ______ last summer. It was a beautiful wedding.</p><input type="text" name="v9_9" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>10. Margaret has been scared ______ cows for years.</p><input type="text" name="v9_10" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(9)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-pronunciation-10">
+                <div class="section-title">
+                    <h2>Pronunciation 10</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Which is the stressed syllable? Tick 1, 2, 3, or 4.</h3><div class="q-item"><p>1. pri|ma|ry 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_1" value="1"> syllable 1</label><label><input type="radio" name="p10_1" value="2"> syllable 2</label><label><input type="radio" name="p10_1" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>2. re|la|tion|ship 	1  	2  	3  	4 </p><div class="radio-group"><label><input type="radio" name="p10_2" value="1"> syllable 1</label><label><input type="radio" name="p10_2" value="2"> syllable 2</label><label><input type="radio" name="p10_2" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>3. de|cis|ion 	1  	2  	3  	4 </p><div class="radio-group"><label><input type="radio" name="p10_3" value="1"> syllable 1</label><label><input type="radio" name="p10_3" value="2"> syllable 2</label><label><input type="radio" name="p10_3" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>4. mo|squi|to 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_4" value="1"> syllable 1</label><label><input type="radio" name="p10_4" value="2"> syllable 2</label><label><input type="radio" name="p10_4" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>5. pa|ra|graph 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_5" value="1"> syllable 1</label><label><input type="radio" name="p10_5" value="2"> syllable 2</label><label><input type="radio" name="p10_5" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>6. in|spi|ra|tion 	1  	2  	3  	4 </p><div class="radio-group"><label><input type="radio" name="p10_6" value="1"> syllable 1</label><label><input type="radio" name="p10_6" value="2"> syllable 2</label><label><input type="radio" name="p10_6" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>7. sa|xo|phone 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p10_7" value="1"> syllable 1</label><label><input type="radio" name="p10_7" value="2"> syllable 2</label><label><input type="radio" name="p10_7" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>8. com|pe|ti|tion 	1  	2  	3  	4 </p><div class="radio-group"><label><input type="radio" name="p10_8" value="1"> syllable 1</label><label><input type="radio" name="p10_8" value="2"> syllable 2</label><label><input type="radio" name="p10_8" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>9. ex|pe|ri|ence 	1  	2  	3  	4 </p><div class="radio-group"><label><input type="radio" name="p10_9" value="1"> syllable 1</label><label><input type="radio" name="p10_9" value="2"> syllable 2</label><label><input type="radio" name="p10_9" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>10. Example: re|mem|ber 	1  	2 	 	3 </p><div class="radio-group"><label><input type="radio" name="p10_10" value="1"> syllable 1</label><label><input type="radio" name="p10_10" value="2"> syllable 2</label><label><input type="radio" name="p10_10" value="3"> syllable 3</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(8)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(10)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-reading">
+                <div class="section-title">
+                    <h2>Reading</h2>
+                </div>
+                
+                <div class="reading-split"><div class="reading-passages"><p>Dog therapy Our health editor, Nikki Langer, interviewed three people whose jobs show that dogs can improve human health. Ben Forster, dog trainer Dogs are the most common therapy animal because they are easy to train, and because there are many different sizes. For a hospital visit, for example, it might be important to have a small dog which someone can hold on their lap. The most important thing, though, is the dog's personality: it must be calm and quiet. Most therapy dogs are not puppies – they are usually at least three years and older – and they have to complete a special training course before they can work in hospitals or schools. There are many benefits for the patients and children. Research has shown that regular contact with dogs can improve physical and mental health. Jasmin Hussain, tutor I used to have mental health problems. A few years ago, my doctor recommended getting a dog. She said that walking with a dog and caring for it would help me to recover – and that was true for me. Now Domino comes to the university with me and helps my students. She sits in my office during my classes. When my office door is open, students know they can come in and talk to Domino. My university department has lots of international students and some of them are far away from home. One girl told me that she missed her pet dog more than her parents! If Domino didn't come to work with me, the students would definitely be sad. He's a great dog: very gentle, and he loves it when people stroke him. Thanks to my students, he has also learned instructions in several languages! Andrea Weber, nurse I work at a residential home for elderly men and women. Our youngest resident is 85. A lot of the people who live here have long-term conditions. It can be hard for them to be active. But I know that every Tuesday, they will come to the main living room to see our pet therapist, Pat, and her beautiful dog, Trixie. Trixie is a large dog, with lovely soft fur. When Trixie sits next to you, you want to talk to her and touch her. And while people are waiting to talk to Trixie, they talk to each other. It's a very positive thing.</p></div><div class="reading-questions">
+                <h3>Part 1</h3><div class="q-item"><p>1. relaxed, not worried or frightened ______</p><div class="radio-group"><label><input type="radio" name="r1_1" value="A"> A. True</label><label><input type="radio" name="r1_1" value="B"> B. False</label><label><input type="radio" name="r1_1" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>2. advantages ______</p><div class="radio-group"><label><input type="radio" name="r1_2" value="A"> A. True</label><label><input type="radio" name="r1_2" value="B"> B. False</label><label><input type="radio" name="r1_2" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>3. to get healthy again after an illness ______</p><div class="radio-group"><label><input type="radio" name="r1_3" value="A"> A. True</label><label><input type="radio" name="r1_3" value="B"> B. False</label><label><input type="radio" name="r1_3" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>4. to move a hand along something ______</p><div class="radio-group"><label><input type="radio" name="r1_4" value="A"> A. True</label><label><input type="radio" name="r1_4" value="B"> B. False</label><label><input type="radio" name="r1_4" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>5. describes something that moves around a lot ______</p><div class="radio-group"><label><input type="radio" name="r1_5" value="A"> A. True</label><label><input type="radio" name="r1_5" value="B"> B. False</label><label><input type="radio" name="r1_5" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>6. The girl said, “I miss my dog as much as my family!”</p><div class="radio-group"><label><input type="radio" name="r1_6" value="A"> A. True</label><label><input type="radio" name="r1_6" value="B"> B. False</label><label><input type="radio" name="r1_6" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>7. The students have taught Domino some new instructions.</p><div class="radio-group"><label><input type="radio" name="r1_7" value="A"> A. True</label><label><input type="radio" name="r1_7" value="B"> B. False</label><label><input type="radio" name="r1_7" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>8. The place where Andrea works is only for people with long-term health problems.</p><div class="radio-group"><label><input type="radio" name="r1_8" value="A"> A. True</label><label><input type="radio" name="r1_8" value="B"> B. False</label><label><input type="radio" name="r1_8" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>9. The residents can throw a soft toy for Trixie to bring back.</p><div class="radio-group"><label><input type="radio" name="r1_9" value="A"> A. True</label><label><input type="radio" name="r1_9" value="B"> B. False</label><label><input type="radio" name="r1_9" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>10. Andrea and the residents like Trixie's appearance.</p><div class="radio-group"><label><input type="radio" name="r1_10" value="A"> A. True</label><label><input type="radio" name="r1_10" value="B"> B. False</label><label><input type="radio" name="r1_10" value="C"> C. Doesn't say</label></div></div><h3>Part 2</h3><div class="q-item"><p>1. relaxed, not worried or frightened ______</p><input type="text" name="r2_1" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>2. advantages ______</p><input type="text" name="r2_2" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>3. Before the dogs can work in schools, they must complete the training course.</p><input type="text" name="r2_3" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>4. Jasmin had suffered from health problems since she was in her twenties.</p><input type="text" name="r2_4" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>5. If Jasmin's office door is open, students can visit Domino.</p><input type="text" name="r2_5" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>5. If Jasmin's office door is open, students can visit Domino.</p><input type="text" name="r2_5" class="answer-input" placeholder="Short answer"></div>
+                </div></div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(9)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(11)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-writing">
+                <div class="section-title">
+                    <h2>Writing</h2>
+                </div>
+                
+                <div class="question-block">
+                <div class="question-block"><h3>Write your answer below (100–150 words).</h3><textarea name="writing" class="writing-area answer-input" rows="6" placeholder="Write here (100–150 words)..."></textarea><p style="font-size:0.85rem;color:#64748B;margin-top:0.5rem;">This section is reviewed manually.</p></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(10)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(12)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-1">
+                <div class="section-title">
+                    <h2>Listening 1</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/progress_2/listening_1.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to a conversation about running. Tick A, B, or C.</h3><div class="q-item"><p>1. Elena was motivated to start running when she ______ .</p><div class="radio-group"><label><input type="radio" name="l1_1" value="A"> A. lost weight</label><label><input type="radio" name="l1_1" value="B"> B. found a photo</label><label><input type="radio" name="l1_1" value="C"> C. met Jonas</label></div></div>
+<div class="q-item"><p>2. According to Jonas, new runners should ______ .</p><div class="radio-group"><label><input type="radio" name="l1_2" value="A"> A. buy</label><label><input type="radio" name="l1_2" value="B"> B. check with a</label><label><input type="radio" name="l1_2" value="C"> C. go for a walk</label></div></div>
+<div class="q-item"><p>3. Elena thinks she might ______ if she exercises next to the river.</p><div class="radio-group"><label><input type="radio" name="l1_3" value="A"> A. meet a dog</label><label><input type="radio" name="l1_3" value="B"> B. get hurt</label><label><input type="radio" name="l1_3" value="C"> C. get lost</label></div></div>
+<div class="q-item"><p>4. Jonas has been running regularly ______ .</p><div class="radio-group"><label><input type="radio" name="l1_4" value="A"> A. for 4 years</label><label><input type="radio" name="l1_4" value="B"> B. since</label><label><input type="radio" name="l1_4" value="C"> C. since his 30th birthday</label></div></div>
+<div class="q-item"><p>5. If Elena ran ______ , she'd feel proud.</p><div class="radio-group"><label><input type="radio" name="l1_5" value="A"> A. around the park</label><label><input type="radio" name="l1_5" value="B"> B. near the river</label><label><input type="radio" name="l1_5" value="C"> C. 5 kilometres</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(11)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(13)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-2">
+                <div class="section-title">
+                    <h2>Listening 2</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/progress_2/listening_2.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to five conversations. Match them with activities A–E.</h3><div class="match-options"><div><strong>A</strong> making a decision</div><div><strong>B</strong> sunbathing</div><div><strong>C</strong> doing</div><div><strong>D</strong> catching an animal</div><div><strong>E</strong> having</div></div><div class="q-item"><p>1. Item 1</p><select name="l2_1" class="answer-input"><option value="">— Select —</option><option value="A">A. making a decision</option><option value="B">B. sunbathing</option><option value="C">C. doing</option><option value="D">D. catching an animal</option><option value="E">E. having</option></select></div>
+<div class="q-item"><p>2. Item 2</p><select name="l2_2" class="answer-input"><option value="">— Select —</option><option value="A">A. making a decision</option><option value="B">B. sunbathing</option><option value="C">C. doing</option><option value="D">D. catching an animal</option><option value="E">E. having</option></select></div>
+<div class="q-item"><p>3. Item 3</p><select name="l2_3" class="answer-input"><option value="">— Select —</option><option value="A">A. making a decision</option><option value="B">B. sunbathing</option><option value="C">C. doing</option><option value="D">D. catching an animal</option><option value="E">E. having</option></select></div>
+<div class="q-item"><p>4. Item 4</p><select name="l2_4" class="answer-input"><option value="">— Select —</option><option value="A">A. making a decision</option><option value="B">B. sunbathing</option><option value="C">C. doing</option><option value="D">D. catching an animal</option><option value="E">E. having</option></select></div>
+<div class="q-item"><p>5. Item 5</p><select name="l2_5" class="answer-input"><option value="">— Select —</option><option value="A">A. making a decision</option><option value="B">B. sunbathing</option><option value="C">C. doing</option><option value="D">D. catching an animal</option><option value="E">E. having</option></select></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(12)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(14)">Final Step <i class="fa-solid fa-user-check"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">First Name *</label><input type="text" id="regFirstName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Last Name *</label><input type="text" id="regLastName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Proposed Group *</label><input type="text" id="regGroup" class="answer-input" value="Pre-intermediate Progress Test 2" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Phone Number *</label><input type="tel" id="regPhone" class="answer-input" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(13)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary btn-submit" onclick="submitTest()">Finish & Submit <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </section>
+            <section class="test-section" id="section-result">
+                <div style="text-align:center;padding:3rem 0;">
+                    <i class="fa-solid fa-circle-check" style="font-size:5rem;color:var(--primary);margin-bottom:2rem;"></i>
+                    <h2>Test Submitted!</h2>
+                    <p id="resultFeedback" style="color:#64748B;">Calculating your score...</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='tests.html'">Back to Tests</button>
+                </div>
+            </section>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) { window.location.href = 'login.html'; }
+        const unitSections = ["section-grammar-1","section-grammar-2","section-grammar-3","section-grammar-4","section-grammar-5","section-vocab-6","section-vocab-7","section-vocab-8","section-vocab-9","section-pronunciation-10","section-reading","section-writing","section-listening-1","section-listening-2","section-details"];
+        const answerKey = {"g1_1":["speak"],"g1_2":["to get on"],"g1_3":["will understand"],"g1_4":["was discovered"],"g1_5":["wearing"],"g1_6":["wrote"],"g1_7":["had eaten"],"g1_8":["knew"],"g1_9":["has written"],"g1_10":["hadn’t","had not met"],"g2_1":["he has to"],"g2_2":["round the city"],"g2_3":["to find"],"g2_4":["can i"],"g2_5":["up"],"g2_6":["is often called"],"g2_7":["usually"],"g2_8":["have they worked"],"g2_9":["wants"],"g2_10":["ours"],"g3_1":["they said they’d","they would see fahad later"],"g3_2":["shaun said he’d","he had bought a bicycle"],"g3_3":["aisha","she said she didn’t","did not eat meat"],"g3_4":["they said they could see the sea"],"g3_5":["mum said she wanted to believe me"],"g4_1":["should"],"g4_2":["since"],"g4_3":["into"],"g4_4":["did"],"g4_5":["so"],"g4_6":["used"],"g4_7":["were"],"g4_8":["might","may"],"g4_9":["down"],"g4_10":["mustn’t"],"g5_1":["i don’t","do not think you should leave"],"g5_2":["gabriela hasn’t","has not lived in mexico city for five years"],"g5_3":["nikolai didn’t","did not use to enjoy skiing"],"g5_4":["skateboards weren’t","where not invented in the 1970s"],"g5_5":["you ought not to say things like that"],"v6_2":["j"],"v6_3":["f"],"v6_4":["d"],"v6_5":["h"],"v6_6":["k"],"v6_7":["i"],"v6_8":["e"],"v6_9":["g"],"v6_10":["b"],"v6_11":["a"],"v7_1":["at"],"v7_2":["with"],"v7_3":["through"],"v7_4":["past"],"v7_5":["from"],"v8_1":["wasp"],"v8_2":["decision"],"v8_3":["pe"],"v8_4":["angrily"],"v8_5":["straight away"],"v8_6":["choice"],"v8_7":["invention"],"v8_8":["in sweden"],"v8_9":["mice"],"v8_10":["lend"],"v8_11":["physics"],"v8_12":["hopes"],"v8_13":["cool"],"v8_14":["bring"],"v8_15":["crowds"],"v9_1":["sting"],"v9_2":["away"],"v9_3":["left"],"v9_4":["out"],"v9_5":["identical"],"v9_6":["polish"],"v9_7":["similar"],"v9_8":["of"],"v9_9":["married"],"v9_10":["of"],"p10_1":["1"],"p10_2":["2"],"p10_3":["2"],"p10_4":["2"],"p10_5":["1"],"p10_6":["3"],"p10_7":["1"],"p10_8":["3"],"p10_9":["2"],"p10_10":["1"],"r1_1":["b"],"r1_2":["b"],"r1_3":["a"],"r1_4":["c"],"r1_5":["a"],"r1_6":["b"],"r1_7":["a"],"r1_8":["b"],"r1_9":["c"],"r1_10":["a"],"r2_1":["calm"],"r2_2":["benefits"],"r2_3":["recover"],"r2_4":["stroke"],"r2_5":["mend"],"l1_1":["b"],"l1_2":["c"],"l1_3":["a"],"l1_4":["a"],"l1_5":["c"],"l2_1":["d"],"l2_2":["e"],"l2_3":["a"],"l2_4":["c"],"l2_5":["b"]};
+
+        function nextUnitSection(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            if (idx >= unitSections.length) return;
+            document.getElementById(unitSections[idx]).classList.add('active');
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / unitSections.length * 100) + '%';
+            if (txt) txt.innerText = 'Step ' + (idx + 1) + ' of ' + unitSections.length;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function normalize(s) {
+            if (!s) return '';
+            return s.toString().trim().toLowerCase()
+                .replace(/['']/g, "'").replace(/[?!.,;:"()]/g, '').replace(/\s+/g, ' ');
+        }
+
+        function checkAnswer(userVal, accepted) {
+            const u = normalize(userVal);
+            if (!u) return false;
+            return accepted.some((a) => {
+                const c = normalize(a);
+                if (u === c) return true;
+                if (/^[a-gtflh]$/.test(c) && u === c) return true;
+                const parts = a.replace(/…/g, '...').split(/\s*\.\.\.\s*/).map((p) => normalize(p)).filter(Boolean);
+                if (parts.length >= 2 && parts.every((p) => u.includes(p))) return true;
+                if (c.length >= 4 && (u.includes(c) || c.includes(u))) return true;
+                return false;
+            });
+        }
+
+        async function submitTest() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const group = document.getElementById('regGroup').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            if (!firstName || !lastName || !group || !phone) { alert('Please fill in all required fields!'); return; }
+
+            const btn = document.querySelector('.btn-submit');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...'; }
+
+            let score = 0;
+            const answers = new FormData(document.getElementById('unitTestForm'));
+            for (const id in answerKey) {
+                const userVal = answers.get(id);
+                if (checkAnswer(userVal, answerKey[id])) score++;
+            }
+
+            if (window.eduSupabase) {
+                await window.eduSupabase.from('submissions').insert([{
+                    student_name: firstName + ' ' + lastName,
+                    test_type: "Pre-intermediate Progress Test 2",
+                    score: score,
+                    group_name: group,
+                    phone: phone,
+                    raw_answers: Object.fromEntries(answers.entries())
+                }]);
+            }
+
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-result').classList.add('active');
+            document.getElementById('resultFeedback').innerText = 'Thank you, ' + firstName + '! Auto-graded score: ' + score + ' points (writing reviewed separately).';
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+    </script>
+</body>
+</html>

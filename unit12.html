@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 12 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table-custom { width:100%; border-collapse: collapse; margin-bottom: 1rem; }
+        .table-custom th, .table-custom td { border: 1px solid #CBD5E1; padding: 0.4rem; text-align: left; font-size: 0.95rem; }
+        
+        @media (max-width: 992px) { 
+            .sheet-grid { grid-template-columns: 1fr; } 
+            .reading-layout { grid-template-columns:1fr; } 
+        }
+        body.dark-theme .word-bank { background: #1F2937; border-color: #475569; color: #E2E8F0; }
+        body.dark-theme .table-custom th,
+        body.dark-theme .table-custom td {
+            border-color: #334155;
+            color: #cbd5e1;
+        }
+
+        body.dark-theme .table-custom th {
+            background: #1e293b;
+            color: var(--white);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 12</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit12Form">
+            <!-- PART 1: Grammar, Vocabulary, Pronunciation -->
+            <section class="test-section active" id="u12-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>GRAMMAR</h3>
+                            <p class="instruction">1 Complete the sentences. Use the correct past simple form of the verb in brackets.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Julia <u>left</u> home at seven o'clock yesterday morning. (leave)</p>
+                                <p>1 Ben <input type="text" name="u12g1_1" class="small-input"> a new pair of shoes last week. (buy)</p>
+                                <p>2 I <input type="text" name="u12g1_2" class="small-input"> a long email to Maxine. (write)</p>
+                                <p>3 Martina <input type="text" name="u12g1_3" class="small-input"> a taxi home last night. (not get)</p>
+                                <p>4 Sam <input type="text" name="u12g1_4" class="small-input"> anything to me. (not say)</p>
+                                <p>5 Jack <input type="text" name="u12g1_5" class="small-input"> his job application to the company yesterday. (send)</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Complete the dialogue. Use the correct past tense form of verbs from the box.</p>
+                            <div class="word-bank">buy, go, have, stay, visit</div>
+                            <div class="q-item">
+                                <p><strong>Helen</strong> Hi Mark! How <u>was</u> your holiday?<br>
+                                <strong>Mark</strong> It was fantastic! We <sup>1</sup><input type="text" name="u12g2_1" class="small-input"> to Türkiye.<br>
+                                <strong>Helen</strong> Türkiye! That sounds amazing.<br>
+                                <strong>Mark</strong> Yes, it was. We <sup>2</sup><input type="text" name="u12g2_2" class="small-input"> a great time. The first week we<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<sup>3</sup><input type="text" name="u12g2_3" class="small-input"> at a lovely hotel near the beach and then we<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<sup>4</sup><input type="text" name="u12g2_4" class="small-input"> some friends in the south of the country.<br>
+                                <strong>Helen</strong> Lucky you!<br>
+                                <strong>Mark</strong> Oh, I <sup>5</sup><input type="text" name="u12g2_5" class="small-input"> you a souvenir. Now, where is it?</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>VOCABULARY</h3>
+                            <p class="instruction">3 Complete the sentences with the correct past tense form of verbs from the box.</p>
+                            <div class="word-bank">exchange, move, sit, tell, wait</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> We <u>saw</u> the new film at the cinema.</p>
+                                <p>1 We <input type="text" name="u12v3_1" class="small-input"> for an hour, but she didn't come.</p>
+                                <p>2 Toni <input type="text" name="u12v3_2" class="small-input"> some money at the airport.</p>
+                                <p>3 My sister <input type="text" name="u12v3_3" class="small-input"> to Canada last year.</p>
+                                <p>4 I <input type="text" name="u12v3_4" class="small-input"> you not to say that!</p>
+                                <p>5 A famous actor <input type="text" name="u12v3_5" class="small-input"> next to me on the train.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">4 Complete the sentences. Use the correct word.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> We _____ lunch at a Chinese restaurant yesterday.<br>
+                                    <label><input type="radio" checked disabled> A had</label> &nbsp; <label><input type="radio" disabled> B did</label> &nbsp; <label><input type="radio" disabled> C went</label>
+                                </p>
+                                <p>1 We _____ a taxi home last night.<br>
+                                    <label><input type="radio" name="u12v1" value="A"> A did</label> &nbsp; <label><input type="radio" name="u12v1" value="B"> B got</label> &nbsp; <label><input type="radio" name="u12v1" value="C"> C went</label>
+                                </p>
+                                <p>2 I didn't have _____ this morning.<br>
+                                    <label><input type="radio" name="u12v2" value="A"> A breakfast</label> &nbsp; <label><input type="radio" name="u12v2" value="B"> B sport</label> &nbsp; <label><input type="radio" name="u12v2" value="C"> C up early</label>
+                                </p>
+                                <p>3 We _____ lots of housework last weekend.<br>
+                                    <label><input type="radio" name="u12v3" value="A"> A did</label> &nbsp; <label><input type="radio" name="u12v3" value="B"> B got</label> &nbsp; <label><input type="radio" name="u12v3" value="C"> C went</label>
+                                </p>
+                                <p>4 We checked _____ the hotel yesterday.<br>
+                                    <label><input type="radio" name="u12v4" value="A"> A at</label> &nbsp; <label><input type="radio" name="u12v4" value="B"> B into</label> &nbsp; <label><input type="radio" name="u12v4" value="C"> C onto</label>
+                                </p>
+                                <p>5 Steve didn't go _____ last night.<br>
+                                    <label><input type="radio" name="u12v5" value="A"> A home</label> &nbsp; <label><input type="radio" name="u12v5" value="B"> B homework</label> &nbsp; <label><input type="radio" name="u12v5" value="C"> C housework</label>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRONUNCIATION</h3>
+                            <p class="instruction">5 Which is the stressed syllable? Tick (✔) 1, 2, or 3.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> per|fume &nbsp; <strong>1</strong> [✓] &nbsp; <strong>2</strong> [ ]</p>
+                                <p>1 con|cert <label><input type="radio" name="u12p1" value="1"> 1</label> <label><input type="radio" name="u12p1" value="2"> 2</label></p>
+                                <p>2 eve|ning <label><input type="radio" name="u12p2" value="1"> 1</label> <label><input type="radio" name="u12p2" value="2"> 2</label></p>
+                                <p>3 class|i|cal <label><input type="radio" name="u12p3" value="1"> 1</label> <label><input type="radio" name="u12p3" value="2"> 2</label> <label><input type="radio" name="u12p3" value="3"> 3</label></p>
+                                <p>4 hol|i|day <label><input type="radio" name="u12p4" value="1"> 1</label> <label><input type="radio" name="u12p4" value="2"> 2</label> <label><input type="radio" name="u12p4" value="3"> 3</label></p>
+                                <p>5 ex|pen|sive <label><input type="radio" name="u12p5" value="1"> 1</label> <label><input type="radio" name="u12p5" value="2"> 2</label> <label><input type="radio" name="u12p5" value="3"> 3</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">6 Tick (✔) the word that has a different sound.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <label><input type="radio" disabled> painted</label> &nbsp; <label><input type="radio" checked disabled> rained</label> &nbsp; <label><input type="radio" disabled> wanted</label></p>
+                                <p>1 <label><input type="radio" name="u12p6" value="looked"> looked</label> &nbsp; <label><input type="radio" name="u12p6" value="stopped"> stopped</label> &nbsp; <label><input type="radio" name="u12p6" value="waited"> waited</label></p>
+                                <p>2 <label><input type="radio" name="u12p7" value="bought"> bought</label> &nbsp; <label><input type="radio" name="u12p7" value="saw"> saw</label> &nbsp; <label><input type="radio" name="u12p7" value="was"> was</label></p>
+                                <p>3 <label><input type="radio" name="u12p8" value="hated"> hated</label> &nbsp; <label><input type="radio" name="u12p8" value="liked"> liked</label> &nbsp; <label><input type="radio" name="u12p8" value="needed"> needed</label></p>
+                                <p>4 <label><input type="radio" name="u12p9" value="got"> got</label> &nbsp; <label><input type="radio" name="u12p9" value="went"> went</label> &nbsp; <label><input type="radio" name="u12p9" value="was"> was</label></p>
+                                <p>5 <label><input type="radio" name="u12p10" value="played"> played</label> &nbsp; <label><input type="radio" name="u12p10" value="cooked"> cooked</label> &nbsp; <label><input type="radio" name="u12p10" value="watched"> watched</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU12(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 2: Reading -->
+            <section class="test-section" id="u12-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Read the blog. Tick (✔) True or False.</p>
+                        <div class="reading-panel">
+                            <p><strong>A train in the mountains</strong></p>
+                            <p>Last year, I went on the most fantastic holiday. I went to South America for six weeks! That's a long time to be away from home. I went with my sister, but our parents didn't come with us. It was the first time we were on holiday alone.</p>
+                            <p>We visited three countries: Colombia, Ecuador, and Peru. In Colombia, we visited the capital city, Bogota. I didn't like the city, but my sister loved it. Then in Ecuador, we went to the rainforest and to a market town called Otavalo. I bought some souvenirs there and we ate a delicious meal. In the rainforest, it rained every day. Now I understand why it's called the rainforest.</p>
+                            <p>When we left Ecuador, we travelled to Peru. We visited some famous places and stayed in the mountains for three days. We saw the famous Condor - it's a really big bird. Then we went on my favourite part of the journey. We travelled on the train from Lima, the capital city of Peru, up into the Andes mountains to a town called Huancayo.</p>
+                            <p>The train journey was amazing. We travelled next to the Rimac River and we went on 58 bridges. There were a lot of small towns and the views from the train were beautiful. As the train travelled up into the mountains, the weather was good - it didn't rain, but it was cold. My sister was happy - she loves taking photos. The people that work on the trains speak English, Spanish, and French, so we didn't have problems.</p>
+                            <p>After 12 hours, we arrived in Huancayo, where the train journey finished. We were both very tired, but it was a journey to remember.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <div class="q-item">
+                                <p>1 The writer went on holiday to South America.<br><label><input type="radio" name="u12r1" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r1" value="False"> False</label></p>
+                                <p>2 She went with her parents and her sister.<br><label><input type="radio" name="u12r2" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r2" value="False"> False</label></p>
+                                <p>3 The first country they visited was Colombia.<br><label><input type="radio" name="u12r3" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r3" value="False"> False</label></p>
+                                <p>4 The writer liked Bogota, but her sister didn't.<br><label><input type="radio" name="u12r4" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r4" value="False"> False</label></p>
+                                <p>5 Her sister bought some clothes in Otavalo.<br><label><input type="radio" name="u12r5" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r5" value="False"> False</label></p>
+                                <p>6 It rained a lot in the rainforest.<br><label><input type="radio" name="u12r6" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r6" value="False"> False</label></p>
+                                <p>7 In Peru the writer saw a big bird called a Condor.<br><label><input type="radio" name="u12r7" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r7" value="False"> False</label></p>
+                                <p>8 They started the train journey in Lima.<br><label><input type="radio" name="u12r8" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r8" value="False"> False</label></p>
+                                <p>9 They had problems on the train because people didn't speak English.<br><label><input type="radio" name="u12r9" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r9" value="False"> False</label></p>
+                                <p>10 At the end of the train journey, they didn't feel tired.<br><label><input type="radio" name="u12r10" value="True"> True</label> &nbsp; <label><input type="radio" name="u12r10" value="False"> False</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Read the blog again. Complete the sentences with the correct number.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> The writer went on holiday for <u>six</u> weeks.</p>
+                                <p>1 The writer visited <input type="text" name="u12r2_1" class="small-input"> countries.</p>
+                                <p>2 It was the <input type="text" name="u12r2_2" class="small-input"> time the writer and her sister were on holiday alone.</p>
+                                <p>3 They stayed in the mountains in Peru for <input type="text" name="u12r2_3" class="small-input"> days.</p>
+                                <p>4 There were <input type="text" name="u12r2_4" class="small-input"> bridges on the train journey.</p>
+                                <p>5 They were on the train for <input type="text" name="u12r2_5" class="small-input"> hours from Lima to Huancayo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU12(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU12(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 3: Writing -->
+            <section class="test-section" id="u12-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Answer these questions about last weekend.</p>
+                        <div class="q-item">
+                            <p>1 Where did you go on Saturday or Sunday? <input type="text" class="full-input"></p>
+                            <p>2 Who did you go with? <input type="text" class="full-input"></p>
+                            <p>3 What did you do? <input type="text" class="full-input"></p>
+                            <p>4 Did you enjoy it? <input type="text" class="full-input"></p>
+                            <p>5 Did you feel tired in the evening? <input type="text" class="full-input"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="question-block">
+                        <p class="instruction">2 Now answer the questions about a film you saw in the past.</p>
+                        <div class="q-item">
+                            <p>1 What was the last film you saw? <input type="text" class="full-input"></p>
+                            <p>2 What kind of film was it? <input type="text" class="full-input"></p>
+                            <p>3 Where did you see it? <input type="text" class="full-input"></p>
+                            <p>4 Who did you see it with? <input type="text" class="full-input"></p>
+                            <p>5 Did you enjoy it? Why (not)? <input type="text" class="full-input"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU12(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU12(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 4: Listening -->
+            <section class="test-section" id="u12-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 12/ef5e_beginner_test_item_ 023.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">1 Listen to Laura and Francoise talking about their holidays. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 Francoise went to France on holiday.<br><label><input type="radio" name="u12l1" value="True"> True</label> &nbsp; <label><input type="radio" name="u12l1" value="False"> False</label></p>
+                                <p>2 Francoise is tired after her holiday.<br><label><input type="radio" name="u12l2" value="True"> True</label> &nbsp; <label><input type="radio" name="u12l2" value="False"> False</label></p>
+                                <p>3 Francoise didn't stay in a hotel.<br><label><input type="radio" name="u12l3" value="True"> True</label> &nbsp; <label><input type="radio" name="u12l3" value="False"> False</label></p>
+                                <p>4 Laura moved to Ireland last year.<br><label><input type="radio" name="u12l4" value="True"> True</label> &nbsp; <label><input type="radio" name="u12l4" value="False"> False</label></p>
+                                <p>5 Francoise bought some gifts for Laura.<br><label><input type="radio" name="u12l5" value="True"> True</label> &nbsp; <label><input type="radio" name="u12l5" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 12/ef5e_beginner_test_item_ 024.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">2 Listen to five conversations and answer the questions. Tick (✔) A, B, or C.</p>
+                            <div class="q-item">
+                                <p>1 What didn't Max do?<br>
+                                    <label><input type="radio" name="u12l6" value="A"> A Check in.</label> &nbsp; <label><input type="radio" name="u12l6" value="B"> B Pack his passport.</label> &nbsp; <label><input type="radio" name="u12l6" value="C"> C Book a taxi.</label>
+                                </p>
+                                <p>2 Why did Carmen stay at home yesterday?<br>
+                                    <label><input type="radio" name="u12l7" value="A"> A She was on holiday.</label> &nbsp; <label><input type="radio" name="u12l7" value="B"> B She had a lot of work to do.</label> &nbsp; <label><input type="radio" name="u12l7" value="C"> C The office was closed.</label>
+                                </p>
+                                <p>3 What did Elif do at the weekend?<br>
+                                    <label><input type="radio" name="u12l8" value="A"> A She read a book.</label> &nbsp; <label><input type="radio" name="u12l8" value="B"> B She passed her driving test.</label> &nbsp; <label><input type="radio" name="u12l8" value="C"> C She worked.</label>
+                                </p>
+                                <p>4 What did the woman like about the holiday?<br>
+                                    <label><input type="radio" name="u12l9" value="A"> A The coffee.</label> &nbsp; <label><input type="radio" name="u12l9" value="B"> B The food.</label> &nbsp; <label><input type="radio" name="u12l9" value="C"> C The weather.</label>
+                                </p>
+                                <p>5 What kind of film did the woman see last night?<br>
+                                    <label><input type="radio" name="u12l10" value="A"> A Horror.</label> &nbsp; <label><input type="radio" name="u12l10" value="B"> B Comedy.</label> &nbsp; <label><input type="radio" name="u12l10" value="C"> C Action.</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU12(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU12()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <!-- Final Step: Details -->
+            <section class="test-section" id="u12-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                
+                <div class="question-block">
+                    <div class="q-item" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">First Name *</label>
+                            <input type="text" id="u12First" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Last Name *</label>
+                            <input type="text" id="u12Last" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Group / Level *</label>
+                            <input type="text" id="u12Group" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Phone Number *</label>
+                            <input type="tel" id="u12Phone" class="full-input" value="+998 " style="margin-bottom: 0;" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit12()" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u12-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u12ExamMode = localStorage.getItem('edu_exam_mode_unit12');
+        if (u12ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u12Sections = ['u12-part1', 'u12-reading', 'u12-writing', 'u12-listening', 'u12-details'];
+        const u12Total = u12Sections.length;
+
+        function updateU12(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u12Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u12Total}`;
+        }
+
+        function showU12(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u12Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU12(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU12(current) { showU12(current); }
+        function prevU12(current) { showU12(current - 2); }
+        function finalU12() { showU12(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]:not([disabled])')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]:not([disabled])'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]:not([disabled])'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit12() {
+            const first = document.getElementById('u12First').value.trim();
+            const last = document.getElementById('u12Last').value.trim();
+            const group = document.getElementById('u12Group').value.trim();
+            const phone = document.getElementById('u12Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u12g1_1: 'bought', u12g1_2: 'wrote', u12g1_3: ['didn\'t get', 'did not get'], u12g1_4: ['didn\'t say', 'did not say'], u12g1_5: 'sent',
+                // Grammar 2
+                u12g2_1: 'went', u12g2_2: 'had', u12g2_3: 'stayed', u12g2_4: 'visited', u12g2_5: 'bought',
+                // Vocabulary 3
+                u12v3_1: 'waited', u12v3_2: 'exchanged', u12v3_3: 'moved', u12v3_4: 'told', u12v3_5: 'sat',
+                // Vocabulary 4
+                u12v1: 'B', u12v2: 'A', u12v3: 'A', u12v4: 'B', u12v5: 'A',
+                // Pronunciation 5
+                u12p1: '1', u12p2: '1', u12p3: '1', u12p4: '1', u12p5: '2',
+                // Pronunciation 6
+                u12p6: 'waited', u12p7: 'was', u12p8: 'liked', u12p9: 'went', u12p10: 'played',
+                // Reading 1
+                u12r1: 'True', u12r2: 'False', u12r3: 'True', u12r4: 'False', u12r5: 'False', u12r6: 'True', u12r7: 'True', u12r8: 'True', u12r9: 'False', u12r10: 'False',
+                // Reading 2
+                u12r2_1: 'three', u12r2_2: 'first', u12r2_3: 'three', u12r2_4: '58', u12r2_5: '12',
+                // Listening 1
+                u12l1: 'True', u12l2: 'False', u12l3: 'True', u12l4: 'False', u12l5: 'True',
+                // Listening 2
+                u12l6: 'C', u12l7: 'B', u12l8: 'A', u12l9: 'B', u12l10: 'C'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    let actual = '';
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else {
+                        actual = field[0].value;
+                    }
+
+                    const normalizedActual = normalize(actual);
+                    if (Array.isArray(expected)) {
+                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
+                    } else if (normalizedActual === normalize(expected)) {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u12-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 12',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPron: sectionStats('u12-part1'),
+                    reading: sectionStats('u12-reading'),
+                    writing: sectionStats('u12-writing'),
+                    listening: sectionStats('u12-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit12Form').style.display = 'none';
+            const res = document.getElementById('u12-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU12(0);
+            const p = document.getElementById('u12Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+

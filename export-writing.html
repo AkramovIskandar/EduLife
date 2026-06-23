@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLife — Writing export</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 2rem; background: #f8fafc; color: #0f172a; }
+        h1 { font-size: 1.5rem; }
+        .bar { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0; align-items: center; }
+        button, .btn { padding: 0.6rem 1rem; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+        .primary { background: #2563eb; color: #fff; }
+        .secondary { background: #e2e8f0; color: #0f172a; }
+        #status { margin: 1rem 0; padding: 0.75rem 1rem; border-radius: 8px; background: #fff; border: 1px solid #e2e8f0; }
+        table { width: 100%; border-collapse: collapse; background: #fff; font-size: 0.9rem; }
+        th, td { border: 1px solid #e2e8f0; padding: 0.6rem 0.75rem; vertical-align: top; text-align: left; }
+        th { background: #f1f5f9; position: sticky; top: 0; }
+        .writing { max-width: 420px; white-space: pre-wrap; word-break: break-word; }
+        .muted { color: #64748b; font-size: 0.85rem; }
+        .empty { padding: 2rem; text-align: center; color: #64748b; }
+    </style>
+</head>
+<body>
+    <h1>Writing topshiriqlari — eksport</h1>
+    <p class="muted">Ma'lumot <code>submissions</code> jadvalidagi <code>raw_answers</code> va <code>section_completion.writing</code> dan olinadi.</p>
+    <div class="bar">
+        <button class="primary" id="btnLoad">Supabase dan yuklash</button>
+        <button class="secondary" id="btnCsv" disabled>CSV yuklab olish</button>
+        <button class="secondary" id="btnJson" disabled>JSON yuklab olish</button>
+    </div>
+    <div id="status">Tayyor. «Supabase dan yuklash» ni bosing.</div>
+    <div id="wrap"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        let rows = [];
+
+        function formatWriting(raw) {
+            if (!raw || typeof raw !== 'object') return '';
+            const w = raw.writingText ?? raw.writing ?? raw.w1 ?? '';
+            if (Array.isArray(w)) return w.filter(Boolean).map((t, i) => `[${i + 1}] ${t}`).join('\n\n');
+            if (typeof w === 'string' && w.trim()) return w;
+            const parts = [];
+            ['w1', 'w2', 'w3'].forEach(k => { if (raw[k]) parts.push(raw[k]); });
+            if (parts.length) return parts.join('\n\n');
+            if (raw && typeof raw === 'object' && Object.keys(raw).length) {
+                const entries = Object.entries(raw).filter(([, v]) => v != null && String(v).trim());
+                if (entries.length) return entries.map(([k, v]) => `${k}: ${v}`).join('\n');
+            }
+            return '';
+        }
+
+        function writingScore(sectionCompletion) {
+            const w = sectionCompletion?.writing;
+            if (!w || !w.total) return '— (qo\'lda / umumiy ball)';
+            const pct = w.percent != null ? w.percent : Math.round((w.answered / w.total) * 100);
+            return `${w.answered ?? 0} / ${w.total} (${pct}%)`;
+        }
+
+        function hasWriting(raw) {
+            return formatWriting(raw).trim().length > 0;
+        }
+
+        async function loadData() {
+            const status = document.getElementById('status');
+            if (!window.eduSupabase) {
+                status.innerHTML = '<strong style="color:#dc2626">Xato:</strong> Supabase ulanmagan. <code>supabase-config.js</code> URL va anon key ni tekshiring.';
+                return;
+            }
+            status.textContent = 'Yuklanmoqda...';
+            const { data, error } = await window.eduSupabase
+                .from('submissions')
+                .select('id, student_name, student_username, test_type, score, raw_answers, section_completion, created_at')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                status.innerHTML = `<strong style="color:#dc2626">Xato:</strong> ${error.message}`;
+                return;
+            }
+
+            const all = data || [];
+            rows = all.filter(r => hasWriting(r.raw_answers)).map(r => ({
+                id: r.id,
+                student_name: r.student_name || '—',
+                student_username: r.student_username || '—',
+                test_type: r.test_type || '—',
+                score: r.score ?? '—',
+                writing_ball: writingScore(r.section_completion),
+                created_at: r.created_at ? new Date(r.created_at).toLocaleString() : '—',
+                writing_text: formatWriting(r.raw_answers)
+            }));
+
+            status.innerHTML = `Jami topshiruv: <strong>${all.length}</strong>. Writing bor: <strong>${rows.length}</strong>.`;
+            document.getElementById('btnCsv').disabled = rows.length === 0;
+            document.getElementById('btnJson').disabled = rows.length === 0;
+            renderTable();
+        }
+
+        function renderTable() {
+            const wrap = document.getElementById('wrap');
+            if (!rows.length) {
+                wrap.innerHTML = '<div class="empty">Writing matni topilmadi. Boshqa Supabase loyihasida ma\'lumot bo\'lishi mumkin — Table Editor → submissions ni tekshiring.</div>';
+                return;
+            }
+            const trs = rows.map(r => `
+                <tr>
+                    <td>${escapeHtml(r.student_name)}<br><span class="muted">@${escapeHtml(r.student_username)}</span></td>
+                    <td>${escapeHtml(r.test_type)}</td>
+                    <td>${escapeHtml(String(r.score))}</td>
+                    <td>${escapeHtml(r.writing_ball)}</td>
+                    <td class="muted">${escapeHtml(r.created_at)}</td>
+                    <td class="writing">${escapeHtml(r.writing_text)}</td>
+                </tr>
+            `).join('');
+            wrap.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>O'quvchi</th>
+                            <th>Test</th>
+                            <th>Umumiy ball</th>
+                            <th>Writing bo'limi</th>
+                            <th>Sana</th>
+                            <th>Writing matni</th>
+                        </tr>
+                    </thead>
+                    <tbody>${trs}</tbody>
+                </table>`;
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        function download(name, content, type) {
+            const blob = new Blob([content], { type });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = name;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        function toCsv() {
+            const header = ['student_name','student_username','test_type','score','writing_ball','created_at','writing_text'];
+            const lines = [header.join(',')];
+            rows.forEach(r => {
+                lines.push(header.map(h => `"${String(r[h]).replace(/"/g, '""')}"`).join(','));
+            });
+            download(`edulife-writing-${Date.now()}.csv`, lines.join('\n'), 'text/csv;charset=utf-8');
+        }
+
+        document.getElementById('btnLoad').addEventListener('click', loadData);
+        document.getElementById('btnCsv').addEventListener('click', toCsv);
+        document.getElementById('btnJson').addEventListener('click', () => {
+            download(`edulife-writing-${Date.now()}.json`, JSON.stringify(rows, null, 2), 'application/json');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 8 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table-custom { width:100%; border-collapse: collapse; margin-bottom: 1rem; }
+        .table-custom th, .table-custom td { border: 1px solid #CBD5E1; padding: 0.4rem; text-align: center; font-size: 0.9rem; }
+        .table-custom td:first-child { text-align: left; font-weight: 500; }
+        
+        @media (max-width: 992px) { 
+            .sheet-grid { grid-template-columns: 1fr; } 
+            .reading-layout { grid-template-columns:1fr; } 
+        }
+        body.dark-theme .word-bank { background: #1F2937; border-color: #475569; color: #E2E8F0; }
+        body.dark-theme .table-custom th,
+        body.dark-theme .table-custom td {
+            border-color: #334155;
+            color: #cbd5e1;
+        }
+
+        body.dark-theme .table-custom th {
+            background: #1e293b;
+            color: var(--white);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 8</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit8Form">
+            <!-- PART 1: Grammar, Vocabulary, Pronunciation -->
+            <section class="test-section active" id="u8-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>GRAMMAR</h3>
+                            <p class="instruction">1 Write <em>can</em> or <em>can't</em> to complete the dialogues.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> A Can I sit here?<br>&nbsp; &nbsp; B Yes, you <u>can</u>.</p>
+                                <p>1 A When <input type="text" name="u8g1_1" class="small-input"> you come?<br>&nbsp; &nbsp; B I can come at 10 o'clock.</p>
+                                <p>2 A Can your sister speak English?<br>&nbsp; &nbsp; B No, she <input type="text" name="u8g1_2" class="small-input">.</p>
+                                <p>3 A Can we take photos in the museum?<br>&nbsp; &nbsp; B No, you <input type="text" name="u8g1_3" class="small-input">.</p>
+                                <p>4 A Can you help me?<br>&nbsp; &nbsp; B Yes, I <input type="text" name="u8g1_4" class="small-input">.</p>
+                                <p>5 A Oh no! We <input type="text" name="u8g1_5" class="small-input"> park here.<br>&nbsp; &nbsp; B Don't worry! We can park over there.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Complete the sentences with a verb from the box. Use the verb + <em>-ing</em>.</p>
+                            <div class="word-bank">cook, drive, get, go, swim, watch</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Rafael loves <u>watching</u> horror films.</p>
+                                <p>1 Mike loves <input type="text" name="u8g2_1" class="small-input"> shopping.</p>
+                                <p>2 I really like <input type="text" name="u8g2_2" class="small-input"> paella. It's my favourite dish.</p>
+                                <p>3 My husband hates <input type="text" name="u8g2_3" class="small-input"> the car in the city.</p>
+                                <p>4 Do you like <input type="text" name="u8g2_4" class="small-input"> in the sea?</p>
+                                <p>5 Jasmina doesn't like <input type="text" name="u8g2_5" class="small-input"> up early.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>VOCABULARY</h3>
+                            <p class="instruction">3 Choose the correct verb from the box to complete the phrases.</p>
+                            <div class="word-bank">play, park, pay, take, use</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <u>take</u> photos</p>
+                                <p>1 <input type="text" name="u8v3_1" class="small-input"> your phone</p>
+                                <p>2 <input type="text" name="u8v3_2" class="small-input"> football</p>
+                                <p>3 <input type="text" name="u8v3_3" class="small-input"> by cash</p>
+                                <p>4 <input type="text" name="u8v3_4" class="small-input"> a coffee</p>
+                                <p>5 <input type="text" name="u8v3_5" class="small-input"> here</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">4 Tick (✔) the correct word.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> My father <label><input type="radio" disabled> sees</label> / <label><input type="radio" checked disabled> reads</label> a newspaper every day.</p>
+                                <p>1 I don't always <label><input type="radio" name="u8v1" value="buy"> buy</label> / <label><input type="radio" name="u8v1" value="make"> make</label> clothes when I go shopping.</p>
+                                <p>2 We like <label><input type="radio" name="u8v2" value="doing"> doing</label> / <label><input type="radio" name="u8v2" value="going"> going</label> for a walk at the weekend.</p>
+                                <p>3 Do you always <label><input type="radio" name="u8v3" value="cook"> cook</label> / <label><input type="radio" name="u8v3" value="eat"> eat</label> for your family?</p>
+                                <p>4 My daughter loves <label><input type="radio" name="u8v4" value="doing"> doing</label> / <label><input type="radio" name="u8v4" value="going"> going</label> yoga.</p>
+                                <p>5 My parents hate <label><input type="radio" name="u8v5" value="cooking"> cooking</label> / <label><input type="radio" name="u8v5" value="eating"> eating</label> out. They don't like restaurants.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRONUNCIATION</h3>
+                            <p class="instruction">5 Match the words with the same sound.</p>
+                            <div class="word-bank">book, car, cat, computer, going, school</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> teacher - <u>computer</u></p>
+                                <p>1 food <input type="text" name="u8p5_1" class="tiny-input"></p>
+                                <p>2 cook <input type="text" name="u8p5_2" class="tiny-input"></p>
+                                <p>3 singer <input type="text" name="u8p5_3" class="tiny-input"></p>
+                                <p>4 can <input type="text" name="u8p5_4" class="tiny-input"></p>
+                                <p>5 can't <input type="text" name="u8p5_5" class="tiny-input"></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">6 Which is the stressed syllable? Tick (✔) 1, 2, or 3.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> cam|ping <strong>1</strong> ✓</p>
+                                <p>1 in|struc|tor <label><input type="radio" name="u8p1" value="1"> 1</label> <label><input type="radio" name="u8p1" value="2"> 2</label> <label><input type="radio" name="u8p1" value="3"> 3</label></p>
+                                <p>2 prac|ti|cal <label><input type="radio" name="u8p2" value="1"> 1</label> <label><input type="radio" name="u8p2" value="2"> 2</label> <label><input type="radio" name="u8p2" value="3"> 3</label></p>
+                                <p>3 ci|ne|ma <label><input type="radio" name="u8p3" value="1"> 1</label> <label><input type="radio" name="u8p3" value="2"> 2</label> <label><input type="radio" name="u8p3" value="3"> 3</label></p>
+                                <p>4 cla|ssi|cal <label><input type="radio" name="u8p4" value="1"> 1</label> <label><input type="radio" name="u8p4" value="2"> 2</label> <label><input type="radio" name="u8p4" value="3"> 3</label></p>
+                                <p>5 dis|as|ter <label><input type="radio" name="u8p5" value="1"> 1</label> <label><input type="radio" name="u8p5" value="2"> 2</label> <label><input type="radio" name="u8p5" value="3"> 3</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU8(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 2: Reading -->
+            <section class="test-section" id="u8-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Read the information. Tick (✔) True or False.</p>
+                        <div class="reading-panel">
+                            <p><strong>University Club Bulletin Board</strong></p>
+                            <p>What do you like doing in your free time? At the university, we have a lot of different clubs, so read this and find a club for you.</p>
+                            <p>Do you like singing? If 'yes', then the singing club is for you! We meet every Monday and Thursday evenings from 8 p.m. until 10 p.m. Then, on the third Thursday of every month, we have a show. A lot of people from the town come and watch our shows. Come and see our club. It is free!</p>
+                            <p>Do you like watching films but hate going to the cinema? Then the cinema club is perfect for you! Every Friday evening, we watch a new film at the university and then we talk about the film. It's a great way to see films and make new friends, and at £5 it isn't expensive. Come this Friday and meet the club.</p>
+                            <p>What do you like doing to relax? A lot of students enjoy doing things like playing sports or running, but these things are not for all people. Students also like doing yoga to relax. Our yoga classes start every Saturday morning at half past nine. The price is £6 for each class, or you can book three classes for £15.</p>
+                            <p>Do you love eating but hate cooking? We know that eating out is expensive and that fast food is not good. So, come to our club and learn how cooking can be fun. The classes are on Monday evenings at 7:45 in the university restaurant. We have six classes for each course and the price is £72, but you can eat the food you cook!</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <div class="q-item">
+                                <p><strong>Example:</strong> The bulletin board has information about four different clubs.<br><label><input type="radio" checked disabled> True</label> &nbsp; <label><input type="radio" disabled> False</label></p>
+                                <p>1 The singing club meets on two evenings every week.<br><label><input type="radio" name="u8r1" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r1" value="False"> False</label></p>
+                                <p>2 The singing club has a show every week.<br><label><input type="radio" name="u8r2" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r2" value="False"> False</label></p>
+                                <p>3 A lot of people from the town are in the singing club.<br><label><input type="radio" name="u8r3" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r3" value="False"> False</label></p>
+                                <p>4 In the cinema club, you can watch a film on Friday evenings.<br><label><input type="radio" name="u8r4" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r4" value="False"> False</label></p>
+                                <p>5 People usually go with their old friends to the cinema club.<br><label><input type="radio" name="u8r5" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r5" value="False"> False</label></p>
+                                <p>6 The yoga classes start at 9:30 on Saturday morning.<br><label><input type="radio" name="u8r6" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r6" value="False"> False</label></p>
+                                <p>7 The price of the yoga classes is £15 for every class.<br><label><input type="radio" name="u8r7" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r7" value="False"> False</label></p>
+                                <p>8 It isn't cheap to eat out.<br><label><input type="radio" name="u8r8" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r8" value="False"> False</label></p>
+                                <p>9 The cooking club is for people who hate cooking.<br><label><input type="radio" name="u8r9" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r9" value="False"> False</label></p>
+                                <p>10 The price of the cooking club is £72.<br><label><input type="radio" name="u8r10" value="True"> True</label> &nbsp; <label><input type="radio" name="u8r10" value="False"> False</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Read the text again. Complete the answers to the questions.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> A What clubs does the university have?<br>&nbsp; &nbsp; B It has <u>singing, cinema, yoga, and cooking</u> clubs.</p>
+                                <p>1 What time does the singing club meet?<br>&nbsp; &nbsp; It meets <input type="text" name="u8r2_1" class="full-input" style="width:200px!important"></p>
+                                <p>2 What is the price for the cinema club?<br>&nbsp; &nbsp; It is <input type="text" name="u8r2_2" class="full-input" style="width:200px!important"></p>
+                                <p>3 What do people do at the cinema club?<br>&nbsp; &nbsp; They <input type="text" name="u8r2_3" class="small-input"> and <input type="text" name="u8r2_4" class="small-input"></p>
+                                <p>4 What kind of classes can you go to on Saturday mornings?<br>&nbsp; &nbsp; You can go to <input type="text" name="u8r2_5" class="small-input"> on Saturday mornings.</p>
+                                <p>5 When are the cooking classes?<br>&nbsp; &nbsp; They are on <input type="text" name="u8r2_6" class="small-input"> at <input type="text" name="u8r2_7" class="small-input"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU8(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU8(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 3: Writing -->
+            <section class="test-section" id="u8-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="question-block">
+                    <p class="instruction">Answer the questions about your town / city with complete sentences.</p>
+                    <div class="q-item">
+                        <p>1 What can people buy in your town / city? <input type="text" class="full-input"></p>
+                        <p>2 Are clothes expensive in your town / city? <input type="text" class="full-input"></p>
+                        <p>3 Where can people eat / drink in your town / city? <input type="text" class="full-input"></p>
+                        <p>4 What can people do in their free time in your town / city? <input type="text" class="full-input"></p>
+                        <p>5 Which places in your town / city are interesting for people to visit? <input type="text" class="full-input"></p>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU8(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU8(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 4: Listening -->
+            <section class="test-section" id="u8-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 8/ef5e_beginner_test_item_ 015.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">1 Listen to Rosa telling Tom about her likes and dislikes. Tick (✔) A, B, or C to complete the sentences.</p>
+                            <div class="q-item">
+                                <p>1 Rosa doesn't like...<br>
+                                    <label><input type="radio" name="u8l1" value="A"> A going for walks</label> &nbsp; <label><input type="radio" name="u8l1" value="B"> B doing yoga</label> &nbsp; <label><input type="radio" name="u8l1" value="C"> C being hot</label>
+                                </p>
+                                <p>2 She likes...<br>
+                                    <label><input type="radio" name="u8l2" value="A"> A cycling</label> &nbsp; <label><input type="radio" name="u8l2" value="B"> B running</label> &nbsp; <label><input type="radio" name="u8l2" value="C"> C watching sports</label>
+                                </p>
+                                <p>3 She enjoys eating out and camping...<br>
+                                    <label><input type="radio" name="u8l3" value="A"> A at the weekend</label> &nbsp; <label><input type="radio" name="u8l3" value="B"> B with her friends</label> &nbsp; <label><input type="radio" name="u8l3" value="C"> C with her family</label>
+                                </p>
+                                <p>4 Rosa and her boyfriend like...<br>
+                                    <label><input type="radio" name="u8l4" value="A"> A swimming</label> &nbsp; <label><input type="radio" name="u8l4" value="B"> B taking photos</label> &nbsp; <label><input type="radio" name="u8l4" value="C"> C eating out</label>
+                                </p>
+                                <p>5 Rosa hates...<br>
+                                    <label><input type="radio" name="u8l5" value="A"> A driving</label> &nbsp; <label><input type="radio" name="u8l5" value="B"> B flying</label> &nbsp; <label><input type="radio" name="u8l5" value="C"> C travelling</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 8/ef5e_beginner_test_item_ 016.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">2 Listen to five conversations. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 You can't take photos in the museum.<br><label><input type="radio" name="u8l6" value="True"> True</label> &nbsp; <label><input type="radio" name="u8l6" value="False"> False</label></p>
+                                <p>2 The man loves Chinese food.<br><label><input type="radio" name="u8l7" value="True"> True</label> &nbsp; <label><input type="radio" name="u8l7" value="False"> False</label></p>
+                                <p>3 The woman can park here.<br><label><input type="radio" name="u8l8" value="True"> True</label> &nbsp; <label><input type="radio" name="u8l8" value="False"> False</label></p>
+                                <p>4 The man can't shop now.<br><label><input type="radio" name="u8l9" value="True"> True</label> &nbsp; <label><input type="radio" name="u8l9" value="False"> False</label></p>
+                                <p>5 The man likes doing sport.<br><label><input type="radio" name="u8l10" value="True"> True</label> &nbsp; <label><input type="radio" name="u8l10" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU8(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU8()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <!-- Final Step: Details -->
+            <section class="test-section" id="u8-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                
+                <div class="question-block">
+                    <div class="q-item" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">First Name *</label>
+                            <input type="text" id="u8First" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Last Name *</label>
+                            <input type="text" id="u8Last" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Group / Level *</label>
+                            <input type="text" id="u8Group" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Phone Number *</label>
+                            <input type="tel" id="u8Phone" class="full-input" value="+998 " style="margin-bottom: 0;" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit8()" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u8-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u8ExamMode = localStorage.getItem('edu_exam_mode_unit8');
+        if (u8ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u8Sections = ['u8-part1', 'u8-reading', 'u8-writing', 'u8-listening', 'u8-details'];
+        const u8Total = u8Sections.length;
+
+        function updateU8(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u8Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u8Total}`;
+        }
+
+        function showU8(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u8Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU8(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU8(current) { showU8(current); }
+        function prevU8(current) { showU8(current - 2); }
+        function finalU8() { showU8(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]:not([disabled])')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]:not([disabled])'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]:not([disabled])'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit8() {
+            const first = document.getElementById('u8First').value.trim();
+            const last = document.getElementById('u8Last').value.trim();
+            const group = document.getElementById('u8Group').value.trim();
+            const phone = document.getElementById('u8Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u8g1_1: 'can', u8g1_2: 'can\'t', u8g1_3: 'can\'t', u8g1_4: 'can', u8g1_5: 'can\'t',
+                // Grammar 2
+                u8g2_1: 'going', u8g2_2: 'cooking', u8g2_3: 'driving', u8g2_4: 'swimming', u8g2_5: 'getting',
+                // Vocabulary 3
+                u8v3_1: 'use', u8v3_2: 'play', u8v3_3: 'pay', u8v3_4: 'have', u8v3_5: 'park',
+                // Vocabulary 4
+                u8v1: 'buy', u8v2: 'going', u8v3: 'cook', u8v4: 'doing', u8v5: 'eating',
+                // Pronunciation 5
+                u8p5_1: 'school', u8p5_2: 'book', u8p5_3: 'going', u8p5_4: 'cat', u8p5_5: 'car',
+                // Pronunciation 6
+                u8p1: '2', u8p2: '1', u8p3: '1', u8p4: '1', u8p5: '2',
+                // Reading 1
+                u8r1: 'True', u8r2: 'False', u8r3: 'False', u8r4: 'True', u8r5: 'False', u8r6: 'True', u8r7: 'False', u8r8: 'True', u8r9: 'True', u8r10: 'True',
+                // Reading 2
+                u8r2_1: 'from 8 p.m. until 10 p.m.', u8r2_2: '£5', u8r2_3: 'watch a new film', u8r2_4: 'then talk about it', u8r2_5: 'yoga', u8r2_6: 'Monday evenings', u8r2_7: '7:45',
+                // Listening 1
+                u8l1: 'C', u8l2: 'A', u8l3: 'B', u8l4: 'A', u8l5: 'B',
+                // Listening 2
+                u8l6: 'True', u8l7: 'True', u8l8: 'False', u8l9: 'False', u8l10: 'False'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                let actual = '';
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else if (field[0].type === 'text') {
+                        actual = field[0].value.trim().toLowerCase();
+                    }
+                }
+
+                if (Array.isArray(expected)) {
+                    if (expected.some(e => actual === e.toLowerCase())) score++;
+                } else if (typeof expected === 'string' && actual === (key.includes('u8r2') || key.includes('u8s2') ? expected.toLowerCase() : expected.toLowerCase())) {
+                   score++;
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u8-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 8',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPron: sectionStats('u8-part1'),
+                    reading: sectionStats('u8-reading'),
+                    writing: sectionStats('u8-writing'),
+                    listening: sectionStats('u8-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit8Form').style.display = 'none';
+            const res = document.getElementById('u8-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU8(0);
+            const p = document.getElementById('u8Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+

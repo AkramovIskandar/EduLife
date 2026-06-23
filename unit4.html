@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 4 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 992px) { 
+            .sheet-grid { grid-template-columns: 1fr; } 
+            .reading-layout { grid-template-columns:1fr; } 
+        }
+        body.dark-theme .word-bank { background: #1F2937; border-color: #475569; color: #E2E8F0; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 4</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, practical English, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit4Form">
+            <!-- PART 1: Grammar, Vocabulary, Pronunciation -->
+            <section class="test-section active" id="u4-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>GRAMMAR</h3>
+                            <p class="instruction">1 Tick (✔) the correct sentence.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <label><input type="radio" checked disabled> A It's a big dog.</label> <label><input type="radio" disabled> B It's a dog big.</label></p>
+                                <p>1 <label><input type="radio" name="u4g1" value="A"> A This is a restaurant expensive.</label><br><label><input type="radio" name="u4g1" value="B"> B This is an expensive restaurant.</label></p>
+                                <p>2 <label><input type="radio" name="u4g2" value="A"> A Your children are beautiful.</label><br><label><input type="radio" name="u4g2" value="B"> B Your beautiful are children.</label></p>
+                                <p>3 <label><input type="radio" name="u4g3" value="A"> A It's Mexican food.</label><br><label><input type="radio" name="u4g3" value="B"> B It's food Mexican.</label></p>
+                                <p>4 <label><input type="radio" name="u4g4" value="A"> A This is my parent's car.</label><br><label><input type="radio" name="u4g4" value="B"> B This is my parents' car.</label></p>
+                                <p>5 <label><input type="radio" name="u4g5" value="A"> A These are olds houses.</label><br><label><input type="radio" name="u4g5" value="B"> B These are old houses.</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Complete the sentences with <em>my, your, his, her, its, our,</em> or <em>their</em>.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> I'm from England, but <u>my</u> wife is from France.</p>
+                                <p>1 A What's your name?<br>B <input type="text" name="u4g2_1" class="small-input" placeholder="word"> name? Oh, it's Gabriella.</p>
+                                <p>2 This is my sister. <input type="text" name="u4g2_2" class="small-input" placeholder="word"> name is Dani.</p>
+                                <p>3 The hotel is fantastic. <input type="text" name="u4g2_3" class="small-input" placeholder="word"> name is Ocean View.</p>
+                                <p>4 They're my children. <input type="text" name="u4g2_4" class="small-input" placeholder="word"> names are Tomas and Vicente.</p>
+                                <p>5 We have a new house. <input type="text" name="u4g2_5" class="small-input" placeholder="word"> new address is 5 Green Street.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>VOCABULARY</h3>
+                            <p class="instruction">3 Tick (✔) the correct answer.</p>
+                            <div class="q-item">
+                                <p>1 Is your T-shirt clean?<br><label><input type="radio" name="u4v1" value="no dirty"> A No, it's dirty.</label> &nbsp; <label><input type="radio" name="u4v1" value="no ugly"> B No, it's ugly.</label></p>
+                                <p>2 Is that car fast?<br><label><input type="radio" name="u4v2" value="no slow"> A No, it's slow.</label> &nbsp; <label><input type="radio" name="u4v2" value="no cheap"> B No, it's cheap.</label></p>
+                                <p>3 Is that an expensive watch?<br><label><input type="radio" name="u4v3" value="no cheap"> A No, it's a cheap watch.</label> &nbsp; <label><input type="radio" name="u4v3" value="no long"> B No, it's a long watch.</label></p>
+                                <p>4 Is your house new?<br><label><input type="radio" name="u4v4" value="no small"> A No, it's small.</label> &nbsp; <label><input type="radio" name="u4v4" value="no old"> B No, it's old.</label></p>
+                                <p>5 Is the test easy?<br><label><input type="radio" name="u4v5" value="no short"> A No, it's short.</label> &nbsp; <label><input type="radio" name="u4v5" value="no difficult"> B No, it's difficult.</label></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">4 Write <em>man, men, woman, women, child,</em> or <em>children</em>.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> My wife. <u>woman</u></p>
+                                <p>1 My father. <input type="text" name="u4v4_1" class="small-input"></p>
+                                <p>2 My daughter. She's two. <input type="text" name="u4v4_2" class="small-input"></p>
+                                <p>3 My son and daughter. <input type="text" name="u4v4_3" class="small-input"></p>
+                                <p>4 My brother. He's 19. <input type="text" name="u4v4_4" class="small-input"></p>
+                                <p>5 My grandfathers. They are 75 and 80. <input type="text" name="u4v4_5" class="small-input"></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRONUNCIATION</h3>
+                            <p class="instruction">5 Which is the stressed syllable? Tick (✔) 1, 2, or 3.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> beau|ti|ful <strong>1</strong> ✓</p>
+                                <p>1 fa|ther <label><input type="radio" name="u4p1" value="1"> 1</label> <label><input type="radio" name="u4p1" value="2"> 2</label></p>
+                                <p>2 fa|mi|ly <label><input type="radio" name="u4p2" value="1"> 1</label> <label><input type="radio" name="u4p2" value="2"> 2</label> <label><input type="radio" name="u4p2" value="3"> 3</label></p>
+                                <p>3 ex|pen|sive <label><input type="radio" name="u4p3" value="1"> 1</label> <label><input type="radio" name="u4p3" value="2"> 2</label> <label><input type="radio" name="u4p3" value="3"> 3</label></p>
+                                <p>4 co|lour <label><input type="radio" name="u4p4" value="1"> 1</label> <label><input type="radio" name="u4p4" value="2"> 2</label></p>
+                                <p>5 com|pu|ter <label><input type="radio" name="u4p5" value="1"> 1</label> <label><input type="radio" name="u4p5" value="2"> 2</label> <label><input type="radio" name="u4p5" value="3"> 3</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">6 Match the words with the same sound.</p>
+                            <div class="word-bank">bags, brother, computer, father, man, short</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> zero - <u>bags</u></p>
+                                <p>1 family <input type="text" name="u4p6_1" class="tiny-input"></p>
+                                <p>2 small <input type="text" name="u4p6_2" class="tiny-input"></p>
+                                <p>3 fast <input type="text" name="u4p6_3" class="tiny-input"></p>
+                                <p>4 woman <input type="text" name="u4p6_4" class="tiny-input"></p>
+                                <p>5 husband <input type="text" name="u4p6_5" class="tiny-input"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU4(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 2: Reading -->
+            <section class="test-section" id="u4-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Read the email and match the names in the box with the descriptions.</p>
+                        <div class="reading-panel">
+                            <p><strong>To:</strong> Manny<br><strong>From:</strong> Luiz<br><strong>Subject:</strong> My family</p>
+                            <p>Hi Manny, my new penfriend! My name's Luiz Pereira and I'm in London with my girlfriend. Her name is Mia. We're not English. I'm from Brazil and she is Swiss. She's from Geneva. I'm 26 and Mia is 24. Our house is very small, but it's great. London isn't a cheap city, but it's beautiful.</p>
+                            <p>I have a big family. My father's name is Paulo and he's 55. My mother is 50. Her name's Valentina and she's very nice. My mother's American, but her mother and father are Italian. They're from Turin. I have three sisters. Their names are Marcia, Aline, and Rosa. Rosa is an Italian name. Her husband's name is Jack and he's from New York. Marcia is 23 and she's a student in Madrid in Spain. Aline is 18. She's at home with our parents.</p>
+                            <p>My parents have a big house and an expensive, red car. It's new and fast, but very small!</p>
+                            <p>What about your family?</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <div class="word-bank">Aline, Jack, Luiz, Marcia, Mia, Paulo, Rosa, Valentina</div>
+                            <div class="q-item compact-options">
+                                <p><strong>Example:</strong> He's 26 and Brazilian. <u>Luiz</u></p>
+                                <p>1 She's from Geneva and is 24. <input type="text" name="u4r1_1" class="small-input"></p>
+                                <p>2 He's married to one of Luiz's sisters. <input type="text" name="u4r1_2" class="small-input"></p>
+                                <p>3 She's 23 and is in Madrid. <input type="text" name="u4r1_3" class="small-input"></p>
+                                <p>4 He's 55. <input type="text" name="u4r1_4" class="small-input"></p>
+                                <p>5 She's 18 and is with her parents. <input type="text" name="u4r1_5" class="small-input"></p>
+                                <p>6 She's American, but her parents are Italian. <input type="text" name="u4r1_6" class="small-input"></p>
+                                <p>7 She's married to Jack. <input type="text" name="u4r1_7" class="small-input"></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Read the email again and complete the answers to the questions.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> A What is Luiz's last name?<br>B It's <u>Pereira</u>.</p>
+                                <p>1 A Is London expensive?<br>B Yes, <input type="text" name="u4r2_1" class="small-input">.</p>
+                                <p>2 A What is Luiz's father's name?<br>B It's <input type="text" name="u4r2_2" class="small-input">.</p>
+                                <p>3 A How old is Luiz's mother?<br>B She's <input type="text" name="u4r2_3" class="small-input">.</p>
+                                <p>4 A Where is Luiz's girlfriend from?<br>B She's from <input type="text" name="u4r2_4" class="small-input">.</p>
+                                <p>5 A What are Luiz's sisters' names?<br>B Their names are <input type="text" name="u4r2_5" class="small-input">.</p>
+                                <p>6 A What is Rosa's husband's name?<br>B His name is <input type="text" name="u4r2_6" class="small-input">.</p>
+                                <p>7 A Is his parents' house big?<br>B Yes, <input type="text" name="u4r2_7" class="small-input">.</p>
+                                <p>8 A What nationality is Luiz's mother?<br>B She's <input type="text" name="u4r2_8" class="small-input">.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU4(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU4(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 3: Writing -->
+            <section class="test-section" id="u4-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="question-block">
+                    <p class="instruction">1 Answer the questions about a man in your family.</p>
+                    <div class="q-item">
+                        <p><strong>Example:</strong> <em>He's my brother / father / grandfather / husband / son. His name is...</em></p>
+                        <p style="margin-top: 10px;">Who is he? <input type="text" class="full-input"></p>
+                        <p>What's his name? <input type="text" class="full-input"></p>
+                        <p>Where is he from? <input type="text" class="full-input"></p>
+                        <p>How old is he? <input type="text" class="full-input"></p>
+                        <p>Is he married? <input type="text" class="full-input"></p>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <p class="instruction">2 Now answer the questions about a woman in your family.</p>
+                    <div class="q-item">
+                        <p><strong>Example:</strong> <em>She's my sister / mother / grandmother / wife / daughter. Her name is...</em></p>
+                        <p style="margin-top: 10px;">Who is she? <input type="text" class="full-input"></p>
+                        <p>What's her name? <input type="text" class="full-input"></p>
+                        <p>Where is she from? <input type="text" class="full-input"></p>
+                        <p>How old is she? <input type="text" class="full-input"></p>
+                        <p>Is she married? <input type="text" class="full-input"></p>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU4(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU4(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 4: Listening -->
+            <section class="test-section" id="u4-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 4/ef5e_beginner_test_item_ 007.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">1 Listen to Larry talking about his family. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 Larry's mother is 76.<br><label><input type="radio" name="u4l1" value="True"> True</label> <label><input type="radio" name="u4l1" value="False"> False</label></p>
+                                <p>2 Larry's sister has two children.<br><label><input type="radio" name="u4l2" value="True"> True</label> <label><input type="radio" name="u4l2" value="False"> False</label></p>
+                                <p>3 Jake is Eva's husband.<br><label><input type="radio" name="u4l3" value="True"> True</label> <label><input type="radio" name="u4l3" value="False"> False</label></p>
+                                <p>4 Larry's brother is married.<br><label><input type="radio" name="u4l4" value="True"> True</label> <label><input type="radio" name="u4l4" value="False"> False</label></p>
+                                <p>5 Rebecca's brother is a doctor.<br><label><input type="radio" name="u4l5" value="True"> True</label> <label><input type="radio" name="u4l5" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 4/ef5e_beginner_test_item_ 008.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">2 Listen to five conversations and answer the questions. Tick (✔) the correct answer.</p>
+                            <div class="q-item">
+                                <p>1 What food does the woman prefer?<br>
+                                    <label><input type="radio" name="u4l6" value="A"> A French</label> <label><input type="radio" name="u4l6" value="B"> B Italian</label> <label><input type="radio" name="u4l6" value="C"> C Spanish</label>
+                                </p>
+                                <p>2 What does Emily's sister have?<br>
+                                    <label><input type="radio" name="u4l7" value="A"> A glasses</label> <label><input type="radio" name="u4l7" value="B"> B long brown hair</label> <label><input type="radio" name="u4l7" value="C"> C short brown hair</label>
+                                </p>
+                                <p>3 Which car does the woman buy?<br>
+                                    <label><input type="radio" name="u4l8" value="A"> A a family car</label> <label><input type="radio" name="u4l8" value="B"> B a red car</label> <label><input type="radio" name="u4l8" value="C"> C a sports car</label>
+                                </p>
+                                <p>4 Who is Amanda?<br>
+                                    <label><input type="radio" name="u4l9" value="A"> A the man's wife</label> <label><input type="radio" name="u4l9" value="B"> B his brother's wife</label> <label><input type="radio" name="u4l9" value="C"> C his mother</label>
+                                </p>
+                                <p>5 What is the man's watch like?<br>
+                                    <label><input type="radio" name="u4l10" value="A"> A new and expensive</label> <label><input type="radio" name="u4l10" value="B"> B old and cheap</label> <label><input type="radio" name="u4l10" value="C"> C old and expensive</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU4(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU4()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <!-- Final Step: Details -->
+            <section class="test-section" id="u4-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                
+                <div class="question-block">
+                    <div class="q-item" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">First Name *</label>
+                            <input type="text" id="u4First" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Last Name *</label>
+                            <input type="text" id="u4Last" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Group / Level *</label>
+                            <input type="text" id="u4Group" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Phone Number *</label>
+                            <input type="tel" id="u4Phone" class="full-input" value="+998 " style="margin-bottom: 0;" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit4()" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u4-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u4ExamMode = localStorage.getItem('edu_exam_mode_unit4');
+        if (u4ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u4Sections = ['u4-part1', 'u4-reading', 'u4-writing', 'u4-listening', 'u4-details'];
+        const u4Total = u4Sections.length;
+
+        function updateU4(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u4Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u4Total}`;
+        }
+
+        function showU4(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u4Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU4(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU4(current) { showU4(current); }
+        function prevU4(current) { showU4(current - 2); }
+        function finalU4() { showU4(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]:not([disabled])')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]:not([disabled])'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]:not([disabled])'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit4() {
+            const first = document.getElementById('u4First').value.trim();
+            const last = document.getElementById('u4Last').value.trim();
+            const group = document.getElementById('u4Group').value.trim();
+            const phone = document.getElementById('u4Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u4g1: 'B', u4g2: 'A', u4g3: 'A', u4g4: 'B', u4g5: 'B',
+                // Grammar 2
+                u4g2_1: 'My', u4g2_2: 'Her', u4g2_3: 'Its', u4g2_4: 'Their', u4g2_5: 'Our',
+                // Vocabulary 3
+                u4v1: 'no dirty', u4v2: 'no slow', u4v3: 'no cheap', u4v4: 'no old', u4v5: 'no difficult',
+                // Vocabulary 4
+                u4v4_1: 'man', u4v4_2: 'child', u4v4_3: 'children', u4v4_4: 'man', u4v4_5: 'men',
+                // Pronunciation 5
+                u4p1: '1', u4p2: '1', u4p3: '2', u4p4: '1', u4p5: '2',
+                // Pronunciation 6
+                u4p6_1: 'man', u4p6_2: 'short', u4p6_3: 'father', u4p6_4: 'computer', u4p6_5: 'brother',
+                // Reading 1
+                u4r1_1: 'Mia', u4r1_2: 'Jack', u4r1_3: 'Marcia', u4r1_4: 'Paulo', u4r1_5: 'Aline', u4r1_6: 'Valentina', u4r1_7: 'Rosa',
+                // Reading 2
+                u4r2_1: ['it\'s', 'it is', 'it\'s expensive', 'it is expensive'], u4r2_2: 'Paulo', u4r2_3: ['50', 'fifty'], u4r2_4: ['Geneva', 'Switzerland', 'Geneva / Switzerland'], u4r2_5: 'Marcia, Aline, and Rosa', u4r2_6: 'Jack', u4r2_7: ['it\'s', 'it is', 'it\'s big', 'it is big'], u4r2_8: 'American',
+                // Listening 1
+                u4l1: 'True', u4l2: 'True', u4l3: 'False', u4l4: 'False', u4l5: 'True',
+                // Listening 2
+                u4l6: 'C', u4l7: 'C', u4l8: 'A', u4l9: 'B', u4l10: 'C'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    let actual = '';
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else {
+                        actual = field[0].value;
+                    }
+
+                    const normalizedActual = normalize(actual);
+                    if (Array.isArray(expected)) {
+                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
+                    } else if (normalizedActual === normalize(expected)) {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u4-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 4',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPron: sectionStats('u4-part1'),
+                    reading: sectionStats('u4-reading'),
+                    writing: sectionStats('u4-writing'),
+                    listening: sectionStats('u4-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit4Form').style.display = 'none';
+            const res = document.getElementById('u4-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU4(0);
+            const p = document.getElementById('u4Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+

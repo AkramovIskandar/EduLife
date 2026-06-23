@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 10 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table-custom { width:100%; border-collapse: collapse; margin-bottom: 1rem; }
+        .table-custom th, .table-custom td { border: 1px solid #CBD5E1; padding: 0.4rem; text-align: left; font-size: 0.95rem; }
+        
+        @media (max-width: 992px) { 
+            .sheet-grid { grid-template-columns: 1fr; } 
+            .reading-layout { grid-template-columns:1fr; } 
+        }
+        body.dark-theme .word-bank { background: #1F2937; border-color: #475569; color: #E2E8F0; }
+        body.dark-theme .table-custom th,
+        body.dark-theme .table-custom td {
+            border-color: #334155;
+            color: #cbd5e1;
+        }
+
+        body.dark-theme .table-custom th {
+            background: #1e293b;
+            color: var(--white);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 10</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit10Form">
+            <!-- PART 1: Grammar, Vocabulary, Pronunciation -->
+            <section class="test-section active" id="u10-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>GRAMMAR</h3>
+                            <p class="instruction">1 Tick (✔) the correct word.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <label><input type="radio" checked disabled> There is</label> / <label><input type="radio" disabled> are</label> a hotel in the town.</p>
+                                <p>1 <label><input type="radio" name="u10g1" value="There is"> There is</label> / <label><input type="radio" name="u10g1" value="are"> are</label> great views from some of the rooms.</p>
+                                <p>2 <label><input type="radio" name="u10g2" value="There are"> There are</label> / <label><input type="radio" name="u10g2" value="aren't"> aren't</label> any people on the beach.</p>
+                                <p>3 <label><input type="radio" name="u10g3" value="There are some"> There are some</label> / <label><input type="radio" name="u10g3" value="any"> any</label> nice pictures on the wall.</p>
+                                <p>4 <label><input type="radio" name="u10g4" value="Are there some"> Are there some</label> / <label><input type="radio" name="u10g4" value="any"> any</label> tables in the garden?</p>
+                                <p>5 <label><input type="radio" name="u10g5" value="There are some"> There are some</label> / <label><input type="radio" name="u10g5" value="any"> any</label> beautiful places to visit.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Tick (✔) the correct word.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Tamas <label><input type="radio" checked disabled> was</label> / <label><input type="radio" disabled> were</label> a student in 2017.</p>
+                                <p>1 <label><input type="radio" name="u10g6" value="Was"> Was</label> / <label><input type="radio" name="u10g6" value="Were"> Were</label> he late for work this morning?</p>
+                                <p>2 We <label><input type="radio" name="u10g7" value="were"> were</label> / <label><input type="radio" name="u10g7" value="weren't"> weren't</label> at home yesterday. We were at the swimming pool.</p>
+                                <p>3 Meg <label><input type="radio" name="u10g8" value="wasn't"> wasn't</label> / <label><input type="radio" name="u10g8" value="weren't"> weren't</label> in class yesterday.</p>
+                                <p>4 <label><input type="radio" name="u10g9" value="Was"> Was</label> / <label><input type="radio" name="u10g9" value="Were"> Were</label> you in Brazil on holiday last year?</p>
+                                <p>5 They <label><input type="radio" name="u10g10" value="wasn't"> wasn't</label> / <label><input type="radio" name="u10g10" value="weren't"> weren't</label> famous.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>VOCABULARY</h3>
+                            <p class="instruction">3 Complete the sentences with <em>in</em>, <em>on</em>, or <em>under</em>.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> We're eating lunch <u>in</u> a café.</p>
+                                <p>1 Our breakfast is <input type="text" name="u10v3_1" class="small-input"> the table.</p>
+                                <p>2 There was a nice place to sit <input type="text" name="u10v3_2" class="small-input"> the trees.</p>
+                                <p>3 When I travel, I put my clothes <input type="text" name="u10v3_3" class="small-input"> a suitcase.</p>
+                                <p>4 I put my shoes <input type="text" name="u10v3_4" class="small-input"> the bed.</p>
+                                <p>5 Please don't leave your clothes <input type="text" name="u10v3_5" class="small-input"> the floor.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">4 Complete the sentences with <em>in</em>, <em>at</em>, or <em>on</em>.</p>
+                            <div class="q-item" style="border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px;">
+                                <p>Paula lives <u>in</u> Madrid. She works <sup>1</sup><input type="text" name="u10v4_1" class="small-input"> the university, but she doesn't go to work every day. Sometimes she works <sup>2</sup><input type="text" name="u10v4_2" class="small-input"> home. There's a small room next to her bedroom and she works <sup>3</sup><input type="text" name="u10v4_3" class="small-input"> this room.</p>
+                                <p>Paula isn't at home right now - she's <sup>4</sup><input type="text" name="u10v4_4" class="small-input"> a bus. She wants to meet some friends <sup>5</sup><input type="text" name="u10v4_5" class="small-input"> the bus stop in the city centre.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRONUNCIATION</h3>
+                            <p class="instruction">5 Tick (✔) the word that has a different sound.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> <label><input type="radio" disabled> chair</label> &nbsp; <label><input type="radio" checked disabled> near</label> &nbsp; <label><input type="radio" disabled> wear</label></p>
+                                <p>1 <label><input type="radio" name="u10p1" value="where"> where</label> &nbsp; <label><input type="radio" name="u10p1" value="there"> there</label> &nbsp; <label><input type="radio" name="u10p1" value="dear"> dear</label></p>
+                                <p>2 <label><input type="radio" name="u10p2" value="near"> near</label> &nbsp; <label><input type="radio" name="u10p2" value="repair"> repair</label> &nbsp; <label><input type="radio" name="u10p2" value="their"> their</label></p>
+                                <p>3 <label><input type="radio" name="u10p3" value="here"> here</label> &nbsp; <label><input type="radio" name="u10p3" value="there"> there</label> &nbsp; <label><input type="radio" name="u10p3" value="year"> year</label></p>
+                                <p>4 <label><input type="radio" name="u10p4" value="airport"> airport</label> &nbsp; <label><input type="radio" name="u10p4" value="we're"> we're</label> &nbsp; <label><input type="radio" name="u10p4" value="where"> where</label></p>
+                                <p>5 <label><input type="radio" name="u10p5" value="idea"> idea</label> &nbsp; <label><input type="radio" name="u10p5" value="really"> really</label> &nbsp; <label><input type="radio" name="u10p5" value="year"> year</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">6 Which is the stressed syllable? Tick (✔) 1, 2, 3, 4, or 5.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> ho|tel &nbsp; <strong>1</strong> [ ] &nbsp; <strong>2</strong> [✓]</p>
+                                <p>1 re|mem|ber <label><input type="radio" name="u10p6" value="1"> 1</label> <label><input type="radio" name="u10p6" value="2"> 2</label> <label><input type="radio" name="u10p6" value="3"> 3</label></p>
+                                <p>2 beau|ti|ful <label><input type="radio" name="u10p7" value="1"> 1</label> <label><input type="radio" name="u10p7" value="2"> 2</label> <label><input type="radio" name="u10p7" value="3"> 3</label></p>
+                                <p>3 vi|si|tor <label><input type="radio" name="u10p8" value="1"> 1</label> <label><input type="radio" name="u10p8" value="2"> 2</label> <label><input type="radio" name="u10p8" value="3"> 3</label></p>
+                                <p>4 u|ni|ver|si|ty <label><input type="radio" name="u10p9" value="1"> 1</label> <label><input type="radio" name="u10p9" value="2"> 2</label> <label><input type="radio" name="u10p9" value="3"> 3</label> <label><input type="radio" name="u10p9" value="4"> 4</label> <label><input type="radio" name="u10p9" value="5"> 5</label></p>
+                                <p>5 cen|tu|ry <label><input type="radio" name="u10p10" value="1"> 1</label> <label><input type="radio" name="u10p10" value="2"> 2</label> <label><input type="radio" name="u10p10" value="3"> 3</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU10(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 2: Reading -->
+            <section class="test-section" id="u10-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Read the reviews. Complete the sentences with one word.</p>
+                        <div class="reading-panel">
+                            <p><strong>Hotel Reviews - The Lux</strong></p>
+                            <p>I was in The Lux Hotel when we were on holiday last July. I was there with my wife and our room was fantastic. There are great views from many of the rooms and there are lots of things to do near the hotel. There is a nice restaurant in the hotel, but you can also go outside, as there are some nice restaurants near the hotel. We were there for four nights and it was wonderful. Max ****</p>
+                            <p>What a terrible hotel. Don't stay in The Lux. I was there with my husband last year and it wasn't good. It's a big hotel...there are 600 rooms. Our room was very small and there was no view from any of the windows. There is a restaurant in the hotel, but the food was terrible and it was very expensive. Lucia *</p>
+                            <p>This hotel is really great! There is a small park near the entrance, and on the fourth floor there is a swimming pool and a spa. There is a restaurant and the food is delicious. Outside the hotel, there are a lot of places to visit. I was there with my family for two weeks. The children were really happy. Perfect! Javier *****</p>
+                            <p>I don't like The Lux Hotel, but my wife says it's good. I think she likes it because there are a lot of places to visit near the hotel. The bedrooms are OK and there are good views from some of the rooms. There is wi-fi in the hotel, but the price isn't cheap. Ryan ***</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <div class="q-item">
+                                <p><strong>Example:</strong> There are <u>four</u> reviews of the hotel.</p>
+                                <p>1 Max writes that there are great <input type="text" name="u10r1_1" class="small-input"> from the rooms.</p>
+                                <p>2 Max was in The Lux for <input type="text" name="u10r1_2" class="small-input"> nights with his wife.</p>
+                                <p>3 There are <input type="text" name="u10r1_3" class="small-input"> rooms in the hotel.</p>
+                                <p>4 Lucia writes that the restaurant was <input type="text" name="u10r1_4" class="small-input"> and the food was terrible.</p>
+                                <p>5 Javier's children were very <input type="text" name="u10r1_5" class="small-input"> in the hotel.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Read the reviews again. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 There aren't any places to eat outside the hotel.<br><label><input type="radio" name="u10r1" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r1" value="False"> False</label></p>
+                                <p>2 Lucia was in The Lux last year with her husband.<br><label><input type="radio" name="u10r2" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r2" value="False"> False</label></p>
+                                <p>3 There was a great view from the room Lucia was in.<br><label><input type="radio" name="u10r3" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r3" value="False"> False</label></p>
+                                <p>4 Lucia gives The Lux one star in her review.<br><label><input type="radio" name="u10r4" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r4" value="False"> False</label></p>
+                                <p>5 There is a park near the hotel.<br><label><input type="radio" name="u10r5" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r5" value="False"> False</label></p>
+                                <p>6 There is a swimming pool in the hotel.<br><label><input type="radio" name="u10r6" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r6" value="False"> False</label></p>
+                                <p>7 Javier was in the hotel for a week.<br><label><input type="radio" name="u10r7" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r7" value="False"> False</label></p>
+                                <p>8 Ryan's wife likes The Lux Hotel.<br><label><input type="radio" name="u10r8" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r8" value="False"> False</label></p>
+                                <p>9 There are a lot of places to visit near the hotel.<br><label><input type="radio" name="u10r9" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r9" value="False"> False</label></p>
+                                <p>10 There is cheap wi-fi in the hotel.<br><label><input type="radio" name="u10r10" value="True"> True</label> &nbsp; <label><input type="radio" name="u10r10" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU10(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU10(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 3: Writing -->
+            <section class="test-section" id="u10-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="question-block">
+                    <p class="instruction">Answer the holiday questionnaire. Write a short description of your last holiday and the place you stayed in.</p>
+                    <div class="q-item" style="border:1px solid #CBD5E1; padding: 1.5rem; background:#fff; border-radius:6px;">
+                        <h3 style="margin-top:0; border-bottom:2px solid #F1F5F9; padding-bottom:0.5rem; margin-bottom:1rem;">Holiday Questionnaire</h3>
+                        
+                        <p style="font-weight:bold; margin-bottom:0.5rem">The holiday</p>
+                        <p>Where were you on your last holiday? <input type="text" class="full-input"></p>
+                        <p>Who were you with? <input type="text" class="full-input"></p>
+                        <p>When were you there? <input type="text" class="full-input"></p>
+                        
+                        <p style="font-weight:bold; margin-top:1.5rem; margin-bottom:0.5rem">The hotel</p>
+                        <p>Where was your hotel? <input type="text" class="full-input"></p>
+                        <p>What was there in the hotel? <input type="text" class="full-input"></p>
+                        <p>Was the hotel nice? Why (not)? <input type="text" class="full-input"></p>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU10(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU10(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 4: Listening -->
+            <section class="test-section" id="u10-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 10/ef5e_beginner_test_item_ 019.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">1 Listen to a woman talking to a receptionist in a hotel. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 There is a view of the mountains from one room.<br><label><input type="radio" name="u10l1" value="True"> True</label> &nbsp; <label><input type="radio" name="u10l1" value="False"> False</label></p>
+                                <p>2 There isn't a lift.<br><label><input type="radio" name="u10l2" value="True"> True</label> &nbsp; <label><input type="radio" name="u10l2" value="False"> False</label></p>
+                                <p>3 The first room the woman sees is small.<br><label><input type="radio" name="u10l3" value="True"> True</label> &nbsp; <label><input type="radio" name="u10l3" value="False"> False</label></p>
+                                <p>4 The room on the second floor has a view of the mountains.<br><label><input type="radio" name="u10l4" value="True"> True</label> &nbsp; <label><input type="radio" name="u10l4" value="False"> False</label></p>
+                                <p>5 There are three restaurants near the hotel.<br><label><input type="radio" name="u10l5" value="True"> True</label> &nbsp; <label><input type="radio" name="u10l5" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 10/ef5e_beginner_test_item_ 020.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">2 Listen to five conversations and answer the questions. Tick (✔) A, B, or C.</p>
+                            <div class="q-item">
+                                <p>1 Where was the man at 7 o'clock yesterday?<br>
+                                    <label><input type="radio" name="u10l6" value="A"> A at the swimming pool</label> &nbsp; <label><input type="radio" name="u10l6" value="B"> B on the bus</label> &nbsp; <label><input type="radio" name="u10l6" value="C"> C at home</label>
+                                </p>
+                                <p>2 What does the man say is fantastic in the hotel?<br>
+                                    <label><input type="radio" name="u10l7" value="A"> A the views</label> &nbsp; <label><input type="radio" name="u10l7" value="B"> B the gym</label> &nbsp; <label><input type="radio" name="u10l7" value="C"> C the swimming pool</label>
+                                </p>
+                                <p>3 Where was the remote control?<br>
+                                    <label><input type="radio" name="u10l8" value="A"> A on the table</label> &nbsp; <label><input type="radio" name="u10l8" value="B"> B under the table</label> &nbsp; <label><input type="radio" name="u10l8" value="C"> C under the chair</label>
+                                </p>
+                                <p>4 Where was the woman on Saturday?<br>
+                                    <label><input type="radio" name="u10l9" value="A"> A at the beach</label> &nbsp; <label><input type="radio" name="u10l9" value="B"> B in the garden</label> &nbsp; <label><input type="radio" name="u10l9" value="C"> C in the park</label>
+                                </p>
+                                <p>5 Where was Anton at 7 p.m. last night?<br>
+                                    <label><input type="radio" name="u10l10" value="A"> A at home</label> &nbsp; <label><input type="radio" name="u10l10" value="B"> B in the shopping centre</label> &nbsp; <label><input type="radio" name="u10l10" value="C"> C in the cinema</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU10(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU10()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <!-- Final Step: Details -->
+            <section class="test-section" id="u10-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                
+                <div class="question-block">
+                    <div class="q-item" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">First Name *</label>
+                            <input type="text" id="u10First" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Last Name *</label>
+                            <input type="text" id="u10Last" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Group / Level *</label>
+                            <input type="text" id="u10Group" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Phone Number *</label>
+                            <input type="tel" id="u10Phone" class="full-input" value="+998 " style="margin-bottom: 0;" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit10()" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u10-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u10ExamMode = localStorage.getItem('edu_exam_mode_unit10');
+        if (u10ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u10Sections = ['u10-part1', 'u10-reading', 'u10-writing', 'u10-listening', 'u10-details'];
+        const u10Total = u10Sections.length;
+
+        function updateU10(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u10Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u10Total}`;
+        }
+
+        function showU10(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u10Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU10(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU10(current) { showU10(current); }
+        function prevU10(current) { showU10(current - 2); }
+        function finalU10() { showU10(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]:not([disabled])')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]:not([disabled])'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]:not([disabled])'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit10() {
+            const first = document.getElementById('u10First').value.trim();
+            const last = document.getElementById('u10Last').value.trim();
+            const group = document.getElementById('u10Group').value.trim();
+            const phone = document.getElementById('u10Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u10g1: 'are', u10g2: 'aren\'t', u10g3: 'There are some', u10g4: 'any', u10g5: 'There are some',
+                // Grammar 2
+                u10g6: 'Was', u10g7: 'weren\'t', u10g8: 'wasn\'t', u10g9: 'Were', u10g10: 'weren\'t',
+                // Vocabulary 3
+                u10v3_1: 'on', u10v3_2: 'under', u10v3_3: 'in', u10v3_4: 'under', u10v3_5: 'on',
+                // Vocabulary 4
+                u10v4_1: 'at', u10v4_2: 'at', u10v4_3: 'in', u10v4_4: 'on', u10v4_5: 'at',
+                // Pronunciation 5
+                u10p1: 'dear', u10p2: 'near', u10p3: 'there', u10p4: 'we\'re', u10p5: 'idea',
+                // Pronunciation 6
+                u10p6: '2', u10p7: '1', u10p8: '1', u10p9: '3', u10p10: '1',
+                // Reading 1
+                u10r1_1: 'views', u10r1_2: 'four', u10r1_3: '600', u10r1_4: 'expensive', u10r1_5: 'happy',
+                // Reading 2
+                u10r1: 'False', u10r2: 'True', u10r3: 'False', u10r4: 'True', u10r5: 'True', u10r6: 'True', u10r7: 'False', u10r8: 'True', u10r9: 'True', u10r10: 'False',
+                // Listening 1
+                u10l1: 'True', u10l2: 'False', u10l3: 'True', u10l4: 'False', u10l5: 'True',
+                // Listening 2
+                u10l6: 'C', u10l7: 'A', u10l8: 'C', u10l9: 'B', u10l10: 'B'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    let actual = '';
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else {
+                        actual = field[0].value;
+                    }
+
+                    const normalizedActual = normalize(actual);
+                    if (Array.isArray(expected)) {
+                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
+                    } else if (normalizedActual === normalize(expected)) {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u10-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 10',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPron: sectionStats('u10-part1'),
+                    reading: sectionStats('u10-reading'),
+                    writing: sectionStats('u10-writing'),
+                    listening: sectionStats('u10-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit10Form').style.display = 'none';
+            const res = document.getElementById('u10-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU10(0);
+            const p = document.getElementById('u10Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

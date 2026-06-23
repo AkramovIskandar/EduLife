@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 3 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .dialogue-box { border: 1px solid #CBD5E1; border-radius: 8px; padding: 0.9rem; margin-bottom: 1rem; background: var(--white); }
+        .dialogue-box p { margin-bottom: 0.45rem; line-height: 1.5; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        @media (max-width: 992px) { .sheet-grid { grid-template-columns: 1fr; } }
+        body.dark-theme .word-bank { background: #1F2937; border-color: #475569; color: #E2E8F0; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 3</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, practical English, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit3Form">
+            <section class="test-section active" id="u3-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation, Practical English</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>1. Complete the questions with <em>this</em>, <em>these</em>, <em>that</em>, or <em>those</em>.</h3>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Are <u>these</u> your keys? (near the speaker)</p>
+                                <p>1) Are <input type="text" name="u3g0_1" class="small-input" placeholder="word"> your glasses? (near the speaker)</p>
+                                <p>2) Is <input type="text" name="u3g0_2" class="small-input" placeholder="word"> your car? (far from the speaker)</p>
+                                <p>3) Is <input type="text" name="u3g0_3" class="small-input" placeholder="word"> your phone? (near the speaker)</p>
+                                <p>4) Are <input type="text" name="u3g0_4" class="small-input" placeholder="word"> pencils or pens? (far from the speaker)</p>
+                                <p>5) Are <input type="text" name="u3g0_5" class="small-input" placeholder="word"> your holiday photos? (near the speaker)</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>2. Tick the correct word.</h3>
+                            <div class="q-item compact-options">
+                                <p><strong>Example:</strong> It's a book / <u>books</u> ✓</p>
+                                <p>1) It's <label><input type="radio" name="u3g1" value="A"> an</label> / <label><input type="radio" name="u3g1" value="B"> a</label> umbrella.</p>
+                                <p>2) It's not my <label><input type="radio" name="u3g2" value="A"> coat</label> / <label><input type="radio" name="u3g2" value="B"> coats</label>.</p>
+                                <p>3) They're his <label><input type="radio" name="u3g3" value="A"> bag</label> / <label><input type="radio" name="u3g3" value="B"> bags</label>.</p>
+                                <p>4) They're <label><input type="radio" name="u3g4" value="A"> watchs</label> / <label><input type="radio" name="u3g4" value="B"> watches</label>.</p>
+                                <p>5) Where are the <label><input type="radio" name="u3g5" value="A"> dictionary</label> / <label><input type="radio" name="u3g5" value="B"> dictionaries</label>?</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>3. Tick the one that doesn't belong.</h3>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> ID card, photo, bank card, <u>umbrella</u> (doesn't belong)</p>
+                                <p>1)</p>
+                                <label><input type="radio" name="u3v1" value="purse"> purse</label>
+                                <label><input type="radio" name="u3v1" value="teddy"> teddy</label>
+                                <label><input type="radio" name="u3v1" value="wallet"> wallet</label>
+                                <label><input type="radio" name="u3v1" value="bank"> bank card</label>
+                                <p>2)</p>
+                                <label><input type="radio" name="u3v2" value="pen"> pen</label>
+                                <label><input type="radio" name="u3v2" value="pencil"> pencil</label>
+                                <label><input type="radio" name="u3v2" value="mug"> mug</label>
+                                <label><input type="radio" name="u3v2" value="notebook"> notebook</label>
+                                <p>3)</p>
+                                <label><input type="radio" name="u3v3" value="photo"> photo</label>
+                                <label><input type="radio" name="u3v3" value="cap"> cap</label>
+                                <label><input type="radio" name="u3v3" value="scarf"> scarf</label>
+                                <label><input type="radio" name="u3v3" value="tshirt"> T-shirt</label>
+                                <p>4)</p>
+                                <label><input type="radio" name="u3v4" value="student"> student</label>
+                                <label><input type="radio" name="u3v4" value="bankcard"> bank card</label>
+                                <label><input type="radio" name="u3v4" value="mobile"> mobile phone</label>
+                                <label><input type="radio" name="u3v4" value="keyring"> key ring</label>
+                                <p>5)</p>
+                                <label><input type="radio" name="u3v5" value="phone"> phone</label>
+                                <label><input type="radio" name="u3v5" value="laptop"> laptop</label>
+                                <label><input type="radio" name="u3v5" value="camera"> camera</label>
+                                <label><input type="radio" name="u3v5" value="sunglasses"> sunglasses</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <h3>4. Complete the sentences with the words in the box.</h3>
+                            <div class="word-bank">bag, ID card, key, phone, photo, sunglasses</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> A: How much are the <u>sunglasses</u>? B: They're £15.</p>
+                                <p>1) A: You're in room 202. Here's your <input type="text" name="u3v4_1" class="tiny-input">. B: Thank you.</p>
+                                <p>2) A: What's in your <input type="text" name="u3v4_2" class="tiny-input">? B: I have my mobile phone, purse and keys.</p>
+                                <p>3) Excuse me. Can I see your passport or <input type="text" name="u3v4_3" class="tiny-input">, please?</p>
+                                <p>4) A: Excuse me. Can you take a <input type="text" name="u3v4_4" class="tiny-input"> for us? B: Yes, sure. A: Here's my camera. Just press this button.</p>
+                                <p>5) Please switch off your mobile <input type="text" name="u3v4_5" class="tiny-input">.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>5. Which is the stressed syllable? Tick 1, 2, or 3.</h3>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> gla|sses: syllable <strong>1</strong> ✓</p>
+                                <p>1) co|ffee: <label><input type="radio" name="u3p1" value="1">1</label> <label><input type="radio" name="u3p1" value="2">2</label></p>
+                                <p>2) um|bre|lla: <label><input type="radio" name="u3p2" value="1">1</label> <label><input type="radio" name="u3p2" value="2">2</label> <label><input type="radio" name="u3p2" value="3">3</label></p>
+                                <p>3) sand|wich: <label><input type="radio" name="u3p3" value="1">1</label> <label><input type="radio" name="u3p3" value="2">2</label></p>
+                                <p>4) wal|let: <label><input type="radio" name="u3p4" value="1">1</label> <label><input type="radio" name="u3p4" value="2">2</label></p>
+                                <p>5) tour|ist: <label><input type="radio" name="u3p5" value="1">1</label> <label><input type="radio" name="u3p5" value="2">2</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>6. Read the dialogue. Complete the conversation with the words in the box.</h3>
+                            <div class="word-bank">Here, and, pounds, much, please</div>
+                            <div class="q-item dialogue-box">
+                                <p><strong>Waiter:</strong> Hi. Welcome to Maria's Café.</p>
+                                <p><strong>Man:</strong> Hi. Can I have a mineral water and a cheese sandwich, <input type="text" name="u3e6_1" class="tiny-input" style="width:70px">.</p>
+                                <p><strong>Waiter:</strong> Ice <input type="text" name="u3e6_2" class="tiny-input" style="width:55px"> lemon with the mineral water?</p>
+                                <p><strong>Man:</strong> Yes, please. How <input type="text" name="u3e6_3" class="tiny-input" style="width:70px"> is it?</p>
+                                <p><strong>Waiter:</strong> It's six <input type="text" name="u3e6_4" class="tiny-input" style="width:70px"> and 45 pence, please.</p>
+                                <p><strong>Man:</strong> <input type="text" name="u3e6_5" class="tiny-input" style="width:70px"> you are.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU3(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u3-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>Dialogue</h3>
+                            <div class="dialogue-box">
+                                <p><strong>Shop assistant:</strong> Good morning. Can I help you?</p>
+                                <p><strong>Woman:</strong> Yes, please. I'm on holiday and I'm looking for a bag.</p>
+                                <p><strong>Assistant:</strong> Oh, lovely. Are you from London?</p>
+                                <p><strong>Woman:</strong> Yes, I am.</p>
+                                <p><strong>Assistant:</strong> It's a nice city.</p>
+                                <p><strong>Woman:</strong> Thank you. That bag is beautiful. Where is it from?</p>
+                                <p><strong>Assistant:</strong> We have things from China, Mexico, Spain, and more. That one is from Italy. It's £45.</p>
+                                <p><strong>Woman:</strong> And those sunglasses?</p>
+                                <p><strong>Assistant:</strong> They're from Germany. These ones are £22.</p>
+                                <p><strong>Woman:</strong> I'll take the bag and the sunglasses. That's a good price — £60 for both?</p>
+                                <p><strong>Assistant:</strong> Yes, that's £60 for both. Do you want anything else?</p>
+                                <p><strong>Woman:</strong> No, thanks. I'll pay by bank card.</p>
+                                <p><strong>Assistant:</strong> Bank cards are fine. Thank you!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <h3>1. Read the dialogue. Tick True or False.</h3>
+                            <div class="q-item">
+                                <p>1) The woman is on holiday.</p>
+                                <label><input type="radio" name="u3r1" value="True"> True</label>
+                                <label><input type="radio" name="u3r1" value="False"> False</label>
+                                <p>2) The bag is from Mexico.</p>
+                                <label><input type="radio" name="u3r2" value="True"> True</label>
+                                <label><input type="radio" name="u3r2" value="False"> False</label>
+                                <p>3) The bag is £45.</p>
+                                <label><input type="radio" name="u3r3" value="True"> True</label>
+                                <label><input type="radio" name="u3r3" value="False"> False</label>
+                                <p>4) The sunglasses are from Germany.</p>
+                                <label><input type="radio" name="u3r4" value="True"> True</label>
+                                <label><input type="radio" name="u3r4" value="False"> False</label>
+                                <p>5) The bag and sunglasses are £50.</p>
+                                <label><input type="radio" name="u3r5" value="True"> True</label>
+                                <label><input type="radio" name="u3r5" value="False"> False</label>
+                                <p>6) The woman uses her bank card.</p>
+                                <label><input type="radio" name="u3r6" value="True"> True</label>
+                                <label><input type="radio" name="u3r6" value="False"> False</label>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>2. Read the dialogue again. Who says this? Write <strong>S</strong> (shop assistant) or <strong>W</strong> (woman).</h3>
+                            <div class="q-item">
+                                <p>1) "Can I help you?" <input type="text" name="u3sw1" class="sw-input" maxlength="1" autocomplete="off"></p>
+                                <p>2) "Are you from London?" <input type="text" name="u3sw2" class="sw-input" maxlength="1" autocomplete="off"></p>
+                                <p>3) "It's a nice city." <input type="text" name="u3sw3" class="sw-input" maxlength="1" autocomplete="off"></p>
+                                <p>4) "That bag is beautiful." <input type="text" name="u3sw4" class="sw-input" maxlength="1" autocomplete="off"></p>
+                                <p>5) "They're from Germany." <input type="text" name="u3sw5" class="sw-input" maxlength="1" autocomplete="off"></p>
+                                <p>6) "These ones are £22." <input type="text" name="u3sw6" class="sw-input" maxlength="1" autocomplete="off"></p>
+                                <p>7) "That's a good price." <input type="text" name="u3sw7" class="sw-input" maxlength="1" autocomplete="off"></p>
+                                <p>8) "Do you want anything else?" <input type="text" name="u3sw8" class="sw-input" maxlength="1" autocomplete="off"></p>
+                                <p>9) "Bank cards are fine." <input type="text" name="u3sw9" class="sw-input" maxlength="1" autocomplete="off"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU3(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU3(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u3-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <h3>Answer the questions with complete sentences.</h3>
+                    <div class="q-item">
+                        <p>1) What are three things in your bag or pocket?</p>
+                        <input type="text" class="full-input">
+                        <p>2) Where is your ID card?</p>
+                        <input type="text" class="full-input">
+                        <p>3) Where is your phone charger?</p>
+                        <input type="text" class="full-input">
+                        <p>4) Where are your keys?</p>
+                        <input type="text" class="full-input">
+                        <p>5) How much is a Coke at a restaurant?</p>
+                        <input type="text" class="full-input">
+                    </div>
+                </div>
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU3(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU3(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u3-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+                <div class="question-block">
+                    <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 3/ef5e_beginner_test_item_ 005.mp3" type="audio/mpeg"></audio>
+                    <h3>1. Listen to Andy talk to a security guard at the airport. Tick True or False.</h3>
+                    <div class="q-item">
+                        <p>1) Andy's passport is in his bag.</p>
+                        <label><input type="radio" name="u3l1" value="True"> True</label>
+                        <label><input type="radio" name="u3l1" value="False"> False</label>
+                        <p>2) His car keys are in the bag.</p>
+                        <label><input type="radio" name="u3l2" value="True"> True</label>
+                        <label><input type="radio" name="u3l2" value="False"> False</label>
+                        <p>3) His wallet is in the bag.</p>
+                        <label><input type="radio" name="u3l3" value="True"> True</label>
+                        <label><input type="radio" name="u3l3" value="False"> False</label>
+                        <p>4) His mobile phone is in the bag.</p>
+                        <label><input type="radio" name="u3l4" value="True"> True</label>
+                        <label><input type="radio" name="u3l4" value="False"> False</label>
+                        <p>5) A book is in the bag.</p>
+                        <label><input type="radio" name="u3l5" value="True"> True</label>
+                        <label><input type="radio" name="u3l5" value="False"> False</label>
+                    </div>
+                </div>
+                <div class="question-block">
+                    <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 3/ef5e_beginner_test_item_ 006.mp3" type="audio/mpeg"></audio>
+                    <h3>2. Listen to five conversations and complete the sentences. Tick A, B, or C.</h3>
+                    <div class="q-item">
+                        <p>1) The woman wants to buy</p>
+                        <label><input type="radio" name="u3l6" value="A"> A a football shirt</label>
+                        <label><input type="radio" name="u3l6" value="B"> B a football scarf</label>
+                        <label><input type="radio" name="u3l6" value="C"> C a T-shirt</label>
+                        <p>2) The chicken sandwich is</p>
+                        <label><input type="radio" name="u3l7" value="A"> A £4</label>
+                        <label><input type="radio" name="u3l7" value="B"> B £5.15</label>
+                        <label><input type="radio" name="u3l7" value="C"> C £5.50</label>
+                        <p>3) The man's glasses are</p>
+                        <label><input type="radio" name="u3l8" value="A"> A on the table</label>
+                        <label><input type="radio" name="u3l8" value="B"> B in his bag</label>
+                        <label><input type="radio" name="u3l8" value="C"> C in his pocket</label>
+                        <p>4) The woman has</p>
+                        <label><input type="radio" name="u3l9" value="A"> A a coffee with milk</label>
+                        <label><input type="radio" name="u3l9" value="B"> B a tea and no milk</label>
+                        <label><input type="radio" name="u3l9" value="C"> C a tea with milk</label>
+                        <p>5) The big caps are</p>
+                        <label><input type="radio" name="u3l10" value="A"> A £1.99</label>
+                        <label><input type="radio" name="u3l10" value="B"> B £2.99</label>
+                        <label><input type="radio" name="u3l10" value="C"> C £4.99</label>
+                    </div>
+                </div>
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU3(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU3()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u3-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item reg-form-container">
+                    <div class="reg-grid">
+                        <div class="input-group"><label>First Name *</label><input type="text" id="u3First" required></div>
+                        <div class="input-group"><label>Last Name *</label><input type="text" id="u3Last" required></div>
+                        <div class="input-group"><label>Group / Level *</label><input type="text" id="u3Group" required></div>
+                        <div class="input-group"><label>Phone Number *</label><input type="tel" id="u3Phone" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit3()" style="width:100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u3-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u3ExamMode = localStorage.getItem('edu_exam_mode_unit3');
+        if (u3ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u3Sections = ['u3-part1', 'u3-reading', 'u3-writing', 'u3-listening', 'u3-details'];
+        const u3Total = u3Sections.length;
+
+        function updateU3(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u3Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u3Total}`;
+        }
+
+        function showU3(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u3Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU3(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU3(current) { showU3(current); }
+        function prevU3(current) { showU3(current - 2); }
+        function finalU3() { showU3(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit3() {
+            const first = document.getElementById('u3First').value.trim();
+            const last = document.getElementById('u3Last').value.trim();
+            const group = document.getElementById('u3Group').value.trim();
+            const phone = document.getElementById('u3Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u3g0_1: 'these', u3g0_2: 'that', u3g0_3: 'this', u3g0_4: 'those', u3g0_5: 'these',
+                // Grammar 2
+                u3g1: 'A', u3g2: 'A', u3g3: 'B', u3g4: 'B', u3g5: 'B',
+                // Vocabulary 3
+                u3v1: 'teddy', u3v2: 'mug', u3v3: 'photo', u3v4: 'student', u3v5: 'sunglasses',
+                // Vocabulary 4
+                u3v4_1: 'key', u3v4_2: 'bag', u3v4_3: 'ID card', u3v4_4: 'photo', u3v4_5: 'phone',
+                // Pronunciation 5
+                u3p1: '1', u3p2: '2', u3p3: '1', u3p4: '1', u3p5: '1',
+                // Practical English 6
+                // Practical English 6
+                u3e6_1: 'please', u3e6_2: 'and', u3e6_3: 'much', u3e6_4: 'pounds', u3e6_5: 'Here',
+                // Reading 1
+                u3r1: 'True', u3r2: 'False', u3r3: 'True', u3r4: 'True', u3r5: 'False', u3r6: 'True',
+                // Reading 2
+                u3sw1: 'S', u3sw2: 'S', u3sw3: 'S', u3sw4: 'W', u3sw5: 'S', u3sw6: 'S', u3sw7: 'W', u3sw8: 'S', u3sw9: 'S',
+                // Listening 1
+                u3l1: 'False', u3l2: 'False', u3l3: 'True', u3l4: 'False', u3l5: 'True',
+                // Listening 2
+                u3l6: 'C', u3l7: 'C', u3l8: 'A', u3l9: 'B', u3l10: 'C'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    let actual = '';
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else {
+                        actual = field[0].value;
+                    }
+
+                    const normalizedActual = normalize(actual);
+                    if (Array.isArray(expected)) {
+                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
+                    } else if (normalizedActual === normalize(expected)) {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u3-writing input[type="text"]'))
+                .map((input, i) => `Q${i + 1}: ${input.value.trim()}`)
+                .filter(line => line.split(': ')[1])
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 3',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPronPractical: sectionStats('u3-part1'),
+                    reading: sectionStats('u3-reading'),
+                    writing: sectionStats('u3-writing'),
+                    listening: sectionStats('u3-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit3Form').style.display = 'none';
+            const res = document.getElementById('u3-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU3(0);
+            const p = document.getElementById('u3Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

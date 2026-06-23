@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard-container {
+            padding: 100px 5% 50px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f0f9ff 0%, #fef3c7 50%, #fef2f2 100%);
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            margin-top: 2rem;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background: #e2e8f0;
+            border-radius: 15px;
+            height: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7);
+            border-radius: 15px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .motivation-card {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid #f59e0b;
+        }
+
+        .motivation-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .test-item {
+            aspect-ratio: 1;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .test-item.pending {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+
+        .test-item.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .test-item.locked {
+            background: #f1f5f9;
+            color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .test-item:hover:not(.locked) {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+
+        .test-item i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars-container {
+            display: flex;
+            gap: 0.3rem;
+            margin-top: 1rem;
+        }
+
+        .star {
+            font-size: 1.5rem;
+            color: #d1d5db;
+        }
+
+        .star.filled {
+            color: #fbbf24;
+            animation: starPop 0.5s ease;
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 1.25rem;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #fbbf24;
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ============ DASHBOARD RESPONSIVE OVERRIDES ============ */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                padding: 7rem 4% 4rem !important;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 6rem 5% 3rem !important;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            .stats-card {
+                padding: 1.5rem !important;
+            }
+            
+            .stat-value {
+                font-size: 2.25rem !important;
+            }
+            
+            .progress-section {
+                padding: 1.5rem !important;
+            }
+            
+            .progress-section h2 {
+                font-size: 1.25rem !important;
+            }
+            
+            .tests-grid {
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 0.75rem !important;
+            }
+            
+            .test-item {
+                padding: 0.75rem 0.5rem !important;
+            }
+            
+            .test-item i {
+                font-size: 1.5rem !important;
+            }
+            
+            .motivation-card {
+                padding: 1.25rem !important;
+            }
+            
+            .motivation-text {
+                flex-direction: column !important;
+                text-align: center !important;
+                gap: 0.75rem !important;
+                font-size: 1rem !important;
+            }
+            
+            .stars-container {
+                gap: 0.4rem !important;
+            }
+            
+            .star {
+                font-size: 1.25rem !important;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .action-btn {
+                padding: 1rem !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .dashboard-container h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            .dashboard-container p {
+                font-size: 0.95rem !important;
+            }
+            
+            .level-badge {
+                display: block !important;
+                width: fit-content !important;
+                margin-top: 0.5rem !important;
+            }
+            
+            .tests-grid {
+                grid-template-columns: repeat(4, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tests-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .tests-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.5rem !important;
+            }
+            
+            .test-item {
+                padding: 0.5rem 0.25rem !important;
+            }
+            
+            .test-item i {
+                font-size: 1.25rem !important;
+            }
+            
+            .test-item div {
+                font-size: 0.8rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="dashboard.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="tests.html">Tests</a></li>
+            <li><a href="my-progress.html">My Progress</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Welcome back, <span id="studentName">Student</span>! 👋</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">Your Current Level: <span class="level-badge" id="currentLevelBadge" style="display:inline-block; padding:0.3rem 0.8rem; border-radius:999px; font-weight:700; background:#dbeafe; color:#1d4ed8;">Beginner</span></p>
+        </div>
+
+        <div style="max-width: 1200px; margin: 2rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+            <div class="stats-card">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-check-circle"></i> Tests Completed</h3>
+                <div class="stat-value" id="completedCount">0</div>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">out of 15</p>
+            </div>
+
+            <div class="stats-card">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-chart-line"></i> Overall Progress</h3>
+                <div class="stat-value" id="progressPercent">0%</div>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">Keep going!</p>
+            </div>
+
+            <div class="stats-card">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-percent"></i> Average Score</h3>
+                <div class="stat-value" id="avgScore">0%</div>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;" id="avgScoreDetail">0 / 0</p>
+            </div>
+        </div>
+
+        <div class="progress-section" style="max-width: 1200px; margin: 2rem auto 0;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem;">
+                <i class="fa-solid fa-route" style="color: var(--primary);"></i>
+                Your Learning Path
+            </h2>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="mainProgressBar" style="width: 0%;"></div>
+            </div>
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-muted); font-weight: 600;">
+                <span id="remainingTests">15</span> tests remaining to complete the level!
+            </p>
+
+            <div class="tests-grid" id="testsGrid">
+                <!-- Tests will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="motivation-card" id="motivationCard" style="max-width: 1200px; margin: 2rem auto 0;">
+            <div class="motivation-text" id="motivationText">
+                <i class="fa-solid fa-rocket" style="font-size: 2rem;"></i>
+                <span>Start your learning journey today! Every test brings you closer to your goal!</span>
+            </div>
+        </div>
+
+        <div class="stars-container" style="max-width: 1200px; margin: 2rem auto 0; display: flex; justify-content: center;">
+            <i class="fa-solid fa-star star" id="star1"></i>
+            <i class="fa-solid fa-star star" id="star2"></i>
+            <i class="fa-solid fa-star star" id="star3"></i>
+            <i class="fa-solid fa-star star" id="star4"></i>
+            <i class="fa-solid fa-star star" id="star5"></i>
+        </div>
+
+        <div class="quick-actions" style="max-width: 1200px; margin: 2rem auto 0;">
+            <a href="tests.html" class="action-btn">
+                <i class="fa-solid fa-play"></i>
+                Continue Learning
+            </a>
+            <a href="my-progress.html" class="action-btn">
+                <i class="fa-solid fa-chart-line"></i>
+                My Progress
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="api-config.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const levelTests = {
+            'beginner': [
+                { key: 'unit_1', name: 'Unit Test 1', file: 'unit1.html' },
+                { key: 'unit_2', name: 'Unit Test 2', file: 'unit2.html' },
+                { key: 'unit_3', name: 'Unit Test 3', file: 'unit3.html' },
+                { key: 'unit_4', name: 'Unit Test 4', file: 'unit4.html' },
+                { key: 'unit_5', name: 'Unit Test 5', file: 'unit5.html' },
+                { key: 'unit_6', name: 'Unit Test 6', file: 'unit6.html' },
+                { key: 'progress_1', name: 'Progress Test 1', file: 'progress.html' },
+                { key: 'unit_7', name: 'Unit Test 7', file: 'unit7.html' },
+                { key: 'unit_8', name: 'Unit Test 8', file: 'unit8.html' },
+                { key: 'unit_9', name: 'Unit Test 9', file: 'unit9.html' },
+                { key: 'unit_10', name: 'Unit Test 10', file: 'unit10.html' },
+                { key: 'unit_11', name: 'Unit Test 11', file: 'unit11.html' },
+                { key: 'unit_12', name: 'Unit Test 12', file: 'unit12.html' },
+                { key: 'progress_2', name: 'Progress Test 2', file: 'progress2.html' },
+                { key: 'final', name: 'End of Course', file: 'test.html' }
+            ],
+            'elementary': [
+                { key: 'elementary_unit_1', name: 'Unit Test 1', file: 'unit1-elementary.html' },
+                { key: 'elementary_unit_2', name: 'Unit Test 2', file: 'unit2-elementary.html' },
+                { key: 'elementary_unit_3', name: 'Unit Test 3', file: 'unit3-elementary.html' },
+                { key: 'elementary_unit_4', name: 'Unit Test 4', file: 'unit4-elementary.html' },
+                { key: 'elementary_unit_5', name: 'Unit Test 5', file: 'unit5-elementary.html' },
+                { key: 'elementary_unit_6', name: 'Unit Test 6', file: 'unit6-elementary.html' },
+                { key: 'elementary_progress_1', name: 'Progress Test 1', file: 'elementary-progress-test-1.html' },
+                { key: 'elementary_unit_7', name: 'Unit Test 7', file: 'unit7-elementary.html' },
+                { key: 'elementary_unit_8', name: 'Unit Test 8', file: 'unit8-elementary.html' },
+                { key: 'elementary_unit_9', name: 'Unit Test 9', file: 'unit9-elementary.html' },
+                { key: 'elementary_unit_10', name: 'Unit Test 10', file: 'unit10-elementary.html' },
+                { key: 'elementary_unit_11', name: 'Unit Test 11', file: 'unit11-elementary.html' },
+                { key: 'elementary_unit_12', name: 'Unit Test 12', file: 'unit12-elementary.html' },
+                { key: 'elementary_progress_2', name: 'Progress Test 2', file: 'elementary-progress-test-2.html' },
+                { key: 'elementary', name: 'End of Course', file: 'elementary-test.html' }
+            ],
+            'preintermediate': [
+                { key: 'preint_unit_1', name: 'Unit Test 1', file: 'unit1-pre-intermediate.html' },
+                { key: 'preint_unit_2', name: 'Unit Test 2', file: 'unit2-pre-intermediate.html' },
+                { key: 'preint_unit_3', name: 'Unit Test 3', file: 'unit3-pre-intermediate.html' },
+                { key: 'preint_unit_4', name: 'Unit Test 4', file: 'unit4-pre-intermediate.html' },
+                { key: 'preint_unit_5', name: 'Unit Test 5', file: 'unit5-pre-intermediate.html' },
+                { key: 'preint_unit_6', name: 'Unit Test 6', file: 'unit6-pre-intermediate.html' },
+                { key: 'preint_progress_1', name: 'Progress Test 1', file: 'pre-intermediate-progress-test-1.html' },
+                { key: 'preint_unit_7', name: 'Unit Test 7', file: 'unit7-pre-intermediate.html' },
+                { key: 'preint_unit_8', name: 'Unit Test 8', file: 'unit8-pre-intermediate.html' },
+                { key: 'preint_unit_9', name: 'Unit Test 9', file: 'unit9-pre-intermediate.html' },
+                { key: 'preint_unit_10', name: 'Unit Test 10', file: 'unit10-pre-intermediate.html' },
+                { key: 'preint_unit_11', name: 'Unit Test 11', file: 'unit11-pre-intermediate.html' },
+                { key: 'preint_unit_12', name: 'Unit Test 12', file: 'unit12-pre-intermediate.html' },
+                { key: 'preint_progress_2', name: 'Progress Test 2', file: 'pre-intermediate-progress-test-2.html' },
+                { key: 'preint', name: 'End of Course', file: 'pre-intermediate-test.html' }
+            ]
+        };
+
+        const motivationMessages = {
+            0: { text: "Start your learning journey today! Every test brings you closer to your goal!", icon: "rocket" },
+            10: { text: "Great start! You've completed your first test! Keep it up!", icon: "trophy" },
+            20: { text: "20% done! You're making fantastic progress!", icon: "fire" },
+            30: { text: "Amazing! 30% complete! You're on fire! 🔥", icon: "fire" },
+            40: { text: "Almost halfway there! Keep pushing! 💪", icon: "muscle" },
+            50: { text: "Wow! You're halfway there! Ajoyib! 50% ga erishdingiz! 🎉", icon: "star" },
+            60: { text: "60% complete! Yana 5 ta test qoldi, davom eting! 🚀", icon: "chevron-up" },
+            70: { text: "Incredible! 70% done! You're so close!", icon: "medal" },
+            80: { text: "Outstanding! 80% complete! Almost at the finish line!", icon: "flag-checkered" },
+            90: { text: "Almost there! Just one more test to go! 🏆", icon: "crown" },
+            100: { text: "CONGRATULATIONS! 🎊 You've completed all tests! You're a champion!", icon: "trophy" }
+        };
+
+        let completedTests = new Set();
+        let currentLevel = 'beginner';
+        let studentUsername = '';
+        let testScoreMap = {};
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!localStorage.getItem('currentUser')) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (localStorage.getItem('currentUserRole') === 'admin') {
+                window.location.href = 'admin.html';
+                return;
+            }
+
+            studentUsername = localStorage.getItem('currentUsername');
+            currentLevel = localStorage.getItem('currentUserLevel') || 'beginner';
+            
+            document.getElementById('studentName').textContent = localStorage.getItem('currentUser') || 'Student';
+            
+            const levelNames = { 'beginner': 'Beginner', 'elementary': 'Elementary', 'preintermediate': 'Pre-intermediate' };
+            document.getElementById('currentLevelBadge').textContent = levelNames[currentLevel];
+
+            await loadProgress();
+            renderTests();
+            checkAndShowCelebration();
+            if (typeof window.eduVaultRetrySync === 'function') window.eduVaultRetrySync();
+        });
+
+        function buildSubmissionScoreMap(submissions, tests) {
+            const map = {};
+            submissions.forEach(sub => {
+                const scoreInfo = {
+                    score: parseFloat(sub.score) || 0,
+                    max: getSubmissionMaxPoints(sub),
+                    pct: getSubmissionPercentage(sub)
+                };
+
+                if (sub.test_key) {
+                    map[sub.test_key] = scoreInfo;
+                    return;
+                }
+
+                const matched = tests.find(t => {
+                    if (!sub.test_type) return false;
+                    return sub.test_type === t.name || sub.test_type.includes(t.name);
+                });
+                if (matched) map[matched.key] = scoreInfo;
+            });
+            return map;
+        }
+
+        async function loadProgress() {
+            const tests = levelTests[currentLevel] || levelTests['beginner'];
+            const currentDisplayName = localStorage.getItem('currentUser');
+
+            if (window.eduSupabase && (studentUsername || currentDisplayName)) {
+                try {
+                    let progressQuery = window.eduSupabase
+                        .from('student_progress')
+                        .select('*')
+                        .eq('level', currentLevel);
+
+                    if (studentUsername) {
+                        progressQuery = progressQuery.eq('student_username', studentUsername);
+                    }
+
+                    let submissionsQuery = window.eduSupabase
+                        .from('submissions')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (studentUsername && currentDisplayName) {
+                        submissionsQuery = submissionsQuery.or(`student_username.eq.${studentUsername},student_name.eq.${currentDisplayName}`);
+                    } else if (studentUsername) {
+                        submissionsQuery = submissionsQuery.eq('student_username', studentUsername);
+                    } else {
+                        submissionsQuery = submissionsQuery.eq('student_name', currentDisplayName);
+                    }
+
+                    const [{ data: progressData, error: progressError }, { data: submissions, error: submissionsError }] = await Promise.all([
+                        progressQuery,
+                        submissionsQuery
+                    ]);
+
+                    if (!progressError && progressData) {
+                        progressData.filter(d => d.completed).forEach(d => completedTests.add(d.test_key));
+                        progressData.forEach(d => {
+                            if (d.test_key && d.score != null) {
+                                testScoreMap[d.test_key] = {
+                                    score: parseFloat(d.score) || 0,
+                                    max: getSubmissionMaxPoints({ test_type: d.test_name, score: d.score, percentage: d.percentage }),
+                                    pct: d.percentage != null ? Math.round(parseFloat(d.percentage)) : getSubmissionPercentage({ score: d.score, test_type: d.test_name })
+                                };
+                            }
+                        });
+                    }
+
+                    if (!submissionsError && submissions && submissions.length > 0) {
+                        const submissionMap = buildSubmissionScoreMap(submissions, tests);
+                        Object.assign(testScoreMap, submissionMap);
+                        Object.keys(submissionMap).forEach(key => completedTests.add(key));
+                    }
+
+                    const completedCount = completedTests.size;
+                    const progress = Math.round((completedCount / 15) * 100);
+
+                    let avgScore = 0;
+                    let totalScore = 0;
+                    let totalMax = 0;
+                    const scoreEntries = Object.values(testScoreMap);
+
+                    if (scoreEntries.length > 0) {
+                        const percentages = scoreEntries.map(s => s.pct);
+                        avgScore = Math.round(percentages.reduce((a, b) => a + b, 0) / percentages.length);
+                        totalScore = scoreEntries.reduce((sum, s) => sum + s.score, 0);
+                        totalMax = scoreEntries.reduce((sum, s) => sum + s.max, 0);
+                    }
+
+                    document.getElementById('completedCount').textContent = completedCount;
+                    document.getElementById('progressPercent').textContent = progress + '%';
+                    document.getElementById('mainProgressBar').style.width = progress + '%';
+                    document.getElementById('avgScore').textContent = avgScore + '%';
+                    document.getElementById('avgScoreDetail').textContent = totalMax > 0
+                        ? `${Math.round(totalScore)} / ${Math.round(totalMax)}`
+                        : 'No scores yet';
+                    document.getElementById('remainingTests').textContent = Math.max(0, 15 - completedCount);
+
+                    updateMotivation(progress);
+                    updateStars(progress);
+                } catch (e) {
+                    console.error('Error loading progress:', e);
+                }
+            }
+        }
+
+        function renderTests() {
+            const grid = document.getElementById('testsGrid');
+            const tests = levelTests[currentLevel] || levelTests['beginner'];
+            
+            grid.innerHTML = tests.map((test, index) => {
+                const isCompleted = completedTests.has(test.key);
+                const isLocked = index > 0 && !completedTests.has(tests[index - 1].key) && !isCompleted;
+                const scoreInfo = testScoreMap[test.key];
+                
+                let className = 'test-item';
+                let icon = 'fa-circle';
+                let displayText = `${index + 1}`;
+                
+                if (isCompleted) {
+                    className += ' completed';
+                    icon = 'fa-check';
+                } else if (isLocked) {
+                    className += ' locked';
+                    icon = 'fa-lock';
+                } else {
+                    className += ' pending';
+                }
+
+                const onclick = isLocked ? '' : `onclick="window.location.href='${test.file}'"`;
+                const scoreLabel = scoreInfo
+                    ? `<div style="font-size:0.62rem;margin-top:0.25rem;font-weight:700;line-height:1.2;text-align:center;">${scoreInfo.score}/${scoreInfo.max}<br>${scoreInfo.pct}%</div>`
+                    : '';
+
+                return `
+                    <div class="${className}" ${onclick} title="${test.name}">
+                        <i class="fa-solid ${icon}"></i>
+                        <div style="font-size: 0.9rem; margin-top: 0.25rem;">${displayText}</div>
+                        ${scoreLabel}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateMotivation(progress) {
+            let messageKey = 0;
+            const keys = Object.keys(motivationMessages).map(Number).sort((a, b) => b - a);
+            
+            for (const key of keys) {
+                if (progress >= key) {
+                    messageKey = key;
+                    break;
+                }
+            }
+
+            const message = motivationMessages[messageKey];
+            document.getElementById('motivationText').innerHTML = `
+                <i class="fa-solid fa-${message.icon}" style="font-size: 2rem;"></i>
+                <span>${message.text}</span>
+            `;
+        }
+
+        function updateStars(progress) {
+            const starsToFill = Math.min(5, Math.ceil(progress / 20));
+            for (let i = 1; i <= 5; i++) {
+                const star = document.getElementById(`star${i}`);
+                if (i <= starsToFill) {
+                    star.classList.add('filled');
+                } else {
+                    star.classList.remove('filled');
+                }
+            }
+        }
+
+        function checkAndShowCelebration() {
+            const progress = completedTests.size / 15 * 100;
+            if (progress >= 100) {
+                showConfetti();
+            }
+        }
+
+        function showConfetti() {
+            const colors = ['#fbbf24', '#34d399', '#60a5fa', '#f472b6', '#a78bfa'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+
+</html>
+

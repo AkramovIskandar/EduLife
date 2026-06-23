@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test 9 | EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .sheet-grid .question-block { margin-bottom: 0; }
+        .tiny-input { width: 110px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .small-input { width: 85px !important; display: inline-block !important; margin: 0 0.25rem; vertical-align: middle; }
+        .sw-input { width: 48px !important; display: inline-block !important; text-align: center; text-transform: uppercase; }
+        .word-bank { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; border: 1px solid #94A3B8; padding: 0.45rem 0.6rem; margin-bottom: 0.75rem; background: #fff; color: #0F172A; font-size: 0.9rem; }
+        .compact-options label { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; margin-bottom: 0; }
+        
+        .reading-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1rem; align-items:start; }
+        .reading-panel {
+            background: #FDECCF;
+            border-left: 4px solid #F59E0B;
+            border-radius: 4px 12px 12px 4px;
+            padding: 1.5rem;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        body.dark-theme .reading-panel {
+            background: #1e293b;
+            border-color: #F59E0B;
+            color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .email-panel { background:#E2E8F0; border-radius:8px; padding:1.25rem; margin-bottom:1rem; line-height:1.6; }
+        .email-panel p { margin-bottom:0.75rem; }
+        
+        @media (max-width: 992px) { 
+            .sheet-grid { grid-template-columns: 1fr; } 
+            .reading-layout { grid-template-columns:1fr; } 
+        }
+        body.dark-theme .word-bank { background: #1F2937; border-color: #475569; color: #E2E8F0; }
+        body.dark-theme .email-panel { background: #334155; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar test-nav">
+        <div class="logo">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tests.html">Tests</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="test-progress">
+            <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText">Section 1 of 6</span>
+        </div>
+    </nav>
+
+    <main class="test-container">
+        <div class="test-header">
+            <h1>Unit Test 9</h1>
+            <p>Complete all sections. Grammar, vocabulary, pronunciation, practical English, reading, writing, listening, and speaking.</p>
+        </div>
+
+        <form id="unit9Form">
+            <!-- PART 1: Grammar, Vocabulary, Pronunciation, Practical English -->
+            <section class="test-section active" id="u9-part1">
+                <div class="section-title">
+                    <h2>Part 1: Grammar, Vocabulary, Pronunciation, Practical English</h2>
+                    <span class="points-badge">30 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <h3>GRAMMAR</h3>
+                            <p class="instruction">1 Complete the sentences. Use the present continuous form of the verb in brackets.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> I can't talk right now. I <u>am driving</u> (drive) to the office.</p>
+                                <p>1 Sam <input type="text" name="u9g1_1" class="small-input"> (cook) a meal for his friends.</p>
+                                <p>2 Megan <input type="text" name="u9g1_2" class="small-input"> (shop). She wants to buy some books.</p>
+                                <p>3 We <input type="text" name="u9g1_3" class="small-input"> (stay) in a hotel in the city centre.</p>
+                                <p>4 The children <input type="text" name="u9g1_4" class="small-input"> (do) their homework in their bedrooms.</p>
+                                <p>5 I <input type="text" name="u9g1_5" class="small-input"> (have) a great time in London.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Tick (✔) the correct verb form.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> We always <label><input type="radio" checked disabled> eat</label> / <label><input type="radio" disabled> are eating</label> lunch at home on Sundays.</p>
+                                <p>1 Max sometimes <label><input type="radio" name="u9g1" value="works"> works</label> / <label><input type="radio" name="u9g1" value="is working"> is working</label> in a coffee shop at the weekend.</p>
+                                <p>2 Julio <label><input type="radio" name="u9g2" value="writes"> writes</label> / <label><input type="radio" name="u9g2" value="is writing"> is writing</label> an email to his mother at the moment.</p>
+                                <p>3 That's my girlfriend over there. She <label><input type="radio" name="u9g3" value="wears"> wears</label> / <label><input type="radio" name="u9g3" value="is wearing"> is wearing</label> a red dress.</p>
+                                <p>4 We usually <label><input type="radio" name="u9g4" value="watch"> watch</label> / <label><input type="radio" name="u9g4" value="are watching"> are watching</label> the TV after work.</p>
+                                <p>5 Tina <label><input type="radio" name="u9g5" value="waits"> waits</label> / <label><input type="radio" name="u9g5" value="is waiting"> is waiting</label> for her train right now.</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>VOCABULARY</h3>
+                            <p class="instruction">3 Complete the email with a verb from the box. Use the correct verb form.</p>
+                            <div class="word-bank">buy, arrive, rent, pack, stay</div>
+                            <div class="q-item">
+                                <div class="email-panel">
+                                    <p>Hi Penny,</p>
+                                    <p>We're on holiday now in Venice and we're <u>having</u> a great time! Here are some photos of everything so far. The first photo is me. I'm at home and I'm <sup>1</sup><input type="text" name="u9v3_1" class="small-input"> my suitcase. I have a lot of clothes! Then, in the second photo, you can see us at the airport, and in the third photo, we're <sup>2</sup><input type="text" name="u9v3_2" class="small-input"> in Venice. It's so exciting!</p>
+                                    <p>In the fourth photo, you can see us at the hotel. We're <sup>3</sup><input type="text" name="u9v3_3" class="small-input"> in a fantastic hotel in the centre of the town. In the next photo, we're <sup>4</sup><input type="text" name="u9v3_4" class="small-input"> presents for our friends. Don't worry...I have a present for you, too! And in the last photo, it's me in our little car - we're <sup>5</sup><input type="text" name="u9v3_5" class="small-input"> a car here for a week!</p>
+                                    <p>See you on Monday!<br>Carla</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <p class="instruction">4 Complete the sentences. Write one word in each gap. The words are all related to clothes.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> I like wearing <u>jeans</u> and a T-shirt at the weekends.</p>
+                                <p>1 I'm wearing a sw<input type="text" name="u9v4_1" class="small-input"> because the classroom is cold.</p>
+                                <p>2 Do you know where my c<input type="text" name="u9v4_2" class="small-input"> is? It's raining outside.</p>
+                                <p>3 I work in a bank. I wear a s<input type="text" name="u9v4_3" class="small-input">, a shirt, and tie every day.</p>
+                                <p>4 It's very nice outside today. A lot of people are wearing T-shirts, sh<input type="text" name="u9v4_4" class="small-input"> and sunglasses.</p>
+                                <p>5 You look nice. Is that a new dr<input type="text" name="u9v4_5" class="small-input">?</p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRONUNCIATION</h3>
+                            <p class="instruction">5 Which is the stressed syllable? Tick (✔) 1, 2, or 3.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> in|ter|net <strong>1</strong> ✓</p>
+                                <p>1 tra|vel|ling <label><input type="radio" name="u9p1" value="1"> 1</label> <label><input type="radio" name="u9p1" value="2"> 2</label> <label><input type="radio" name="u9p1" value="3"> 3</label></p>
+                                <p>2 in|ter|view <label><input type="radio" name="u9p2" value="1"> 1</label> <label><input type="radio" name="u9p2" value="2"> 2</label> <label><input type="radio" name="u9p2" value="3"> 3</label></p>
+                                <p>3 com|pa|nies <label><input type="radio" name="u9p3" value="1"> 1</label> <label><input type="radio" name="u9p3" value="2"> 2</label> <label><input type="radio" name="u9p3" value="3"> 3</label></p>
+                                <p>4 im|por|tant <label><input type="radio" name="u9p4" value="1"> 1</label> <label><input type="radio" name="u9p4" value="2"> 2</label> <label><input type="radio" name="u9p4" value="3"> 3</label></p>
+                                <p>5 trou|sers <label><input type="radio" name="u9p5" value="1"> 1</label> <label><input type="radio" name="u9p5" value="2"> 2</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <h3>PRACTICAL ENGLISH</h3>
+                            <p class="instruction">6 Complete the dialogues with a phrase from the box.</p>
+                            <div class="word-bank">How about a coffee, Yes, I'd love to, No, thanks, See you there, Sorry, I can't</div>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> A <u>Would you like</u> a burger?<br>&nbsp; &nbsp; B Yes, please. I'm hungry!</p>
+                                <p>1 A Would you like to go to the football match tomorrow evening?<br>&nbsp; &nbsp; B <input type="text" name="u9e6_1" class="full-input" style="width:200px!important"><br>&nbsp; &nbsp; A Great! I'll get tickets!</p>
+                                <p>2 A Let's meet at 8 o'clock at the restaurant.<br>&nbsp; &nbsp; B OK. <input type="text" name="u9e6_2" class="full-input" style="width:200px!important"> at 8 o'clock then.</p>
+                                <p>3 A Would you like a sandwich?<br>&nbsp; &nbsp; B <input type="text" name="u9e6_3" class="full-input" style="width:200px!important"> I'm not hungry.</p>
+                                <p>4 A <input type="text" name="u9e6_4" class="full-input" style="width:200px!important">?<br>&nbsp; &nbsp; B Oh, yes please.<br>&nbsp; &nbsp; A Do you take milk and sugar?</p>
+                                <p>5 A Would you like to go to the cinema on Friday evening?<br>&nbsp; &nbsp; B <input type="text" name="u9e6_5" class="full-input" style="width:200px!important"> I'm busy this Friday.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-primary" onclick="nextU9(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 2: Reading -->
+            <section class="test-section" id="u9-reading">
+                <div class="section-title">
+                    <h2>Part 2: Reading</h2>
+                    <span class="points-badge">15 Points</span>
+                </div>
+
+                <div class="reading-layout">
+                    <div class="question-block">
+                        <p class="instruction">1 Read the blog. Tick (✔) True or False.</p>
+                        <div class="reading-panel">
+                            <p><strong>My work experience</strong></p>
+                            <p><em>Matteo Lopez studies at university and works in a cafe. Every day, he writes a blog about his work experience and his life.</em></p>
+                            <p>Monday, 12th October</p>
+                            <p>Every morning, I get up at 7 o'clock and go to the cafe. It's not a big cafe. This morning only four people are working here.</p>
+                            <p>Usually, I work in the kitchen doing small jobs, but today I'm working in the cafe cleaning tables and serving customers. Right now, I'm having lunch. I always have lunch at the cafe because the food is delicious and it isn't expensive. Usually, after lunch, I go to university to study, but today I'm staying at work in the afternoon because we are really busy. At university, I'm studying business and I want to work in an office.</p>
+                            <p>I like my job because every day I meet new people and that is interesting. Also, I don't need to wear special clothes. Today, I'm wearing a T-shirt and jeans. The only thing I don't like is getting up early in the morning.</p>
+                            <p>I have a girlfriend. Her name is Monica and she works in a school. She wants to be a teacher. Today, she isn't working as she's travelling to the USA to visit her sister. At the moment, she's at the airport waiting for her flight.</p>
+                            <p>I usually see her every day and sometimes we go to the cinema together. We love watching action films.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="question-block">
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Matteo works in a cafe.<br><label><input type="radio" checked disabled> True</label> &nbsp; <label><input type="radio" disabled> False</label></p>
+                                <p>1 Matteo always gets up at 7 a.m.<br><label><input type="radio" name="u9r1" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r1" value="False"> False</label></p>
+                                <p>2 The cafe is big.<br><label><input type="radio" name="u9r2" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r2" value="False"> False</label></p>
+                                <p>3 Matteo usually works in the kitchen.<br><label><input type="radio" name="u9r3" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r3" value="False"> False</label></p>
+                                <p>4 At the moment, he is having lunch.<br><label><input type="radio" name="u9r4" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r4" value="False"> False</label></p>
+                                <p>5 The food in the cafe is expensive.<br><label><input type="radio" name="u9r5" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r5" value="False"> False</label></p>
+                                <p>6 Matteo never goes to university in the afternoon.<br><label><input type="radio" name="u9r6" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r6" value="False"> False</label></p>
+                                <p>7 He is wearing a suit today.<br><label><input type="radio" name="u9r7" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r7" value="False"> False</label></p>
+                                <p>8 His girlfriend isn't working today.<br><label><input type="radio" name="u9r8" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r8" value="False"> False</label></p>
+                                <p>9 At the moment, she is waiting for a taxi.<br><label><input type="radio" name="u9r9" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r9" value="False"> False</label></p>
+                                <p>10 Matteo loves watching action films with his girlfriend.<br><label><input type="radio" name="u9r10" value="True"> True</label> &nbsp; <label><input type="radio" name="u9r10" value="False"> False</label></p>
+                            </div>
+                        </div>
+
+                        <div class="question-block">
+                            <p class="instruction">2 Read the blog again. Complete the sentences with one word.</p>
+                            <div class="q-item">
+                                <p><strong>Example:</strong> Matteo writes a <u>blog</u> about his work experience.</p>
+                                <p>1 There are f<input type="text" name="u9r2_1" class="small-input"> people working at the cafe.</p>
+                                <p>2 The food at the cafe is d<input type="text" name="u9r2_2" class="small-input">.</p>
+                                <p>3 Matteo isn't studying today because the cafe is really b<input type="text" name="u9r2_3" class="small-input">.</p>
+                                <p>4 His girlfriend wants to be a t<input type="text" name="u9r2_4" class="small-input"> in a school.</p>
+                                <p>5 At the moment, Monica is at the a<input type="text" name="u9r2_5" class="small-input">.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU9(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU9(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 3: Writing -->
+            <section class="test-section" id="u9-writing">
+                <div class="section-title">
+                    <h2>Part 3: Writing</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="question-block">
+                    <p class="instruction">You have a new online friend, Juan. Write an email to Juan about the topics in the box. Then ask Juan five questions about these topics.</p>
+                    <div class="word-bank">Address and phone, Family, Work / School, Free-time activities, Usual schedule</div>
+                    <div class="q-item">
+                        <textarea class="writing-area" rows="6" placeholder="Hi Juan,&#10;Nice to meet you. Let me tell you about myself:&#10;...&#10;Now let me ask you some questions!&#10;..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU9(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextU9(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- PART 4: Listening -->
+            <section class="test-section" id="u9-listening">
+                <div class="section-title">
+                    <h2>Part 4: Listening</h2>
+                    <span class="points-badge">10 Points</span>
+                </div>
+
+                <div class="sheet-grid">
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 9/ef5e_beginner_test_item_ 017.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">1 Listen to Eva and Gabor's telephone conversation. Tick (✔) True or False.</p>
+                            <div class="q-item">
+                                <p>1 Gabor is at work.<br><label><input type="radio" name="u9l1" value="True"> True</label> &nbsp; <label><input type="radio" name="u9l1" value="False"> False</label></p>
+                                <p>2 Eva is doing the housework.<br><label><input type="radio" name="u9l2" value="True"> True</label> &nbsp; <label><input type="radio" name="u9l2" value="False"> False</label></p>
+                                <p>3 Adam is helping his mother.<br><label><input type="radio" name="u9l3" value="True"> True</label> &nbsp; <label><input type="radio" name="u9l3" value="False"> False</label></p>
+                                <p>4 Eva thinks Adam is probably talking to his friends.<br><label><input type="radio" name="u9l4" value="True"> True</label> &nbsp; <label><input type="radio" name="u9l4" value="False"> False</label></p>
+                                <p>5 Gabor isn't stopping at the supermarket.<br><label><input type="radio" name="u9l5" value="True"> True</label> &nbsp; <label><input type="radio" name="u9l5" value="False"> False</label></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="question-block">
+                            <audio controls class="listening-audio" style="width: 100%; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"><source src="Listenings/unit test 9/ef5e_beginner_test_item_ 018.mp3" type="audio/mpeg"></audio>
+                            <p class="instruction">2 Listen to five conversations and answer the questions.</p>
+                            <div class="q-item">
+                                <p>1 Why is the woman getting a taxi to the airport?<br>
+                                    <label><input type="radio" name="u9l6" value="A"> A because it's expensive</label> &nbsp; <label><input type="radio" name="u9l6" value="B"> B because it's fast</label> &nbsp; <label><input type="radio" name="u9l6" value="C"> C because it's slow</label>
+                                </p>
+                                <p>2 Where are Paul's parents staying?<br>
+                                    <label><input type="radio" name="u9l7" value="A"> A at Paul's flat</label> &nbsp; <label><input type="radio" name="u9l7" value="B"> B with Paul's friends</label> &nbsp; <label><input type="radio" name="u9l7" value="C"> C at a hotel</label>
+                                </p>
+                                <p>3 What would the woman like for lunch?<br>
+                                    <label><input type="radio" name="u9l8" value="A"> A a burger</label> &nbsp; <label><input type="radio" name="u9l8" value="B"> B a sandwich</label> &nbsp; <label><input type="radio" name="u9l8" value="C"> C she isn't hungry</label>
+                                </p>
+                                <p>4 Where is the man?<br>
+                                    <label><input type="radio" name="u9l9" value="A"> A leaving the train station</label> &nbsp; <label><input type="radio" name="u9l9" value="B"> B arriving at the bus stop</label> &nbsp; <label><input type="radio" name="u9l9" value="C"> C outside the restaurant</label>
+                                </p>
+                                <p>5 The man is wearing ______.<br>
+                                    <label><input type="radio" name="u9l10" value="A"> A a black hat</label> &nbsp; <label><input type="radio" name="u9l10" value="B"> B a green hat</label> &nbsp; <label><input type="radio" name="u9l10" value="C"> C a green coat</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions flex-between">
+                    <button type="button" class="btn btn-outline" onclick="prevU9(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-submit" onclick="finalU9()"><i class="fa-solid fa-user-check"></i> Continue to Final Step</button>
+                </div>
+            </section>
+
+            <!-- Final Step: Details -->
+            <section class="test-section" id="u9-details">
+                <div class="section-title">
+                    <h2>Final Step: Your Information</h2>
+                </div>
+                
+                <div class="question-block">
+                    <div class="q-item" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">First Name *</label>
+                            <input type="text" id="u9First" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Last Name *</label>
+                            <input type="text" id="u9Last" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Group / Level *</label>
+                            <input type="text" id="u9Group" class="full-input" style="margin-bottom: 0;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Phone Number *</label>
+                            <input type="tel" id="u9Phone" class="full-input" value="+998 " style="margin-bottom: 0;" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions right">
+                    <button type="button" class="btn btn-submit btn-large" onclick="submitUnit9()" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Finish & Submit</button>
+                </div>
+            </section>
+
+            <section class="test-section" id="u9-result" style="display:none; text-align:center;">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h2>Congratulations!</h2>
+                <p>Test submitted successfully. Your objective score: 0 / 125. Redirecting to homepage in 5 seconds...</p>
+                <a href="tests.html" class="btn btn-primary" style="margin-top: 2rem;">Return to Tests Dashboard</a>
+            </section>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) window.location.href = 'login.html';
+        const u9ExamMode = localStorage.getItem('edu_exam_mode_unit9');
+        if (u9ExamMode === 'off') {
+            alert('This test is currently disabled by Admin.');
+            window.location.href = 'tests.html';
+        }
+
+        const u9Sections = ['u9-part1', 'u9-reading', 'u9-writing', 'u9-listening', 'u9-details'];
+        const u9Total = u9Sections.length;
+
+        function updateU9(idx) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / u9Total * 100) + '%';
+            if (txt) txt.innerText = `Section ${idx + 1} of ${u9Total}`;
+        }
+
+        function showU9(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const t = document.getElementById(u9Sections[idx]);
+            if (t) t.classList.add('active');
+            updateU9(idx);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function nextU9(current) { showU9(current); }
+        function prevU9(current) { showU9(current - 2); }
+        function finalU9() { showU9(4); }
+
+        function sectionStats(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return { answered: 0, total: 0, percent: 0 };
+            const radioGroups = Array.from(section.querySelectorAll('input[type="radio"]:not([disabled])')).reduce((acc, r) => {
+                if (r.name) acc.add(r.name);
+                return acc;
+            }, new Set());
+            const radioAnswered = Array.from(radioGroups).filter(name => section.querySelector(`input[name="${name}"]:checked`)).length;
+            const textInputs = Array.from(section.querySelectorAll('input[type="text"]:not([disabled])'));
+            const textAnswered = textInputs.filter(i => i.value.trim().length > 0).length;
+            const textareas = Array.from(section.querySelectorAll('textarea'));
+            const taAnswered = textareas.filter(t => t.value.trim().length > 0).length;
+            const checkboxes = Array.from(section.querySelectorAll('input[type="checkbox"]:not([disabled])'));
+            const checksAnswered = checkboxes.filter(c => c.checked).length;
+            const total = radioGroups.size + textInputs.length + textareas.length + checkboxes.length;
+            const answered = radioAnswered + textAnswered + taAnswered + checksAnswered;
+            return { answered, total, percent: total ? Math.round((answered / total) * 100) : 0 };
+        }
+
+        async function submitUnit9() {
+            const first = document.getElementById('u9First').value.trim();
+            const last = document.getElementById('u9Last').value.trim();
+            const group = document.getElementById('u9Group').value.trim();
+            const phone = document.getElementById('u9Phone').value.trim();
+            if (!first || !last || !group || !phone || phone.replace(/\D/g, '').length < 12) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            const gradingKey = {
+                // Grammar 1
+                u9g1_1: ['\'s cooking', 'is cooking'], u9g1_2: ['\'s shopping', 'is shopping'], u9g1_3: ['\'re staying', 'are staying'], u9g1_4: ['\'re doing', 'are doing'], u9g1_5: ['\'m having', 'am having'],
+                // Grammar 2
+                u9g1: 'works', u9g2: 'is writing', u9g3: 'is wearing', u9g4: 'watch', u9g5: 'is waiting',
+                // Vocabulary 3
+                u9v3_1: 'packing', u9v3_2: 'arriving', u9v3_3: 'staying', u9v3_4: 'buying', u9v3_5: 'renting',
+                // Vocabulary 4
+                u9v4_1: 'sweater', u9v4_2: 'coat', u9v4_3: 'suit', u9v4_4: 'shorts', u9v4_5: 'dress',
+                // Pronunciation 5
+                u9p1: '1', u9p2: '1', u9p3: '1', u9p4: '2', u9p5: '1',
+                // Practical English 6
+                u9e6_1: 'Yes, I\'d love to', u9e6_2: 'See you there', u9e6_3: 'No, thanks', u9e6_4: 'How about a coffee', u9e6_5: 'Sorry, I can\'t',
+                // Reading 1
+                u9r1: 'True', u9r2: 'False', u9r3: 'True', u9r4: 'True', u9r5: 'False', u9r6: 'False', u9r7: 'False', u9r8: 'True', u9r9: 'False', u9r10: 'True',
+                // Reading 2
+                u9r2_1: 'four', u9r2_2: 'delicious', u9r2_3: 'busy', u9r2_4: 'teacher', u9r2_5: 'airport',
+                // Listening 1
+                u9l1: 'False', u9l2: 'True', u9l3: 'False', u9l4: 'True', u9l5: 'False',
+                // Listening 2
+                u9l6: 'B', u9l7: 'C', u9l8: 'C', u9l9: 'B', u9l10: 'C'
+            };
+
+            let score = 0;
+            let totalPossible = Object.keys(gradingKey).length;
+
+            for (const [key, expected] of Object.entries(gradingKey)) {
+                const field = document.getElementsByName(key);
+                if (field.length > 0) {
+                    let actual = '';
+                    if (field[0].type === 'radio') {
+                        const checked = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checked) actual = checked.value;
+                    } else {
+                        actual = field[0].value;
+                    }
+
+                    const normalizedActual = normalize(actual);
+                    if (Array.isArray(expected)) {
+                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
+                    } else if (normalizedActual === normalize(expected)) {
+                        score++;
+                    }
+                }
+            }
+
+            const autoScore = Math.round((score / totalPossible) * 125);
+
+            const writingAnswers = Array.from(document.querySelectorAll('#u9-writing textarea'))
+                .map(t => t.value.trim())
+                .join('\n');
+
+            const sub = {
+                submissionId: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                type: 'Unit Test 9',
+                studentName: `${first} ${last}`,
+                submittedBy: localStorage.getItem('currentUsername') || '',
+                submittedRole: localStorage.getItem('currentUserRole') || 'student',
+                firstName: first,
+                lastName: last,
+                group,
+                phone,
+                timestamp: new Date().toISOString(),
+                scores: { totalObjectiveScore: autoScore },
+                sectionCompletion: {
+                    grammarVocabPron: sectionStats('u9-part1'),
+                    reading: sectionStats('u9-reading'),
+                    writing: sectionStats('u9-writing'),
+                    listening: sectionStats('u9-listening')
+                },
+                rawAnswers: {
+                    writingText: writingAnswers
+                }
+            };
+
+            const ex = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+            ex.push(sub);
+            localStorage.setItem('edu_submissions', JSON.stringify(ex));
+            saveSubmissionToSupabase(sub);
+
+            document.getElementById('unit9Form').style.display = 'none';
+            const res = document.getElementById('u9-result');
+            if (res) {
+                res.style.display = 'block';
+                res.classList.add('active');
+                const h2 = res.querySelector('h2');
+                const p = res.querySelector('p');
+                if (h2) h2.innerText = `${sub.type} Submitted Successfully!`;
+                if (p) p.innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
+            }
+            const progress = document.querySelector('.test-progress');
+            const header = document.querySelector('.test-header');
+            if (progress) progress.style.display = 'none';
+            if (header) header.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateU9(0);
+            const p = document.getElementById('u9Phone');
+            if (p) {
+                p.addEventListener('input', function () {
+                    if (!this.value.startsWith('+998 ')) this.value = '+998 ';
+                });
+                p.addEventListener('keydown', function (e) {
+                    if (this.selectionStart < 5 && (e.key === 'Backspace' || e.key === 'Delete')) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+

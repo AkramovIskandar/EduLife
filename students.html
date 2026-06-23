@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Logins | EDU LIFE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-light">
+    <!-- Navbar -->
+    <nav class="admin-nav">
+        <div class="logo">
+            <span class="logo-icon"><img src="image.png" alt="EDU LIFE"></span>
+            EDU<span class="text-accent">LIFE</span> <span style="font-size: 0.9rem; opacity: 0.8; margin-left: 0.5rem; font-weight: 500;">| Students</span>
+        </div>
+        <div class="nav-actions">
+            <a href="admin.html" class="btn btn-white" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+            </a>
+            <a href="tests.html" class="btn btn-white" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                <i class="fa-solid fa-file-lines"></i> Tests
+            </a>
+            <button class="theme-toggle-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+            <button class="btn btn-outline" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;" onclick="logout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container" style="max-width: 1100px; margin-top: 7rem;">
+        <header style="margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Student Logins</h1>
+                <p style="color: var(--text-muted); font-weight: 500;">Manage student accounts and access credentials.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; max-width: 520px;">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    O'quvchi birinchi marta login qilganda <strong>EduLife Student</strong> ilovasini o'rnatish taklif qilinadi (PWA yoki APK).
+                </p>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:0.5rem;">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+                    <button class="btn" onclick="showOfflineData()" style="padding: 0.3rem 0.75rem; font-size: 0.8rem; background-color: #f59e0b; color: #fff; border: none; border-radius: 4px; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; transition: 0.2s;">
+                        <i class="fa-solid fa-database"></i> INFORMATION
+                    </button>
+                    <div class="badge" style="margin-bottom: 0; background-color: rgba(245, 158, 11, 0.1); color: #D97706; cursor:pointer;" onclick="document.getElementById('acceptmentsSection').scrollIntoView({behavior:'smooth'})">
+                        <i class="fa-solid fa-bell"></i> <span id="pendingCount">0</span> Yangi ariza
+                    </div>
+                    <div class="badge" style="margin-bottom: 0;">
+                        <i class="fa-solid fa-user-graduate"></i> <span id="studentCount">0</span> Students
+                    </div>
+                    <div class="badge" style="margin-bottom: 0; background-color: rgba(16, 185, 129, 0.1); color: #10B981;">
+                        <i class="fa-solid fa-file-signature"></i> <span id="totalTestsCount">0</span> Tests Submitted
+                    </div>
+                </div>
+                <div id="syncIndicator" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">
+                    <i class="fa-solid fa-cloud"></i> Initializing sync...
+                </div>
+            </div>
+        </header>
+
+        <!-- ============ ACCEPTMENTS SECTION ============ -->
+        <div id="acceptmentsSection" class="q-item" style="margin-bottom: 3rem; padding: 2rem; border-left: 4px solid #F59E0B; position: relative;">
+            <h3 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                <i class="fa-solid fa-clipboard-list" style="color: #F59E0B;"></i> Acceptments — Yangi Arizalar
+                <span id="pendingBadge" style="background: #F59E0B; color: #fff; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px; font-weight: 700;">0</span>
+            </h3>
+            <div id="acceptmentsTableContainer">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th>Ism Familiya</th>
+                            <th>Telefon</th>
+                            <th>Izoh</th>
+                            <th>Ariza sanasi</th>
+                            <th style="text-align: right; width: 240px;">Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="acceptmentsTableBody">
+                        <tr><td colspan="6" style="text-align:center; padding: 2rem; color: var(--text-muted);">Yuklanmoqda...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- APPROVAL MODAL -->
+        <div id="approvalModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; display:none; align-items:center; justify-content:center; padding:1rem;">
+            <div style="background:var(--bg-card, #fff); width:100%; max-width:480px; border-radius:16px; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);">
+                <div style="padding:1.5rem; border-bottom:1px solid rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center;">
+                    <h3 style="margin:0;"><i class="fa-solid fa-user-check" style="color:#10B981; margin-right:0.5rem;"></i>Arizani tasdiqlash</h3>
+                    <button onclick="closeApprovalModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</button>
+                </div>
+                <div style="padding:1.5rem;">
+                    <div style="background:rgba(59,130,246,0.05); border:1px solid rgba(59,130,246,0.15); border-radius:10px; padding:1rem; margin-bottom:1.5rem;">
+                        <p style="margin:0; font-size:0.9rem;"><strong>O'quvchi:</strong> <span id="approvalName" style="color:var(--primary);"></span></p>
+                        <p style="margin:0.25rem 0 0; font-size:0.9rem;"><strong>Telefon:</strong> <span id="approvalPhone" style="font-family:monospace;"></span></p>
+                        <p style="margin:0.5rem 0 0; font-size:0.9rem; padding-top:0.5rem; border-top:1px dashed rgba(59,130,246,0.2);"><strong>Izoh:</strong> <span id="approvalNote" style="color:var(--text-muted); font-style:italic;"></span></p>
+                    </div>
+                    <div class="input-group" style="margin-bottom:1rem;">
+                        <label><i class="fa-solid fa-at"></i> Username (login)</label>
+                        <input id="approvalUsername" type="text" placeholder="masalan: aliyev.jasur" class="full-input">
+                    </div>
+                    <div class="input-group" style="margin-bottom:1rem;">
+                        <label><i class="fa-solid fa-key"></i> Parol</label>
+                        <input id="approvalPassword" type="text" placeholder="masalan: jasur123" class="full-input">
+                        <button onclick="generatePassword()" style="margin-top:0.5rem; background:none; border:1px solid var(--primary); color:var(--primary); padding:0.3rem 0.75rem; border-radius:6px; font-size:0.8rem; cursor:pointer;">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Avtomatik parol yaratish
+                        </button>
+                    </div>
+                    <div class="input-group" style="margin-bottom:1.5rem;">
+                        <label><i class="fa-solid fa-layer-group"></i> Daraja</label>
+                        <select id="approvalLevel" class="full-input">
+                            <option value="beginner">Beginner</option>
+                            <option value="elementary">Elementary</option>
+                            <option value="preintermediate">Pre-intermediate</option>
+                        </select>
+                    </div>
+                    <div id="approvalStatus" style="font-weight:600; font-size:0.9rem; margin-bottom:1rem; display:none;"></div>
+
+                    <!-- Credentials display (shown after approval) -->
+                    <div id="credentialsBox" style="display:none; background:#ECFDF5; border:1px solid #A7F3D0; border-radius:10px; padding:1.25rem; margin-bottom:1rem;">
+                        <h4 style="color:#059669; margin:0 0 0.75rem; font-size:0.95rem;"><i class="fa-solid fa-circle-check"></i> Hisob yaratildi!</h4>
+                        <div style="background:#fff; border-radius:8px; padding:1rem; font-family:monospace; font-size:0.95rem; line-height:1.8; border:1px solid #D1FAE5;">
+                            <div><strong>Login:</strong> <span id="credUsername"></span></div>
+                            <div><strong>Parol:</strong> <span id="credPassword"></span></div>
+                        </div>
+                        <button onclick="copyCredentials()" style="margin-top:0.75rem; width:100%; background:#10B981; color:#fff; border:none; padding:0.75rem; border-radius:8px; font-weight:600; cursor:pointer; font-size:0.95rem; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+                            <i class="fa-solid fa-copy"></i> Nusxalash (telefonega jo'natish uchun)
+                        </button>
+                    </div>
+
+                    <div style="display:flex; gap:0.75rem;" id="approvalActions">
+                        <button class="btn btn-primary" onclick="approveRegistration()" style="flex:1; padding:0.8rem;">
+                            <i class="fa-solid fa-check-circle"></i> Tasdiqlash va yaratish
+                        </button>
+                        <button class="btn btn-outline" onclick="closeApprovalModal()" style="padding:0.8rem 1.5rem;">
+                            Bekor qilish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Student Card -->
+        <div class="q-item" style="margin-bottom: 3rem; padding: 2rem; border-left: 4px solid var(--primary);">
+            <h3 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                <i class="fa-solid fa-user-plus" style="color: var(--primary);"></i> Create New Student Account
+            </h3>
+            <div class="reg-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <div class="input-group">
+                    <label><i class="fa-solid fa-id-card"></i> Display Name</label>
+                    <input id="newStudentName" type="text" placeholder="e.g. John Doe" class="full-input">
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-at"></i> Username</label>
+                    <input id="newStudentUsername" type="text" placeholder="e.g. john.doe" class="full-input">
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-key"></i> Password</label>
+                    <input id="newStudentPassword" type="text" placeholder="••••••••" class="full-input">
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-layer-group"></i> Level</label>
+                    <select id="newStudentLevel" class="full-input">
+                        <option value="beginner">Beginner</option>
+                        <option value="elementary">Elementary</option>
+                        <option value="preintermediate">Pre-intermediate</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display:flex; align-items:center; gap: 1.5rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.05);">
+                <button class="btn btn-primary" type="button" onclick="createStudent()" style="padding: 0.8rem 2rem;">
+                    <i class="fa-solid fa-plus-circle"></i> Create Account
+                </button>
+                <div id="createStatus" style="font-weight:600; font-size: 0.95rem;"></div>
+            </div>
+        </div>
+
+        <!-- Accounts List Table -->
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <i class="fa-solid fa-list-ul" style="color: var(--primary); font-size: 1.25rem;"></i>
+            <h2 style="margin-bottom: 0;">Student Accounts</h2>
+        </div>
+        
+        <div class="admin-table-container" style="overflow: visible;">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">#</th>
+                        <th>Display Name</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Level</th>
+                        <th style="text-align: right; width: 220px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsTableBody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <style>
+        .table-input {
+            border: 1px solid transparent;
+            background: transparent;
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: 100%;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .table-input:hover {
+            background: rgba(0,0,0,0.02);
+            border-color: rgba(0,0,0,0.05);
+        }
+        .table-input:focus {
+            background: var(--white);
+            border-color: var(--primary-light);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        body.dark-theme .table-input:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+        }
+        body.dark-theme .table-input:focus {
+            background: #0f172a;
+            border-color: var(--primary-light);
+        }
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        .admin-table td {
+            padding: 1rem 1.25rem;
+            vertical-align: middle;
+        }
+        .badge-username {
+            font-family: monospace;
+            background: #F1F5F9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+        }
+        body.dark-theme .badge-username {
+            background: #1e293b;
+            color: #93c5fd;
+        }
+
+        /* ============ STUDENTS MANAGEMENT RESPONSIVE OVERRIDES ============ */
+        @media (max-width: 1024px) {
+            .admin-table {
+                display: block !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+            
+            .admin-table td,
+            .admin-table th {
+                white-space: nowrap !important;
+            }
+            
+            .admin-card {
+                padding: 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 6rem 5% 3rem !important;
+            }
+            
+            .admin-header h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 0.75rem !important;
+            }
+            
+            .stat-item {
+                padding: 1rem !important;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem !important;
+            }
+            
+            .create-card {
+                padding: 1.25rem !important;
+            }
+            
+            .create-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .create-card .btn {
+                width: 100% !important;
+                padding: 0.85rem 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            main {
+                padding: 5rem 4% 2rem !important;
+            }
+            
+            .admin-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 1rem !important;
+            }
+            
+            .admin-header h1 {
+                font-size: 1.5rem !important;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .admin-card {
+                padding: 1rem !important;
+            }
+            
+            .table-input {
+                font-size: 0.9rem !important;
+                padding: 6px 10px !important;
+            }
+            
+            .action-btns {
+                flex-direction: column !important;
+                gap: 0.35rem !important;
+            }
+            
+            .action-btns .btn {
+                width: 100% !important;
+                padding: 0.5rem !important;
+                font-size: 0.75rem !important;
+            }
+            
+            .admin-table td {
+                padding: 0.75rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stat-item {
+                padding: 0.85rem !important;
+            }
+            
+            .stat-label {
+                font-size: 0.8rem !important;
+            }
+            
+            .stat-number {
+                font-size: 1.25rem !important;
+            }
+            
+            .create-card {
+                padding: 1rem !important;
+            }
+            
+            .admin-card h3 {
+                font-size: 1.1rem !important;
+            }
+        }
+
+        /* Mobile table optimization */
+        @media (max-width: 768px) {
+            .admin-table-container {
+                border-radius: var(--border-radius) !important;
+                overflow: hidden !important;
+            }
+            
+            /* Scroll indicator for mobile tables */
+            .admin-card::after {
+                content: 'Swipe → to view more';
+                position: absolute !important;
+                right: 1rem !important;
+                bottom: 0.75rem !important;
+                font-size: 0.75rem !important;
+                color: var(--text-muted) !important;
+                opacity: 0.6 !important;
+                display: none !important;
+            }
+            
+            @media (max-width: 1024px) {
+                .admin-card::after {
+                    display: block !important;
+                }
+            }
+        }
+
+        /* Prevent iOS text zoom on form focus */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            select,
+            textarea,
+            input[type="text"],
+            input[type="password"],
+            input[type="search"],
+            input[type="number"] {
+                font-size: 16px !important;
+            }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (localStorage.getItem('currentUserRole') !== 'admin') {
+            window.location.href = 'login.html';
+        }
+
+        async function loadStudentsTable() {
+            const tbody = document.getElementById('studentsTableBody');
+            const countEl = document.getElementById('studentCount');
+            const syncEl = document.getElementById('syncIndicator');
+
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 2rem;">Loading global list...</td></tr>';
+
+            let students = [];
+
+            if (window.eduSupabase) {
+                try {
+                    const { count: testCount, error: countError } = await window.eduSupabase
+                        .from('submissions')
+                        .select('*', { count: 'exact', head: true });
+                        
+                    if (!countError && testCount !== null) {
+                        document.getElementById('totalTestsCount').innerText = testCount;
+                    }
+
+                    const { data, error } = await window.eduSupabase
+                        .from('student_accounts')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!error && data) {
+                        students = data.map(d => ({
+                            id: d.id,
+                            username: d.username,
+                            displayName: d.display_name,
+                            role: d.role,
+                            level: d.level
+                        }));
+                        syncEl.innerHTML = '<i class="fa-solid fa-cloud-check" style="color:#10B981"></i> Synced with Cloud';
+                    } else if (error) {
+                        syncEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color:#EF4444"></i> Offline / Error';
+                    }
+                } catch (e) {
+                    syncEl.innerHTML = '<i class="fa-solid fa-wifi" style="color:#EF4444"></i> Connection Error';
+                }
+            }
+
+            countEl.innerText = students.length;
+            tbody.innerHTML = '';
+
+            if (students.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 3rem; color: var(--text-muted);">No student accounts found in cloud.</td></tr>';
+                return;
+            }
+
+            students.forEach((student, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="color: var(--text-muted); font-weight: 600;">${idx + 1}</td>
+                    <td><input id="name_${student.id}" class="table-input" type="text" value="${student.displayName || ''}"></td>
+                    <td><input id="user_${student.id}" class="table-input" type="text" value="${student.username || ''}" style="font-family: monospace;"></td>
+                    <td><input id="pass_${student.id}" class="table-input" type="text" placeholder="•••••••• (for change)"></td>
+                    <td>
+                        <select id="level_${student.id}" class="table-input">
+                            <option value="beginner" ${student.level === 'beginner' ? 'selected' : ''}>Beginner</option>
+                            <option value="elementary" ${student.level === 'elementary' ? 'selected' : ''}>Elementary</option>
+                            <option value="preintermediate" ${student.level === 'preintermediate' ? 'selected' : ''}>Pre-intermediate</option>
+                        </select>
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn btn-primary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;" onclick="updateStudent('${student.id}', this)">
+                                <i class="fa-solid fa-save"></i> Save
+                            </button>
+                            <button class="btn" style="padding: 0.5rem 0.75rem; font-size: 0.8rem; background: #EF4444; color: #fff;" onclick="deleteStudent('${student.id}')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function createStudent() {
+            const displayName = document.getElementById('newStudentName').value.trim();
+            const username = document.getElementById('newStudentUsername').value.trim();
+            const password = document.getElementById('newStudentPassword').value.trim();
+            const level = document.getElementById('newStudentLevel').value;
+            const status = document.getElementById('createStatus');
+
+            if (!displayName || !username || !password) {
+                status.innerText = '⚠️ All fields are required.';
+                status.style.color = '#EF4444';
+                return;
+            }
+
+            status.innerText = 'Syncing to cloud...';
+
+            if (window.eduSupabase) {
+                try {
+                    const { data, error } = await window.eduSupabase
+                        .rpc('create_student_account', {
+                            p_username: username,
+                            p_password: password,
+                            p_display_name: displayName,
+                            p_level: level
+                        });
+
+                    if (error) {
+                        status.innerText = '⚠️ Cloud Error: ' + error.message;
+                        status.style.color = '#EF4444';
+                        return;
+                    }
+
+                    if (data && !data.success) {
+                        status.innerText = '⚠️ ' + (data.message || 'Error creating account.');
+                        status.style.color = '#EF4444';
+                        return;
+                    }
+                } catch (e) {
+                    status.innerText = '⚠️ Connection error.';
+                    status.style.color = '#EF4444';
+                    return;
+                }
+            } else {
+                status.innerText = '⚠️ Database not connected.';
+                status.style.color = '#EF4444';
+                return;
+            }
+
+            document.getElementById('newStudentName').value = '';
+            document.getElementById('newStudentUsername').value = '';
+            document.getElementById('newStudentPassword').value = '';
+            document.getElementById('newStudentLevel').value = 'beginner';
+            status.innerHTML = '✅ Hisob yaratildi! O\'quvchi login qilganda ilovani o\'rnatish taklifi chiqadi.';
+            status.style.color = '#10B981';
+            setTimeout(() => { status.innerText = ''; }, 3000);
+            loadStudentsTable();
+        }
+
+        async function updateStudent(id, btn) {
+            const displayName = document.getElementById(`name_${id}`).value.trim();
+            const username = document.getElementById(`user_${id}`).value.trim();
+            const password = document.getElementById(`pass_${id}`).value.trim();
+            const level = document.getElementById(`level_${id}`).value;
+
+            if (!displayName || !username) {
+                alert('Display Name and Username are required.');
+                return;
+            }
+
+            if (window.eduSupabase) {
+                try {
+                    const { data, error } = await window.eduSupabase
+                        .rpc('update_student_account', {
+                            p_id: id,
+                            p_username: username,
+                            p_password: password || null,
+                            p_display_name: displayName,
+                            p_level: level
+                        });
+
+                    if (error) {
+                        alert('Sync Error: ' + error.message);
+                        return;
+                    }
+
+                    if (data && !data.success) {
+                        alert('Error: ' + (data.message || 'Update failed.'));
+                        return;
+                    }
+                } catch (e) {
+                    alert('Connection Error: ' + e.message);
+                    return;
+                }
+            }
+
+            if (btn) {
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Saved';
+                btn.style.background = '#10B981';
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.style.background = '';
+                }, 2000);
+            }
+            loadStudentsTable();
+        }
+
+        async function deleteStudent(id) {
+            if (!confirm('Are you sure you want to delete this student account?')) return;
+
+            if (window.eduSupabase) {
+                try {
+                    const { error } = await window.eduSupabase.from('student_accounts').delete().eq('id', id);
+                    if (error) {
+                        alert('Cloud delete failed: ' + error.message);
+                        return;
+                    }
+                } catch (e) {
+                    alert('Connection error occurred.');
+                    return;
+                }
+            } else {
+                alert('Database not connected.');
+                return;
+            }
+
+            loadStudentsTable();
+        }
+
+        // Initialize theme toggle
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const icon = document.getElementById('themeToggle').querySelector('i');
+            if(document.body.classList.contains('dark-theme')) {
+                icon.className = 'fa-solid fa-sun';
+                localStorage.setItem('edu_theme', 'dark');
+            } else {
+                icon.className = 'fa-solid fa-moon';
+                localStorage.setItem('edu_theme', 'light');
+            }
+        });
+
+        // Load saved theme
+        if (localStorage.getItem('edu_theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('themeToggle').querySelector('i').className = 'fa-solid fa-sun';
+        }
+
+        async function showOfflineData() {
+            const pwd = prompt('Iltimos, parolni kiriting:');
+            if (pwd !== 'vtc7y29c7xv') {
+                if (pwd !== null) alert('Parol xato!');
+                return;
+            }
+            
+            // Generate modal
+            let modal = document.getElementById('offlineDataModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'offlineDataModal';
+                modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; display:flex; align-items:center; justify-content:center; padding:1rem;';
+                
+                const content = document.createElement('div');
+                content.style.cssText = 'background:var(--bg-card, #fff); width:100%; max-width:1100px; height:85vh; border-radius:12px; display:flex; flex-direction:column; overflow:hidden; position:relative; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);';
+                
+                content.innerHTML = `
+                    <div style="padding:1.5rem; border-bottom:1px solid rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center;">
+                        <h2 style="margin:0; font-size:1.5rem;"><i class="fa-solid fa-database" style="color:#f59e0b;"></i> Yashirin Saqlangan Ma'lumotlar</h2>
+                        <button onclick="document.getElementById('offlineDataModal').style.display='none'" style="background:none; border:none; font-size:1.8rem; cursor:pointer; color:var(--text-color);">&times;</button>
+                    </div>
+                    <div style="padding:1rem 1.5rem; background:rgba(0,0,0,0.02); border-bottom:1px solid rgba(0,0,0,0.1); display:flex; gap:1rem;">
+                        <button class="btn btn-primary" onclick="downloadOfflineCSV()" style="background:#10B981; border:none;"><i class="fa-solid fa-download"></i> Excel/CSV ga tushirish</button>
+                        <button class="btn btn-outline" onclick="loadOfflineTable()"><i class="fa-solid fa-rotate-right"></i> Yangilash</button>
+                        <button class="btn btn-outline" onclick="syncCloudDataToOffline()" style="margin-left:auto; border-color:var(--primary); color:var(--primary);"><i class="fa-solid fa-cloud-arrow-down"></i> Bazadagini tortib olish (Sync)</button>
+                    </div>
+                    <div style="flex:1; overflow:auto; padding:0;" id="offlineDataContent">
+                        <div style="padding:2rem; text-align:center;">Yuklanmoqda...</div>
+                    </div>
+                `;
+                modal.appendChild(content);
+                document.body.appendChild(modal);
+            }
+            
+            modal.style.display = 'flex';
+            await loadOfflineTable();
+        }
+        
+        async function loadOfflineTable() {
+            const container = document.getElementById('offlineDataContent');
+            try {
+                if (typeof window._eduRecoverAll !== 'function') {
+                    container.innerHTML = '<div style="padding:4rem 2rem; text-align:center; color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin" style="font-size:2rem; margin-bottom:1rem; color:var(--primary);"></i><br>Xavfsizlik moduli (Vault) yuklanmoqda... Iltimos internet tezligiga qarab 2-3 soniya kuting va <b>Yangilash</b> tugmasini bosing.</div>';
+                    return;
+                }
+                const data = await window._eduRecoverAll();
+                const all = data.idb.length > 0 ? data.idb : data.ls;
+                
+                if (!all || all.length === 0) {
+                    container.innerHTML = '<div style="text-align:center; padding:4rem; color:var(--text-muted);"><i class="fa-solid fa-box-open" style="font-size:3rem; margin-bottom:1rem; opacity:0.5;"></i><br>Hozircha hech qanday yashirin ma\'lumot saqlanmagan.</div>';
+                    return;
+                }
+                
+                // Oxirgi qo'shilganlar birinchi chiqishi uchun
+                all.reverse();
+                window._cachedOfflineData = all;
+                
+                let html = '<table class="admin-table" style="width:100%; border-radius:0; border:none;"><thead><tr><th style="padding-left:1.5rem;">Sana & Vaqt</th><th>O\'quvchi Ismi</th><th>Test Turi</th><th>Score</th><th>Guruh</th><th>Telefon</th><th>Amallar</th></tr></thead><tbody>';
+                
+                all.forEach(r => {
+                    const date = new Date(r._ts).toLocaleString('uz-UZ', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+                    const name = r._name || r._usr || '-';
+                    const type = r._type || r._key || '-';
+                    const score = r._score !== null ? r._score : '-';
+                    const group = r._group || '-';
+                    const phone = r._phone || '-';
+                    const writing = r._writing ? r._writing.substring(0, 40) + (r._writing.length > 40 ? '...' : '') : '<span style="opacity:0.3">-</span>';
+                    const fullWriting = r._writing ? r._writing.replace(/"/g, '&quot;') : '';
+                    
+                    html += `<tr style="border-bottom:1px solid rgba(0,0,0,0.05);">
+                        <td style="padding-left:1.5rem; font-size:0.85rem; color:var(--text-muted);">${date}</td>
+                        <td style="font-weight:600; color:var(--primary);">${name}</td>
+                        <td style="font-size:0.9rem;">${type}</td>
+                        <td><span class="badge" style="background:rgba(16,185,129,0.1); color:#10B981; margin:0;">${score}</span></td>
+                        <td style="font-size:0.9rem;">${group}</td>
+                        <td style="font-size:0.9rem; font-family:monospace;">${phone}</td>
+                        <td>
+                            <button class="btn btn-outline" style="padding:0.35rem 0.75rem; font-size:0.8rem;" onclick="viewOfflineRecord('${r._sid}')"><i class="fa-solid fa-eye"></i> Ko'rish</button>
+                        </td>
+                    </tr>`;
+                });
+                html += '</tbody></table>';
+                container.innerHTML = html;
+                
+            } catch (err) {
+                container.innerHTML = '<div style="color:#EF4444; padding:2rem; text-align:center;"><i class="fa-solid fa-triangle-exclamation"></i> Xatolik yuz berdi: ' + err.message + '</div>';
+            }
+        }
+        
+        function viewOfflineRecord(sid) {
+            if (!window._cachedOfflineData) return;
+            const r = window._cachedOfflineData.find(x => x._sid === sid);
+            if (!r) return;
+            
+            const container = document.getElementById('offlineDataContent');
+            const date = new Date(r._ts).toLocaleString('uz-UZ', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'});
+            
+            let rawHtml = '';
+            if (r._raw && Object.keys(r._raw).length > 0) {
+                rawHtml = '<div style="margin-top:1.5rem;"><h4 style="margin-bottom:0.75rem; color:var(--primary);"><i class="fa-solid fa-list-check"></i> Barcha Test Javoblari:</h4><div style="background:rgba(0,0,0,0.02); padding:1rem; border-radius:8px; font-family:monospace; font-size:0.85rem; white-space:pre-wrap; border:1px solid rgba(0,0,0,0.1); overflow-x:auto;">' + JSON.stringify(r._raw, null, 2) + '</div></div>';
+            }
+            
+            let writingHtml = '';
+            if (r._writing) {
+                writingHtml = '<div style="margin-top:1.5rem;"><h4 style="margin-bottom:0.75rem; color:var(--primary);"><i class="fa-solid fa-pen-nib"></i> Writing Javoblari:</h4><div style="background:#f8fafc; padding:1.5rem; border-radius:8px; border:1px solid #cbd5e1; white-space:pre-wrap; font-size:0.95rem; line-height:1.6; color:#0f172a;">' + r._writing.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div></div>';
+            }
+            
+            container.innerHTML = `
+                <div style="padding:2rem;">
+                    <button class="btn btn-outline" onclick="loadOfflineTable()" style="margin-bottom:1.5rem;"><i class="fa-solid fa-arrow-left"></i> Orqaga qaytish</button>
+                    
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.5rem; background:rgba(0,0,0,0.02); padding:1.5rem; border-radius:8px; border:1px solid rgba(0,0,0,0.1);">
+                        <div><strong style="color:var(--text-muted); font-size:0.85rem; display:block; margin-bottom:0.25rem;">O'quvchi Ismi</strong><div style="font-size:1.1rem; font-weight:600; color:var(--text-color);">${r._name || r._usr || '-'}</div></div>
+                        <div><strong style="color:var(--text-muted); font-size:0.85rem; display:block; margin-bottom:0.25rem;">Test Turi</strong><div style="font-size:1.1rem; color:var(--text-color);">${r._type || r._key || '-'}</div></div>
+                        <div><strong style="color:var(--text-muted); font-size:0.85rem; display:block; margin-bottom:0.25rem;">To'plagan Ball (Score)</strong><div><span class="badge" style="background:#10B981; color:#fff; font-size:1rem; padding:0.2rem 0.6rem; margin:0;">${r._score !== null ? r._score : '-'}</span></div></div>
+                        <div><strong style="color:var(--text-muted); font-size:0.85rem; display:block; margin-bottom:0.25rem;">Topshirilgan Vaqt</strong><div style="color:var(--text-color);">${date}</div></div>
+                        <div><strong style="color:var(--text-muted); font-size:0.85rem; display:block; margin-bottom:0.25rem;">Guruh</strong><div style="color:var(--text-color);">${r._group || '-'}</div></div>
+                        <div><strong style="color:var(--text-muted); font-size:0.85rem; display:block; margin-bottom:0.25rem;">Telefon</strong><div style="font-family:monospace; color:var(--text-color);">${r._phone || '-'}</div></div>
+                    </div>
+                    
+                    ${writingHtml}
+                    ${rawHtml}
+                </div>
+            `;
+        }
+        
+        async function downloadOfflineCSV() {
+            try {
+                const csv = await window._eduRecoverCSV();
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", "edulife_offline_backup.csv");
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (err) {
+                alert('Yuklashda xatolik: ' + err.message);
+            }
+        }
+
+        async function syncCloudDataToOffline() {
+            if (!window.eduSupabase) {
+                alert("Supabase ga ulanish yo'q.");
+                return;
+            }
+            if (!confirm("Bazada (Cloud) hozirda mavjud bo'lgan barcha test natijalarini yashirin xotiraga (Offline Backup) nusxalaymizmi?")) return;
+            
+            try {
+                const container = document.getElementById('offlineDataContent');
+                container.innerHTML = '<div style="padding:2rem; text-align:center;"><i class="fa-solid fa-spinner fa-spin"></i> Bazadan tortilmoqda... Kuting...</div>';
+                
+                const { data, error } = await window.eduSupabase.from('submissions').select('*');
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    if (window._eduShadowImport) {
+                        window._eduShadowImport(data);
+                    }
+                }
+                
+                setTimeout(() => {
+                    alert(data.length + " ta natija yashirin xotiraga muvaffaqiyatli saqlandi!");
+                    loadOfflineTable();
+                }, 1000);
+            } catch (err) {
+                alert("Xatolik yuz berdi: " + err.message);
+                loadOfflineTable();
+            }
+        }
+
+        // ===== ACCEPTMENTS (Registration Requests) =====
+        let currentApprovalId = null;
+
+        async function loadAcceptments() {
+            const tbody = document.getElementById('acceptmentsTableBody');
+            const pendingCountEl = document.getElementById('pendingCount');
+            const pendingBadge = document.getElementById('pendingBadge');
+
+            if (!window.eduSupabase) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem; color:var(--text-muted);">Bazaga ulanish yo\'q.</td></tr>';
+                return;
+            }
+
+            try {
+                const { data, error } = await window.eduSupabase
+                    .from('registration_requests')
+                    .select('*')
+                    .eq('status', 'pending')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem; color:#EF4444;">Xatolik: ' + error.message + '</td></tr>';
+                    return;
+                }
+
+                const count = data ? data.length : 0;
+                pendingCountEl.innerText = count;
+                pendingBadge.innerText = count;
+
+                if (count === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 2.5rem; color: var(--text-muted);"><i class="fa-solid fa-inbox" style="font-size:1.5rem; display:block; margin-bottom:0.5rem; opacity:0.4;"></i>Hozircha yangi ariza yo\'q</td></tr>';
+                    pendingBadge.style.display = 'none';
+                    return;
+                }
+
+                pendingBadge.style.display = 'inline';
+                tbody.innerHTML = '';
+
+                data.forEach((req, idx) => {
+                    const date = new Date(req.created_at);
+                    const dateStr = date.toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + date.toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' });
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="color: var(--text-muted); font-weight: 600;">${idx + 1}</td>
+                        <td style="font-weight: 600;">${req.full_name}</td>
+                        <td style="font-family: monospace;">${req.phone}</td>
+                        <td style="font-size: 0.85rem; color: var(--text-muted); max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${(req.note || '').replace(/"/g, '&quot;')}">${req.note || '-'}</td>
+                        <td style="font-size: 0.9rem; color: var(--text-muted);">${dateStr}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn btn-primary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;" onclick="openApprovalModal('${req.id}', '${req.full_name.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${req.phone}', '${(req.note || '').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, ' ')}')">
+                                    <i class="fa-solid fa-check"></i> Tasdiqlash
+                                </button>
+                                <button class="btn" style="padding: 0.5rem 0.75rem; font-size: 0.8rem; background: #EF4444; color: #fff;" onclick="rejectRegistration('${req.id}')">
+                                    <i class="fa-solid fa-xmark"></i> Rad etish
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem; color:#EF4444;">Tarmoq xatosi</td></tr>';
+            }
+        }
+
+        function openApprovalModal(id, name, phone, note) {
+            currentApprovalId = id;
+            document.getElementById('approvalName').innerText = name;
+            document.getElementById('approvalPhone').innerText = phone;
+            document.getElementById('approvalNote').innerText = note || '-';
+            document.getElementById('approvalUsername').value = '';
+            document.getElementById('approvalPassword').value = '';
+            document.getElementById('approvalLevel').value = 'beginner';
+            document.getElementById('approvalStatus').style.display = 'none';
+            document.getElementById('credentialsBox').style.display = 'none';
+            document.getElementById('approvalActions').style.display = 'flex';
+            document.getElementById('approvalModal').style.display = 'flex';
+        }
+
+        function closeApprovalModal() {
+            document.getElementById('approvalModal').style.display = 'none';
+            currentApprovalId = null;
+        }
+
+        function generatePassword() {
+            const chars = 'abcdefghijkmnpqrstuvwxyz23456789';
+            let pwd = '';
+            for (let i = 0; i < 8; i++) pwd += chars.charAt(Math.floor(Math.random() * chars.length));
+            document.getElementById('approvalPassword').value = pwd;
+        }
+
+        async function approveRegistration() {
+            const username = document.getElementById('approvalUsername').value.trim();
+            const password = document.getElementById('approvalPassword').value.trim();
+            const level = document.getElementById('approvalLevel').value;
+            const statusEl = document.getElementById('approvalStatus');
+            const displayName = document.getElementById('approvalName').innerText;
+
+            if (!username || !password) {
+                statusEl.innerText = '⚠️ Username va parol majburiy!';
+                statusEl.style.color = '#EF4444';
+                statusEl.style.display = 'block';
+                return;
+            }
+
+            statusEl.innerText = '⏳ Hisob yaratilmoqda...';
+            statusEl.style.color = 'var(--text-muted)';
+            statusEl.style.display = 'block';
+
+            try {
+                // 1. Student account yaratish
+                const { data, error } = await window.eduSupabase
+                    .rpc('create_student_account', {
+                        p_username: username,
+                        p_password: password,
+                        p_display_name: displayName,
+                        p_level: level
+                    });
+
+                if (error) {
+                    statusEl.innerText = '⚠️ Xatolik: ' + error.message;
+                    statusEl.style.color = '#EF4444';
+                    return;
+                }
+
+                if (data && !data.success) {
+                    statusEl.innerText = '⚠️ ' + (data.message || 'Yaratishda xatolik.');
+                    statusEl.style.color = '#EF4444';
+                    return;
+                }
+
+                // 2. Registration request statusini approved ga o'zgartirish
+                await window.eduSupabase
+                    .from('registration_requests')
+                    .update({ status: 'approved' })
+                    .eq('id', currentApprovalId);
+
+                // 3. Muvaffaqiyat — credentials ko'rsatish
+                statusEl.style.display = 'none';
+                document.getElementById('credUsername').innerText = username;
+                document.getElementById('credPassword').innerText = password;
+                document.getElementById('credentialsBox').style.display = 'block';
+                document.getElementById('approvalActions').style.display = 'none';
+
+                // Refresh tables
+                loadAcceptments();
+                loadStudentsTable();
+
+            } catch (err) {
+                statusEl.innerText = '⚠️ Tarmoq xatosi: ' + err.message;
+                statusEl.style.color = '#EF4444';
+            }
+        }
+
+        function copyCredentials() {
+            const username = document.getElementById('credUsername').innerText;
+            const password = document.getElementById('credPassword').innerText;
+            const text = `📚 EduLife Login Ma'lumotlari:\n\n👤 Login: ${username}\n🔑 Parol: ${password}\n\n🌐 Kirish: ${window.location.origin}/login.html`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target.closest('button');
+                const origHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Nusxalandi!';
+                btn.style.background = '#059669';
+                setTimeout(() => {
+                    btn.innerHTML = origHTML;
+                    btn.style.background = '#10B981';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                prompt('Nusxalash uchun:', text);
+            });
+        }
+
+        async function rejectRegistration(id) {
+            if (!confirm('Haqiqatdan ham bu arizani rad etmoqchimisiz?')) return;
+
+            try {
+                await window.eduSupabase
+                    .from('registration_requests')
+                    .update({ status: 'rejected' })
+                    .eq('id', id);
+
+                loadAcceptments();
+            } catch (err) {
+                alert('Xatolik: ' + err.message);
+            }
+        }
+
+        loadStudentsTable();
+        loadAcceptments();
+    </script>
+</body>
+
+</html>

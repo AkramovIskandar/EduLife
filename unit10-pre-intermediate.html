@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-intermediate Unit Test 10 - EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --primary: #7C3AED; --primary-dark: #6D28D9; --primary-light: #EDE9FE; --text-muted: #64748B; }
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.6; }
+        .test-container { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+        .test-header { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; text-align: center; border-bottom: 4px solid var(--primary); }
+        .test-section { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; display: none; }
+        .test-section.active { display: block; }
+        .section-title { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #F1F5F9; }
+        .section-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; color: var(--primary-dark); margin: 0; }
+        .question-block h3, .reading-questions h3 { font-size: 1.05rem; margin: 0 0 1rem; color: var(--primary-dark); }
+        .q-item { margin-bottom: 1rem; padding: 1rem 1.25rem; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .q-item p { font-weight: 500; margin-bottom: 0.75rem; }
+        .test-section .answer-input:not(.inline-input), .test-section select.answer-input, .test-section textarea.answer-input {
+            display: block; width: 100% !important; max-width: 100% !important; box-sizing: border-box;
+            border: 2px solid #E2E8F0 !important; border-radius: 10px !important; background: #fff !important;
+            padding: 0.65rem 0.9rem !important; font-size: 1rem !important; letter-spacing: normal !important; margin-top: 0.35rem;
+        }
+        .test-section input.answer-input[type="text"]:not(.inline-input) { max-width: 28rem !important; }
+        .test-section .q-item > p .inline-input {
+            display: inline-block !important; width: auto !important; min-width: 3.5rem !important; max-width: 9rem !important;
+            margin: 0 0.1rem !important; padding: 0.15rem 0.35rem !important;
+            border: none !important; border-bottom: 2px solid var(--primary) !important; border-radius: 0 !important;
+            background: transparent !important; vertical-align: baseline; box-shadow: none !important;
+        }
+        .test-section .q-item > p .inline-input-wide { min-width: 6rem !important; max-width: 11rem !important; }
+        .test-section .q-item > p:has(.inline-input) { line-height: 2.1; margin-bottom: 0.35rem; }
+        .test-section textarea.writing-area { min-height: 8rem; max-height: 16rem; resize: vertical; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 1rem; background: #fff; border: 1px dashed var(--primary); border-radius: 10px; font-size: 0.95rem; }
+        .match-options { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; padding: 0.75rem 1rem; background: #fff; border-radius: 10px; border: 1px solid #E2E8F0; }
+        .match-options div { margin-bottom: 0.35rem; }
+        .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .radio-group label { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border: 2px solid #E2E8F0; border-radius: 10px; cursor: pointer; font-weight: 400; }
+        .radio-group label:hover { border-color: var(--primary); background: var(--primary-light); }
+        .radio-group input { width: 1.1rem; height: 1.1rem; accent-color: var(--primary); }
+        .reading-split { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(300px, 1fr); gap: 1.5rem; align-items: start; }
+        .reading-passages { background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary); max-height: min(70vh, 28rem); overflow-y: auto; line-height: 1.7; font-size: 1.02rem; }
+        .reading-questions { max-height: min(70vh, 28rem); overflow-y: auto; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; border: none; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-outline { background: #fff; border: 2px solid #E2E8F0; color: var(--text-muted); }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .progress-nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 1rem 0; z-index: 100; border-bottom: 1px solid #E2E8F0; }
+        .progress-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+        .progress-bg { flex-grow: 1; height: 10px; background: #E2E8F0; border-radius: 5px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        @media (max-width: 900px) { .reading-split { grid-template-columns: 1fr; } .reading-passages, .reading-questions { max-height: none; } }
+    </style>
+</head>
+<body>
+    <nav class="progress-nav">
+        <div class="progress-container">
+            <div class="progress-bg"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText" style="font-weight:600;color:var(--primary);">Step 1</span>
+        </div>
+    </nav>
+    <main class="test-container">
+        <div class="test-header">
+            <h1 style="color:var(--primary);">Pre-intermediate Unit Test 10</h1>
+            <p>File 10 — Variant A (no speaking section)</p>
+        </div>
+        <form id="unitTestForm">
+
+            <section class="test-section active" id="section-grammar-1">
+                <div class="section-title">
+                    <h2>Grammar 1</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Tick the correct word.</h3><div class="q-item"><p>1. This is the wrong way. Turn ______</p><div class="radio-group"><label><input type="radio" name="g1_1" value="out"> out</label><label><input type="radio" name="g1_1" value="over"> over</label><label><input type="radio" name="g1_1" value="round"> round</label><label><input type="radio" name="g1_1" value="and go back."> and go back.</label></div></div>
+<div class="q-item"><p>2. I saw Valerie as I was driving ______</p><div class="radio-group"><label><input type="radio" name="g1_2" value="along"> along</label><label><input type="radio" name="g1_2" value="under"> under</label><label><input type="radio" name="g1_2" value="around"> around</label><label><input type="radio" name="g1_2" value="the High Street."> the High Street.</label></div></div>
+<div class="q-item"><p>3. It doesn't take long to get to the station if you go ______</p><div class="radio-group"><label><input type="radio" name="g1_3" value="into"> into</label><label><input type="radio" name="g1_3" value="over"> over</label><label><input type="radio" name="g1_3" value="through"> through</label></div></div>
+<div class="q-item"><p>4. The lift wasn't working, so we walked ______</p><div class="radio-group"><label><input type="radio" name="g1_4" value="across"> across</label><label><input type="radio" name="g1_4" value="down"> down</label><label><input type="radio" name="g1_4" value="along"> along</label><label><input type="radio" name="g1_4" value="the stairs."> the stairs.</label></div></div>
+<div class="q-item"><p>5. ______ saying hello.</p><div class="radio-group"><label><input type="radio" name="g1_5" value="Arthur"> Arthur</label><label><input type="radio" name="g1_5" value="into"> into</label><label><input type="radio" name="g1_5" value="through"> through</label></div></div>
+<div class="q-item"><p>6. ______ Kerry. It's lovely to see you.</p><div class="radio-group"><label><input type="radio" name="g1_6" value="Come out"> Come out</label><label><input type="radio" name="g1_6" value="towards"> towards</label><label><input type="radio" name="g1_6" value="in"> in</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <span></span>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-2">
+                <div class="section-title">
+                    <h2>Grammar 2</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with the correct phrase.</h3><div class="q-item"><p>1. 'This programme's boring.' 'Well, turn ______ .'</p><input type="text" name="g2_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Will you ______ while I'm away?</p><input type="text" name="g2_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Bella rang. Can you call ______ this afternoon?</p><input type="text" name="g2_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. What time do ______ during the week?</p><input type="text" name="g2_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. Your glasses are here. Why don't you put ______ ? them on on them</p><input type="text" name="g2_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. Do you want me to ______ from the airport?</p><input type="text" name="g2_6" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(0)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-3">
+                <div class="section-title">
+                    <h2>Grammar 3</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences. Use the present or past passive.</h3><div class="q-item"><p>1. My mother decorated the kitchen. The kitchen ______ .</p><input type="text" name="g3_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. I didn't write these letters. These letters ______ .</p><input type="text" name="g3_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Millions of people speak English. English ______ .</p><input type="text" name="g3_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Rubbish pollutes our rivers. Our rivers ______ .</p><input type="text" name="g3_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. The cook doesn't do the washing up. The washing up ______ .</p><input type="text" name="g3_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. Our school won the swimming competition. The swimming competition ______ .</p><input type="text" name="g3_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. Miss Stuart doesn't teach art. Art ______ .</p><input type="text" name="g3_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. Mary Anderson invented windscreen wipers. Windscreen wipers ______ .</p><input type="text" name="g3_8" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-4">
+                <div class="section-title">
+                    <h2>Vocabulary 4</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with the correct word.</h3><div class="q-item"><p>1. The film The Birds was ______ by Alfred Hitchcock.</p><div class="radio-group"><label><input type="radio" name="v4_1" value="discovered"> discovered</label><label><input type="radio" name="v4_1" value="invented"> invented</label><label><input type="radio" name="v4_1" value="directed"> directed</label></div></div>
+<div class="q-item"><p>2. Her wedding dress was ______ by Chanel.</p><div class="radio-group"><label><input type="radio" name="v4_2" value="shown"> shown</label><label><input type="radio" name="v4_2" value="used"> used</label><label><input type="radio" name="v4_2" value="designed"> designed</label></div></div>
+<div class="q-item"><p>3. Is this film ______ on a true story?</p><div class="radio-group"><label><input type="radio" name="v4_3" value="based"> based</label><label><input type="radio" name="v4_3" value="invented"> invented</label><label><input type="radio" name="v4_3" value="given"> given</label></div></div>
+<div class="q-item"><p>4. I think this picture was ______ by Van Gogh.</p><div class="radio-group"><label><input type="radio" name="v4_4" value="played"> played</label><label><input type="radio" name="v4_4" value="painted"> painted</label><label><input type="radio" name="v4_4" value="designed"> designed</label></div></div>
+<div class="q-item"><p>5. The art gallery was ______ by the Queen on 15 July 2010.</p><div class="radio-group"><label><input type="radio" name="v4_5" value="built"> built</label><label><input type="radio" name="v4_5" value="painted"> painted</label><label><input type="radio" name="v4_5" value="opened"> opened</label></div></div>
+<div class="q-item"><p>6. A lot of the coffee we drink is ______ in Brazil.</p><div class="radio-group"><label><input type="radio" name="v4_6" value="produced"> produced</label><label><input type="radio" name="v4_6" value="called"> called</label><label><input type="radio" name="v4_6" value="created"> created</label></div></div>
+<div class="q-item"><p>7. When was the North Pole ______ ?</p><div class="radio-group"><label><input type="radio" name="v4_7" value="designed"> designed</label><label><input type="radio" name="v4_7" value="shown"> shown</label><label><input type="radio" name="v4_7" value="discovered"> discovered</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-5">
+                <div class="section-title">
+                    <h2>Vocabulary 5</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Match the sports to the sentences.</h3><div class="q-item"><p>1. You kick and do other movements. ______</p><input type="text" name="v5_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. You try to hit a ball with a bat, then run. ______</p><input type="text" name="v5_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. You throw a ball through a ring, which is high on the wall. ______</p><input type="text" name="v5_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. You move across water on a board. ______</p><input type="text" name="v5_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. You do many different exercises on special equipment. ______</p><input type="text" name="v5_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. You race in a boat. ______</p><input type="text" name="v5_6" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-6">
+                <div class="section-title">
+                    <h2>Vocabulary 6</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the phrasal verbs.</h3><div class="q-item"><p>1. Turn the TV ______ . It's too loud.</p><input type="text" name="v6_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Tom doesn't get ______ with Sam. They argue all the time.</p><input type="text" name="v6_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Can you help me to fill ______ this job application form?</p><input type="text" name="v6_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. The lesson will be ______ at half past three, then you can go home.</p><input type="text" name="v6_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. If they don't know a word, they can look it ______ in a dictionary.</p><input type="text" name="v6_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. How can I find ______ what time the museum opens?</p><input type="text" name="v6_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. When did you give ______ smoking?</p><input type="text" name="v6_7" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-pronunciation-7">
+                <div class="section-title">
+                    <h2>Pronunciation 7</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Match the words with the same sound.</h3><div class="q-item"><p>1. apologize Argentina ______</p><input type="text" name="p7_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. China ______ ______</p><input type="text" name="p7_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. information ______ ______</p><input type="text" name="p7_3" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(7)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-pronunciation-8">
+                <div class="section-title">
+                    <h2>Pronunciation 8</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Which is the stressed syllable? Tick 1, 2, 3, or 4.</h3><div class="q-item"><p>1. cus|to|mer 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_1" value="1"> syllable 1</label><label><input type="radio" name="p8_1" value="2"> syllable 2</label><label><input type="radio" name="p8_1" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>2. tech|no|lo|gy 	1  	2  	3  	4 </p><div class="radio-group"><label><input type="radio" name="p8_2" value="1"> syllable 1</label><label><input type="radio" name="p8_2" value="2"> syllable 2</label><label><input type="radio" name="p8_2" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>3. re|la|tion|ship 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_3" value="1"> syllable 1</label><label><input type="radio" name="p8_3" value="2"> syllable 2</label><label><input type="radio" name="p8_3" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>4. in|ven|tion 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_4" value="1"> syllable 1</label><label><input type="radio" name="p8_4" value="2"> syllable 2</label><label><input type="radio" name="p8_4" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>5. wind|sur|fing 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_5" value="1"> syllable 1</label><label><input type="radio" name="p8_5" value="2"> syllable 2</label><label><input type="radio" name="p8_5" value="3"> syllable 3</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(8)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-reading">
+                <div class="section-title">
+                    <h2>Reading</h2>
+                </div>
+                
+                <div class="reading-split"><div class="reading-passages"><p>Inventions in sport This week in Inventor's World, we speak to three professional athletes about how modern inventions have changed their sport. Luke Gautier, road cyclist Professional cycling is a very inventive sport. Riders and bike teams are always happy to try out new types of bicycles, helmets, cycling clothes – anything to try to save one second in the race. In my opinion, the biggest change in recent years is what the bikes are made of. Thanks to a technology called carbon nanotubes, racing bikes are stronger and lighter than ever before. Carbon nanotubes were invented by the computer company IBM, but so far no one has used them inside computers. In 1996, the Swiss company BMC made the first 'carbon fibre' racing bike – it won the Tour de France that year. Carbon nanotubes are also used in tennis rackets and the screens of phones. Edgar van Marl, swimmer Sometimes, a new invention can be controversial. In my sport, a new type of swimsuit caused problems a few years ago. The company involved, Speedo, have made swimsuits for over one hundred years. They are so famous that in some countries, a racing swimsuit is simply called 'a speedo'. In 2008, they made a new suit that was inspired by shark skin. Called, the 'LZR racer', the suits were designed with long arms and legs to help swimmers cut through the water like a fast shark. The suit was first sold in March 2008. By November 2008, swimmers wearing the suit had broken 74 world records. That's incredible! When Michael Phelps wore the suit at the Olympics in Beijing, he won eight gold medals and said, 'I feel like a rocket'. Swimmers loved them, but the judges didn't. The suits were banned and there are now a lot more rules about what suits are made of. Suki Tyler, tennis The use of video technology has really changed my sport. The most common system was invented in 1999 by an English company. It was developed especially for sport on television. It's called Hawk-Eye – a 'hawk' is a type of hunting bird which has very good eyesight. The video can show very clearly if a ball has or hasn't gone over a particular line. Hawk-Eye was used almost immediately to help with decisions in cricket – in 2001, it was used for the first time in a match between England and Pakistan. It was soon used in tennis, too. The audience loves the excitement that the technology brings to matches. For me, it's a positive thing. Sometimes, it's part of the strategy I use. For example, even when I know that the line judge has made the right decision, I can ask for Hawk-Eye just because I know it's going to make my opponent wait. It's going to make her really annoyed!</p><p>-- 4 of 8 --</p><p>Reading and Writing A</p></div><div class="reading-questions">
+                <h3>Part 1</h3><div class="q-item"><p>1. Carbon nanotubes were invented by ______ .</p><div class="radio-group"><label><input type="radio" name="r1_1" value="A"> A. CNT</label><label><input type="radio" name="r1_1" value="B"> B. BMC</label><label><input type="radio" name="r1_1" value="C"> C. IBM</label></div></div><div class="q-item"><p>2. Professional cyclists will try anything if it makes them ______ .</p><div class="radio-group"><label><input type="radio" name="r1_2" value="A"> A. faster</label><label><input type="radio" name="r1_2" value="B"> B. lighter</label><label><input type="radio" name="r1_2" value="C"> C. more popular</label></div></div><div class="q-item"><p>3. A ______ company first used carbon nanotubes in bicycles.</p><div class="radio-group"><label><input type="radio" name="r1_3" value="A"> A. French</label><label><input type="radio" name="r1_3" value="B"> B. American</label><label><input type="radio" name="r1_3" value="C"> C. Swiss</label></div></div><div class="q-item"><p>4. Speedo are a ______ company.</p><div class="radio-group"><label><input type="radio" name="r1_4" value="A"> A. well-known</label><label><input type="radio" name="r1_4" value="B"> B. controversial</label><label><input type="radio" name="r1_4" value="C"> C. new</label></div></div><div class="q-item"><p>5. At the Beijing Olympics, eight gold medals were won ______ .</p><div class="radio-group"><label><input type="radio" name="r1_5" value="A"> A. in the</label><label><input type="radio" name="r1_5" value="B"> B. by</label><label><input type="radio" name="r1_5" value="C"> C. in</label></div></div><div class="q-item"><p>6. The LZR suits ______ by swimming judges.</p><div class="radio-group"><label><input type="radio" name="r1_6" value="A"> A. were broken</label><label><input type="radio" name="r1_6" value="B"> B. were banned</label><label><input type="radio" name="r1_6" value="C"> C. were changed</label></div></div><div class="q-item"><p>7. Hawk-Eye was invented for ______ .</p><div class="radio-group"><label><input type="radio" name="r1_7" value="A"> A. tennis</label><label><input type="radio" name="r1_7" value="B"> B. television</label><label><input type="radio" name="r1_7" value="C"> C. cricket</label></div></div><div class="q-item"><p>8. Hawk-Eye was used ______ in professional sport.</p><div class="radio-group"><label><input type="radio" name="r1_8" value="A"> A. very quickly</label><label><input type="radio" name="r1_8" value="B"> B. gradually</label><label><input type="radio" name="r1_8" value="C"> C. all the time</label></div></div><div class="q-item"><p>9. Suki sometimes uses Hawk-Eye ______ .</p><div class="radio-group"><label><input type="radio" name="r1_9" value="A"> A. to have a rest</label><label><input type="radio" name="r1_9" value="B"> B. to make the audience happy C to</label></div></div><h3>Part 2</h3><div class="q-item"><p>1. Bikes with carbon nanotubes weigh less than other bikes. ______</p><div class="radio-group"><label><input type="radio" name="r2_1" value="T"> True</label><label><input type="radio" name="r2_1" value="F"> False</label></div></div><div class="q-item"><p>2. Carbon nanotubes aren't used in other sports yet. ______</p><div class="radio-group"><label><input type="radio" name="r2_2" value="T"> True</label><label><input type="radio" name="r2_2" value="F"> False</label></div></div><div class="q-item"><p>3. The design of the LZR suits helped swimmers go faster. ______</p><div class="radio-group"><label><input type="radio" name="r2_3" value="T"> True</label><label><input type="radio" name="r2_3" value="F"> False</label></div></div><div class="q-item"><p>4. Everyone agreed that the new Speedo suits were a great invention. ______</p><div class="radio-group"><label><input type="radio" name="r2_4" value="T"> True</label><label><input type="radio" name="r2_4" value="F"> False</label></div></div><div class="q-item"><p>5. Video technology isn't very popular with tennis audiences. ______</p><div class="radio-group"><label><input type="radio" name="r2_5" value="T"> True</label><label><input type="radio" name="r2_5" value="F"> False</label></div></div><div class="q-item"><p>6. Hawk-Eye is named after a bird. ______</p><div class="radio-group"><label><input type="radio" name="r2_6" value="T"> True</label><label><input type="radio" name="r2_6" value="F"> False</label></div></div>
+                </div></div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(9)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-writing">
+                <div class="section-title">
+                    <h2>Writing</h2>
+                </div>
+                
+                <div class="question-block">
+                <div class="question-block"><h3>Write about an invention that has changed your life. Answer these</h3><textarea name="writing" class="writing-area answer-input" rows="6" placeholder="Write here (100–150 words)..."></textarea><p style="font-size:0.85rem;color:#64748B;margin-top:0.5rem;">This section is reviewed manually.</p></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(8)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(10)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-2">
+                <div class="section-title">
+                    <h2>Listening 2</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/unit_10/listening_2.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to five speakers. Match the speakers (1–5) with when they wake up at night (A–G).</h3><div class="match-options"><div><strong>A</strong> drinks</div><div><strong>B</strong> goes outside</div><div><strong>C</strong> watches TV</div><div><strong>D</strong> reads a book</div><div><strong>E</strong> walks around the house</div><div><strong>F</strong> checks the</div><div><strong>G</strong> goes to work</div></div><div class="q-item"><p>1. Item 1</p><select name="l2_1" class="answer-input"><option value="">— Select —</option><option value="A">A. drinks</option><option value="B">B. goes outside</option><option value="C">C. watches TV</option><option value="D">D. reads a book</option><option value="E">E. walks around the house</option><option value="F">F. checks the</option><option value="G">G. goes to work</option></select></div>
+<div class="q-item"><p>2. Match conversation 2 (option A)</p><input type="text" name="l2_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Item 3</p><select name="l2_3" class="answer-input"><option value="">— Select —</option><option value="A">A. drinks</option><option value="B">B. goes outside</option><option value="C">C. watches TV</option><option value="D">D. reads a book</option><option value="E">E. walks around the house</option><option value="F">F. checks the</option><option value="G">G. goes to work</option></select></div>
+<div class="q-item"><p>4. Match conversation 4 (option B)</p><input type="text" name="l2_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. Item 5</p><select name="l2_5" class="answer-input"><option value="">— Select —</option><option value="A">A. drinks</option><option value="B">B. goes outside</option><option value="C">C. watches TV</option><option value="D">D. reads a book</option><option value="E">E. walks around the house</option><option value="F">F. checks the</option><option value="G">G. goes to work</option></select></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(9)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(11)">Final Step <i class="fa-solid fa-user-check"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">First Name *</label><input type="text" id="regFirstName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Last Name *</label><input type="text" id="regLastName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Proposed Group *</label><input type="text" id="regGroup" class="answer-input" value="Pre-intermediate Unit 10" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Phone Number *</label><input type="tel" id="regPhone" class="answer-input" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(10)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary btn-submit" onclick="submitTest()">Finish & Submit <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </section>
+            <section class="test-section" id="section-result">
+                <div style="text-align:center;padding:3rem 0;">
+                    <i class="fa-solid fa-circle-check" style="font-size:5rem;color:var(--primary);margin-bottom:2rem;"></i>
+                    <h2>Test Submitted!</h2>
+                    <p id="resultFeedback" style="color:#64748B;">Calculating your score...</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='tests.html'">Back to Tests</button>
+                </div>
+            </section>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) { window.location.href = 'login.html'; }
+        const unitSections = ["section-grammar-1","section-grammar-2","section-grammar-3","section-vocab-4","section-vocab-5","section-vocab-6","section-pronunciation-7","section-pronunciation-8","section-reading","section-writing","section-listening-2","section-details"];
+        const answerKey = {"g1_1":["round"],"g1_2":["along"],"g1_3":["through"],"g1_4":["down"],"g1_5":["past"],"g1_6":["in"],"g2_1":["it off"],"g2_2":["look after my cat"],"g2_3":["her back"],"g2_4":["they get up"],"g2_5":["them on"],"g2_6":["pick you up"],"g3_1":["was decorated by my mother"],"g3_2":["weren’t written by me"],"g3_3":["is spoken by millions of people"],"g3_4":["are polluted by rubbish"],"g3_5":["isn’t done by the cook"],"g3_6":["was won by our school"],"g3_7":["isn’t taught by miss stuart"],"g3_8":["were invented by mary anderson"],"v4_1":["directed"],"v4_2":["designed"],"v4_3":["based"],"v4_4":["painted"],"v4_5":["opened"],"v4_6":["produced"],"v4_7":["discovered"],"v5_1":["karate"],"v5_2":["cricket"],"v5_3":["basketball"],"v5_4":["windsurfing"],"v5_5":["gymnastics"],"v5_6":["sailing"],"v6_1":["down"],"v6_2":["on"],"v6_3":["in"],"v6_4":["over"],"v6_5":["up"],"v6_6":["out"],"v6_7":["up"],"p7_1":["energetic"],"p7_2":["questionnaire","watch"],"p7_3":["swedish","relationship"],"p8_1":["1"],"p8_2":["2"],"p8_3":["2"],"p8_4":["2"],"p8_5":["1"],"r1_1":["c"],"r1_2":["a"],"r1_3":["c"],"r1_4":["a"],"r1_5":["b"],"r1_6":["b"],"r1_7":["b"],"r1_8":["a"],"r1_9":["c"],"r2_1":["t"],"r2_2":["f"],"r2_3":["t"],"r2_4":["f"],"r2_5":["f"],"r2_6":["t"],"l2_1":["g"],"l2_2":["a"],"l2_3":["d"],"l2_4":["b"],"l2_5":["e"]};
+
+        function nextUnitSection(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            if (idx >= unitSections.length) return;
+            document.getElementById(unitSections[idx]).classList.add('active');
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / unitSections.length * 100) + '%';
+            if (txt) txt.innerText = 'Step ' + (idx + 1) + ' of ' + unitSections.length;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function normalize(s) {
+            if (!s) return '';
+            return s.toString().trim().toLowerCase()
+                .replace(/['']/g, "'").replace(/[?!.,;:"()]/g, '').replace(/\s+/g, ' ');
+        }
+
+        function checkAnswer(userVal, accepted) {
+            const u = normalize(userVal);
+            if (!u) return false;
+            return accepted.some((a) => {
+                const c = normalize(a);
+                if (u === c) return true;
+                if (/^[a-gtflh]$/.test(c) && u === c) return true;
+                const parts = a.replace(/…/g, '...').split(/\s*\.\.\.\s*/).map((p) => normalize(p)).filter(Boolean);
+                if (parts.length >= 2 && parts.every((p) => u.includes(p))) return true;
+                if (c.length >= 4 && (u.includes(c) || c.includes(u))) return true;
+                return false;
+            });
+        }
+
+        async function submitTest() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const group = document.getElementById('regGroup').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            if (!firstName || !lastName || !group || !phone) { alert('Please fill in all required fields!'); return; }
+
+            const btn = document.querySelector('.btn-submit');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...'; }
+
+            let score = 0;
+            const answers = new FormData(document.getElementById('unitTestForm'));
+            for (const id in answerKey) {
+                const userVal = answers.get(id);
+                if (checkAnswer(userVal, answerKey[id])) score++;
+            }
+
+            if (window.eduSupabase) {
+                await window.eduSupabase.from('submissions').insert([{
+                    student_name: firstName + ' ' + lastName,
+                    test_type: "Pre-intermediate Unit Test 10",
+                    score: score,
+                    group_name: group,
+                    phone: phone,
+                    raw_answers: Object.fromEntries(answers.entries())
+                }]);
+            }
+
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-result').classList.add('active');
+            document.getElementById('resultFeedback').innerText = 'Thank you, ' + firstName + '! Auto-graded score: ' + score + ' points (writing reviewed separately).';
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+    </script>
+</body>
+</html>

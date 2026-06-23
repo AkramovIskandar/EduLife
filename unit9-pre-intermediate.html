@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-intermediate Unit Test 9 - EDU LIFE</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --primary: #7C3AED; --primary-dark: #6D28D9; --primary-light: #EDE9FE; --text-muted: #64748B; }
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.6; }
+        .test-container { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+        .test-header { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; text-align: center; border-bottom: 4px solid var(--primary); }
+        .test-section { background: #fff; padding: 2.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1); margin-bottom: 2rem; display: none; }
+        .test-section.active { display: block; }
+        .section-title { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #F1F5F9; }
+        .section-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; color: var(--primary-dark); margin: 0; }
+        .question-block h3, .reading-questions h3 { font-size: 1.05rem; margin: 0 0 1rem; color: var(--primary-dark); }
+        .q-item { margin-bottom: 1rem; padding: 1rem 1.25rem; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; }
+        .q-item p { font-weight: 500; margin-bottom: 0.75rem; }
+        .test-section .answer-input:not(.inline-input), .test-section select.answer-input, .test-section textarea.answer-input {
+            display: block; width: 100% !important; max-width: 100% !important; box-sizing: border-box;
+            border: 2px solid #E2E8F0 !important; border-radius: 10px !important; background: #fff !important;
+            padding: 0.65rem 0.9rem !important; font-size: 1rem !important; letter-spacing: normal !important; margin-top: 0.35rem;
+        }
+        .test-section input.answer-input[type="text"]:not(.inline-input) { max-width: 28rem !important; }
+        .test-section .q-item > p .inline-input {
+            display: inline-block !important; width: auto !important; min-width: 3.5rem !important; max-width: 9rem !important;
+            margin: 0 0.1rem !important; padding: 0.15rem 0.35rem !important;
+            border: none !important; border-bottom: 2px solid var(--primary) !important; border-radius: 0 !important;
+            background: transparent !important; vertical-align: baseline; box-shadow: none !important;
+        }
+        .test-section .q-item > p .inline-input-wide { min-width: 6rem !important; max-width: 11rem !important; }
+        .test-section .q-item > p:has(.inline-input) { line-height: 2.1; margin-bottom: 0.35rem; }
+        .test-section textarea.writing-area { min-height: 8rem; max-height: 16rem; resize: vertical; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 1rem; background: #fff; border: 1px dashed var(--primary); border-radius: 10px; font-size: 0.95rem; }
+        .match-options { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; padding: 0.75rem 1rem; background: #fff; border-radius: 10px; border: 1px solid #E2E8F0; }
+        .match-options div { margin-bottom: 0.35rem; }
+        .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .radio-group label { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: #fff; border: 2px solid #E2E8F0; border-radius: 10px; cursor: pointer; font-weight: 400; }
+        .radio-group label:hover { border-color: var(--primary); background: var(--primary-light); }
+        .radio-group input { width: 1.1rem; height: 1.1rem; accent-color: var(--primary); }
+        .reading-split { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(300px, 1fr); gap: 1.5rem; align-items: start; }
+        .reading-passages { background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary); max-height: min(70vh, 28rem); overflow-y: auto; line-height: 1.7; font-size: 1.02rem; }
+        .reading-questions { max-height: min(70vh, 28rem); overflow-y: auto; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; border: none; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-outline { background: #fff; border: 2px solid #E2E8F0; color: var(--text-muted); }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .progress-nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 1rem 0; z-index: 100; border-bottom: 1px solid #E2E8F0; }
+        .progress-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+        .progress-bg { flex-grow: 1; height: 10px; background: #E2E8F0; border-radius: 5px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        @media (max-width: 900px) { .reading-split { grid-template-columns: 1fr; } .reading-passages, .reading-questions { max-height: none; } }
+    </style>
+</head>
+<body>
+    <nav class="progress-nav">
+        <div class="progress-container">
+            <div class="progress-bg"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="progressText" style="font-weight:600;color:var(--primary);">Step 1</span>
+        </div>
+    </nav>
+    <main class="test-container">
+        <div class="test-header">
+            <h1 style="color:var(--primary);">Pre-intermediate Unit Test 9</h1>
+            <p>File 9 — Variant A (no speaking section)</p>
+        </div>
+        <form id="unitTestForm">
+
+            <section class="test-section active" id="section-grammar-1">
+                <div class="section-title">
+                    <h2>Grammar 1</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with for or since.</h3><div class="q-item"><p>1. I've been a doctor ______ 2010.</p><input type="text" name="g1_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. We've lived here ______ a long time.</p><input type="text" name="g1_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. I haven't seen Jun ______ Tuesday.</p><input type="text" name="g1_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Antonia's been at work ______ six o'clock this morning.</p><input type="text" name="g1_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. Lily and Fred have been married ______ three years.</p><input type="text" name="g1_5" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <span></span>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(1)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-2">
+                <div class="section-title">
+                    <h2>Grammar 2</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences. Put the verbs in brackets in the present perfect or past simple.</h3><div class="q-item"><p>1. We ______ (not see) Micaela since she moved to Valencia.</p><input type="text" name="g2_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Peter and his wife ______ (buy) a holiday home in Greece last year.</p><input type="text" name="g2_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. How long ______ you ______ (work) in this factory?</p><input type="text" name="g2_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Monica ______ (not say) goodbye when she left.</p><input type="text" name="g2_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. My grandmother ______ (live) in Italy for ten years. She's really happy there.</p><input type="text" name="g2_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. I ______ (not study) German when I was at school.</p><input type="text" name="g2_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. What time ______ they ______ (arrive) at the airport?</p><input type="text" name="g2_7" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(0)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(2)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-grammar-3">
+                <div class="section-title">
+                    <h2>Grammar 3</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the second conditional sentences using the correct form of the verbs in brackets.</h3><div class="q-item"><p>1. If they ______ (have) enough money, they ______ (buy) a new car.</p><input type="text" name="g3_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. We ______ (travel) around the world if we ______ (not have) young children.</p><input type="text" name="g3_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Mia's parents ______ (be) disappointed if she ______ (not do) well at university.</p><input type="text" name="g3_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. You ______ (get) better marks if you ______ (work) harder.</p><input type="text" name="g3_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. If I ______ (be) you, I ______ (stop) smoking.</p><input type="text" name="g3_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. Kwasi ______ (not get) lost if he ______ (use) the satnav in his car.</p><input type="text" name="g3_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. We ______ (lose) weight if we ______ (stop) eating chocolate.</p><input type="text" name="g3_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. If I ______ (see) a snake in my house, I ______ (scream) for help!</p><input type="text" name="g3_8" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(3)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-4">
+                <div class="section-title">
+                    <h2>Vocabulary 4</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the sentences with the correct word.</h3><div class="q-item"><p>1. I saw the spider and started to ______ . My heart was beating very fast.</p><input type="text" name="v4_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. Liban doesn't like the lifts at work. He ______ from a phobia of small spaces.</p><input type="text" name="v4_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. Jenny never travels by plane. She has a ______ about flying.</p><input type="text" name="v4_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. Carl likes singing, but he sometimes ______ in front of an audience.</p><input type="text" name="v4_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. I can't climb trees. I'm scared of ______ .</p><input type="text" name="v4_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. My sister has a ______ of dogs. She's frightened when they bark.</p><input type="text" name="v4_6" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(2)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(4)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-5">
+                <div class="section-title">
+                    <h2>Vocabulary 5</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Complete the life events with the correct verb.</h3><div class="q-item"><p>1. ______ children</p><input type="text" name="v5_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. ______ a job</p><input type="text" name="v5_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. ______ married</p><input type="text" name="v5_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. ______ in love</p><input type="text" name="v5_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. ______ to university</p><input type="text" name="v5_5" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>6. ______ born</p><input type="text" name="v5_6" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>7. ______ divorced</p><input type="text" name="v5_7" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>8. ______ from work</p><input type="text" name="v5_8" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(3)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(5)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-vocab-6">
+                <div class="section-title">
+                    <h2>Vocabulary 6</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Tick the odd word out.</h3><div class="q-item"><p>1. ________</p><div class="radio-group"><label><input type="radio" name="v6_1" value="whale"> whale</label><label><input type="radio" name="v6_1" value="chicken"> chicken</label><label><input type="radio" name="v6_1" value="dolphin"> dolphin</label></div></div>
+<div class="q-item"><p>2. ________</p><div class="radio-group"><label><input type="radio" name="v6_2" value="pig"> pig</label><label><input type="radio" name="v6_2" value="horse"> horse</label><label><input type="radio" name="v6_2" value="tiger"> tiger</label></div></div>
+<div class="q-item"><p>3. ________</p><div class="radio-group"><label><input type="radio" name="v6_3" value="spider"> spider</label><label><input type="radio" name="v6_3" value="bee"> bee</label><label><input type="radio" name="v6_3" value="butterfly"> butterfly</label></div></div>
+<div class="q-item"><p>4. ________</p><div class="radio-group"><label><input type="radio" name="v6_4" value="monkey"> monkey</label><label><input type="radio" name="v6_4" value="elephant"> elephant</label><label><input type="radio" name="v6_4" value="lion"> lion</label></div></div>
+<div class="q-item"><p>5. ________</p><div class="radio-group"><label><input type="radio" name="v6_5" value="goat"> goat</label><label><input type="radio" name="v6_5" value="mice"> mice</label><label><input type="radio" name="v6_5" value="cow"> cow</label></div></div>
+<div class="q-item"><p>6. ________</p><div class="radio-group"><label><input type="radio" name="v6_6" value="bat"> bat</label><label><input type="radio" name="v6_6" value="sheep"> sheep</label><label><input type="radio" name="v6_6" value="camel"> camel</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(4)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(6)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-pronunciation-7">
+                <div class="section-title">
+                    <h2>Pronunciation 7</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Match the words with the same sound.</h3><div class="q-item"><p>1. separate ______</p><input type="text" name="p7_1" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>2. leave ______</p><input type="text" name="p7_2" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>3. divorce ______</p><input type="text" name="p7_3" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>4. love ______</p><input type="text" name="p7_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. retire ______</p><input type="text" name="p7_5" class="answer-input" placeholder="Your answer"></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(5)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(7)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-pronunciation-8">
+                <div class="section-title">
+                    <h2>Pronunciation 8</h2>
+                </div>
+                
+                <div class="question-block">
+                <h3>Which is the stressed syllable? Tick 1, 2, or 3.</h3><div class="q-item"><p>1. frigh|tened 	1  	2 </p><div class="radio-group"><label><input type="radio" name="p8_1" value="1"> syllable 1</label><label><input type="radio" name="p8_1" value="2"> syllable 2</label><label><input type="radio" name="p8_1" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>2. cro|co|dile 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_2" value="1"> syllable 1</label><label><input type="radio" name="p8_2" value="2"> syllable 2</label><label><input type="radio" name="p8_2" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>3. kan|ga|roo 	1  	2  	3 </p><div class="radio-group"><label><input type="radio" name="p8_3" value="1"> syllable 1</label><label><input type="radio" name="p8_3" value="2"> syllable 2</label><label><input type="radio" name="p8_3" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>4. di|vorced 	1  	2 </p><div class="radio-group"><label><input type="radio" name="p8_4" value="1"> syllable 1</label><label><input type="radio" name="p8_4" value="2"> syllable 2</label><label><input type="radio" name="p8_4" value="3"> syllable 3</label></div></div>
+<div class="q-item"><p>5. gi|raffe 	1  	2 </p><div class="radio-group"><label><input type="radio" name="p8_5" value="1"> syllable 1</label><label><input type="radio" name="p8_5" value="2"> syllable 2</label><label><input type="radio" name="p8_5" value="3"> syllable 3</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(6)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(8)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-reading">
+                <div class="section-title">
+                    <h2>Reading</h2>
+                </div>
+                
+                <div class="reading-split"><div class="reading-passages"><p>Safety on safari Do you want to see lions and elephants, buffalo and crocodiles, and many other wild animals? For 35 years, Go Botswana have provided expert safari holidays. All safaris have an element of danger. That's what makes them fun! But do you know what the real dangers are? Hippos Hippos are the second largest animal in Africa – only the elephant is bigger. The males weigh as much as three small cars! Hippos are also the most dangerous land animal you will meet on safari. That might sound surprising because most people think hippos are slow and lazy. But if you saw a hippo get angry, you'd soon change your mind. They can run very fast and they have very big teeth. In fact, they killed around 500 people across Africa last year. During the hot day, hippos need to keep cool. They spend almost all day asleep in rivers and lakes. It isn't a good idea to go swimming while you're on safari. We also suggest that you don't walk on the lake beaches at night, as this is when hippos are awake. Safety tips If all safari tourists followed these simple rules, the number of people hurt by animals each year would go down. • Stay in your vehicle. If you see an interesting animal, do not get out of your safari vehicle to take a picture. It's not a good idea to see how close you can get to a lion. Our drivers will get you to the closest and safest possible location. • Don't wave at the animals. Animals can become aggressive if people wave their hands or other objects at them. Remember, humans are dangerous too – it's a good idea for these animals to be afraid of us. • If you meet an animal that seems nervous, stay quiet and walk backwards to get away. • Always wear walking boots and long socks. You will be walking in long grass and also on the beaches around our lake areas. Wearing the correct shoes will protect you from snakes, scorpions, and biting spiders.</p></div><div class="reading-questions">
+                <h3>Part 1</h3><div class="q-item"><p>1. Go Botswana have organized holidays for about 10 years.</p><div class="radio-group"><label><input type="radio" name="r1_1" value="A"> A. True</label><label><input type="radio" name="r1_1" value="B"> B. False</label><label><input type="radio" name="r1_1" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>2. Safari holidays in Botswana can be dangerous.</p><div class="radio-group"><label><input type="radio" name="r1_2" value="A"> A. True</label><label><input type="radio" name="r1_2" value="B"> B. False</label><label><input type="radio" name="r1_2" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>3. Hippos are bigger than elephants.</p><div class="radio-group"><label><input type="radio" name="r1_3" value="A"> A. True</label><label><input type="radio" name="r1_3" value="B"> B. False</label><label><input type="radio" name="r1_3" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>4. Female hippos are more dangerous than male hippos.</p><div class="radio-group"><label><input type="radio" name="r1_4" value="A"> A. True</label><label><input type="radio" name="r1_4" value="B"> B. False</label><label><input type="radio" name="r1_4" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>5. Hippos spend most of the day in water.</p><div class="radio-group"><label><input type="radio" name="r1_5" value="A"> A. True</label><label><input type="radio" name="r1_5" value="B"> B. False</label><label><input type="radio" name="r1_5" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>6. Hippos can stay under water for five minutes.</p><div class="radio-group"><label><input type="radio" name="r1_6" value="A"> A. True</label><label><input type="radio" name="r1_6" value="B"> B. False</label><label><input type="radio" name="r1_6" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>7. If tourists followed the safety tips, there</p><div class="radio-group"><label><input type="radio" name="r1_7" value="A"> A. True</label><label><input type="radio" name="r1_7" value="B"> B. False</label><label><input type="radio" name="r1_7" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>8. You can leave the vehicle to take pictures if the driver says it's OK.</p><div class="radio-group"><label><input type="radio" name="r1_8" value="A"> A. True</label><label><input type="radio" name="r1_8" value="B"> B. False</label><label><input type="radio" name="r1_8" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>9. Wild animals are frightened of humans because we can be dangerous.</p><div class="radio-group"><label><input type="radio" name="r1_9" value="A"> A. True</label><label><input type="radio" name="r1_9" value="B"> B. False</label><label><input type="radio" name="r1_9" value="C"> C. Doesn't say</label></div></div><div class="q-item"><p>10. If all tourists wore walking boots, they would be safer from snakes.</p><div class="radio-group"><label><input type="radio" name="r1_10" value="A"> A. True</label><label><input type="radio" name="r1_10" value="B"> B. False</label><label><input type="radio" name="r1_10" value="C"> C. Doesn't say</label></div></div><h3>Part 2</h3><div class="q-item"><p>1. How much does a male hippo weigh?</p><input type="text" name="r2_1" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>2. What do most people think about hippos?</p><input type="text" name="r2_2" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>3. What can happen if you wave at the animals?</p><input type="text" name="r2_3" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>4. Where will the safari drivers take you?</p><input type="text" name="r2_4" class="answer-input" placeholder="Short answer"></div><div class="q-item"><p>5. When is it a good idea to walk backwards on safari?</p><input type="text" name="r2_5" class="answer-input" placeholder="Short answer"></div>
+                </div></div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(7)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(9)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-writing">
+                <div class="section-title">
+                    <h2>Writing</h2>
+                </div>
+                
+                <div class="question-block">
+                <div class="question-block"><h3>Write about animals in your country. Answer these questions. (100–</h3><textarea name="writing" class="writing-area answer-input" rows="6" placeholder="Write here (100–150 words)..."></textarea><p style="font-size:0.85rem;color:#64748B;margin-top:0.5rem;">This section is reviewed manually.</p></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(8)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(10)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-1">
+                <div class="section-title">
+                    <h2>Listening 1</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/unit_9/listening_1.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to Kylie talking about her phobia. Tick the correct word(s).</h3><div class="q-item"><p>1. Kylie has been scared of dogs since she was ______ she was a teenager .</p><div class="radio-group"><label><input type="radio" name="l1_1" value="five"> five</label><label><input type="radio" name="l1_1" value="since"> since</label></div></div>
+<div class="q-item"><p>2. She starts to panic if she sees more than one ______ big dog .</p><div class="radio-group"><label><input type="radio" name="l1_2" value="dog"> dog</label><label><input type="radio" name="l1_2" value="a"> a. a</label></div></div>
+<div class="q-item"><p>3. She ______ tried therapy before.</p><div class="radio-group"><label><input type="radio" name="l1_3" value="has"> has</label><label><input type="radio" name="l1_3" value="hasn't"> hasn't</label></div></div>
+<div class="q-item"><p>4. Virtual reality therapy was developed about 25 years ago /</p><input type="text" name="l1_4" class="answer-input" placeholder="Your answer"></div>
+<div class="q-item"><p>5. In the early 1990s, a doctor used the technology to cure his fear of ______ .</p><div class="radio-group"><label><input type="radio" name="l1_5" value="spiders"> spiders</label><label><input type="radio" name="l1_5" value="heights"> heights</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(9)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(11)">Next Section <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-listening-2">
+                <div class="section-title">
+                    <h2>Listening 2</h2>
+                </div>
+                <audio controls class="listening-audio" style="width:100%;margin-bottom:1.5rem;border-radius:10px;"><source src="Listenings/pre-intermediate/unit_9/listening_2.mp3" type="audio/mpeg"></audio>
+                <div class="question-block">
+                <h3>Listen to five conversations. Tick A, B, or C.</h3><div class="q-item"><p>1. How long has Tilda worked in the film industry?</p><div class="radio-group"><label><input type="radio" name="l2_1" value="A"> A. Twenty-two years.</label><label><input type="radio" name="l2_1" value="B"> B. Since she was twenty-two.</label><label><input type="radio" name="l2_1" value="C"> C. Two years.</label></div></div>
+<div class="q-item"><p>2. How many cats does the cat café have?</p><div class="radio-group"><label><input type="radio" name="l2_2" value="A"> A. Three.</label><label><input type="radio" name="l2_2" value="B"> B. Two.</label><label><input type="radio" name="l2_2" value="C"> C. Twelve.</label></div></div>
+<div class="q-item"><p>3. When was the last time Fei felt frightened?</p><div class="radio-group"><label><input type="radio" name="l2_3" value="A"> A. Yesterday.</label><label><input type="radio" name="l2_3" value="B"> B. This morning.</label><label><input type="radio" name="l2_3" value="C"> C. Now.</label></div></div>
+<div class="q-item"><p>4. When did Malik start working as a police officer?</p><div class="radio-group"><label><input type="radio" name="l2_4" value="A"> A. Ten years ago.</label><label><input type="radio" name="l2_4" value="B"> B. Three years ago.</label><label><input type="radio" name="l2_4" value="C"> C. One year ago.</label></div></div>
+<div class="q-item"><p>5. How long has Rob been on holiday?</p><div class="radio-group"><label><input type="radio" name="l2_5" value="A"> A. Two days.</label><label><input type="radio" name="l2_5" value="B"> B. He's just arrived.</label><label><input type="radio" name="l2_5" value="C"> C. Last week.</label></div></div>
+                </div>
+                <div class="flex-between" style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(10)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextUnitSection(12)">Final Step <i class="fa-solid fa-user-check"></i></button>
+                </div>
+            </section>
+
+            <section class="test-section" id="section-details">
+                <div class="section-title"><h2>Final Step: Your Information</h2></div>
+                <div class="q-item">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">First Name *</label><input type="text" id="regFirstName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Last Name *</label><input type="text" id="regLastName" class="answer-input" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Proposed Group *</label><input type="text" id="regGroup" class="answer-input" value="Pre-intermediate Unit 9" required></div>
+                        <div><label style="display:block;margin-bottom:0.35rem;font-weight:600;">Phone Number *</label><input type="tel" id="regPhone" class="answer-input" value="+998 " required></div>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <button type="button" class="btn btn-outline" onclick="nextUnitSection(11)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button type="button" class="btn btn-primary btn-submit" onclick="submitTest()">Finish & Submit <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </section>
+            <section class="test-section" id="section-result">
+                <div style="text-align:center;padding:3rem 0;">
+                    <i class="fa-solid fa-circle-check" style="font-size:5rem;color:var(--primary);margin-bottom:2rem;"></i>
+                    <h2>Test Submitted!</h2>
+                    <p id="resultFeedback" style="color:#64748B;">Calculating your score...</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='tests.html'">Back to Tests</button>
+                </div>
+            </section>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) { window.location.href = 'login.html'; }
+        const unitSections = ["section-grammar-1","section-grammar-2","section-grammar-3","section-vocab-4","section-vocab-5","section-vocab-6","section-pronunciation-7","section-pronunciation-8","section-reading","section-writing","section-listening-1","section-listening-2","section-details"];
+        const answerKey = {"g1_1":["since"],"g1_2":["for"],"g1_3":["since"],"g1_4":["since"],"g1_5":["for"],"g2_1":["haven’t","have not seen"],"g2_2":["bought"],"g2_3":["have worked"],"g2_4":["didn’t","did not say"],"g2_5":["has lived"],"g2_6":["didn’t","did not study"],"g2_7":["did arrive"],"g3_1":["had ’d","would buy"],"g3_2":["’d","would travel didn’t","did not have"],"g3_3":["would be didn’t","did not do"],"g3_4":["’d","would get worked"],"g3_5":["were ’d","would stop"],"g3_6":["wouldn’t","would not get used"],"g3_7":["’d","would lose stopped"],"g3_8":["saw ’d","would scream"],"v4_1":["panic"],"v4_2":["suffers"],"v4_3":["phobia"],"v4_4":["freezes"],"v4_5":["heights"],"v4_6":["fear"],"v5_1":["have"],"v5_2":["get"],"v5_3":["get"],"v5_4":["fall"],"v5_5":["go"],"v5_6":["be"],"v5_7":["get"],"v5_8":["retire"],"v6_1":["chicken"],"v6_2":["tiger"],"v6_3":["spider"],"v6_4":["snake"],"v6_5":["mice"],"v6_6":["bat"],"p7_1":["crocodile"],"p7_2":["sheep"],"p7_3":["pig"],"p7_4":["butterfly"],"p7_5":["lion"],"p8_1":["1"],"p8_2":["1"],"p8_3":["3"],"p8_4":["2"],"p8_5":["2"],"r1_1":["b"],"r1_2":["a"],"r1_3":["b"],"r1_4":["c"],"r1_5":["a"],"r1_6":["c"],"r1_7":["a"],"r1_8":["b"],"r1_9":["a"],"r1_10":["a"],"r2_1":["as much as three small cars"],"r2_2":["that they are slow and lazy"],"r2_3":["they can become aggressive"],"r2_4":["to the closest and safest possible location"],"r2_5":["when","if you meet an animal that seems nervous"],"l1_1":["since she was five"],"l1_2":["a big dog"],"l1_3":["hasn’t"],"l1_4":["about 25 years ago"],"l1_5":["heights"],"l2_1":["b"],"l2_2":["c"],"l2_3":["b"],"l2_4":["a"],"l2_5":["a"]};
+
+        function nextUnitSection(idx) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            if (idx >= unitSections.length) return;
+            document.getElementById(unitSections[idx]).classList.add('active');
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            if (bar) bar.style.width = ((idx + 1) / unitSections.length * 100) + '%';
+            if (txt) txt.innerText = 'Step ' + (idx + 1) + ' of ' + unitSections.length;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function normalize(s) {
+            if (!s) return '';
+            return s.toString().trim().toLowerCase()
+                .replace(/['']/g, "'").replace(/[?!.,;:"()]/g, '').replace(/\s+/g, ' ');
+        }
+
+        function checkAnswer(userVal, accepted) {
+            const u = normalize(userVal);
+            if (!u) return false;
+            return accepted.some((a) => {
+                const c = normalize(a);
+                if (u === c) return true;
+                if (/^[a-gtflh]$/.test(c) && u === c) return true;
+                const parts = a.replace(/…/g, '...').split(/\s*\.\.\.\s*/).map((p) => normalize(p)).filter(Boolean);
+                if (parts.length >= 2 && parts.every((p) => u.includes(p))) return true;
+                if (c.length >= 4 && (u.includes(c) || c.includes(u))) return true;
+                return false;
+            });
+        }
+
+        async function submitTest() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const group = document.getElementById('regGroup').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            if (!firstName || !lastName || !group || !phone) { alert('Please fill in all required fields!'); return; }
+
+            const btn = document.querySelector('.btn-submit');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...'; }
+
+            let score = 0;
+            const answers = new FormData(document.getElementById('unitTestForm'));
+            for (const id in answerKey) {
+                const userVal = answers.get(id);
+                if (checkAnswer(userVal, answerKey[id])) score++;
+            }
+
+            if (window.eduSupabase) {
+                await window.eduSupabase.from('submissions').insert([{
+                    student_name: firstName + ' ' + lastName,
+                    test_type: "Pre-intermediate Unit Test 9",
+                    score: score,
+                    group_name: group,
+                    phone: phone,
+                    raw_answers: Object.fromEntries(answers.entries())
+                }]);
+            }
+
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-result').classList.add('active');
+            document.getElementById('resultFeedback').innerText = 'Thank you, ' + firstName + '! Auto-graded score: ' + score + ' points (writing reviewed separately).';
+            setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
+        }
+    </script>
+</body>
+</html>

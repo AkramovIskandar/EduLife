@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Progress - EduLife</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .progress-container {
+            padding: 10rem 5% 5rem;
+            min-height: 100vh;
+            background: radial-gradient(circle at top right, #f1f5f9 0%, #ffffff 50%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .stat-card .stat-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #60a5fa);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .submissions-table {
+            max-width: 1200px;
+            margin: 3rem auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .submissions-table-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+
+        .submissions-table-header h2 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .submissions-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .submissions-table th,
+        .submissions-table td {
+            padding: 1rem 2rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .submissions-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .score-high {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .score-medium {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .score-low {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-score {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .view-btn {
+            padding: 0.4rem 0.9rem;
+            border: 1px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .view-btn:hover {
+            background: rgba(37, 99, 235, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="dashboard.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+                <span class="logo-icon"><img src="edulife-logo.png" alt="EDU LIFE Logo"></span>
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="tests.html">Tests</a></li>
+            <li><a href="my-progress.html" class="active">My Progress</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="progress-container">
+        <div style="max-width: 1200px; margin: 0 auto 3rem;">
+            <h1 style="font-size: 2.5rem; margin: 0;">My Progress</h1>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Track your learning journey and see your improvement</p>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3><i class="fa-solid fa-list-check"></i> Total Tests Taken</h3>
+                <div class="stat-value" id="totalTests">0</div>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fa-solid fa-percent"></i> Average Score</h3>
+                <div class="stat-value" id="avgScore">0%</div>
+                <p style="color: var(--text-muted); margin-top: 0.5rem; font-weight: 600;" id="avgScoreDetail">0 / 0</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="avgProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fa-solid fa-trophy"></i> Best Score</h3>
+                <div class="stat-value" id="bestScore">0%</div>
+                <p style="color: var(--text-muted); margin-top: 0.5rem; font-weight: 600;" id="bestScoreDetail">0 / 0</p>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fa-solid fa-layer-group"></i> Current Level</h3>
+                <div class="stat-value" id="currentLevel" style="font-size: 2rem;"></div>
+            </div>
+        </div>
+
+        <div class="submissions-table">
+            <div class="submissions-table-header">
+                <h2><i class="fa-solid fa-history"></i> Test History</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Test Type</th>
+                        <th>Score</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="submissionsBody">
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">Loading test history...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTestName">Test Result</h2>
+                    <p id="modalTestMeta" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;"></p>
+                </div>
+                <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="results-detail" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="api-config.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (!localStorage.getItem('currentUser')) {
+            window.location.href = 'login.html';
+        }
+
+        let studentSubmissions = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (localStorage.getItem('currentUserRole') === 'admin') {
+                window.location.href = 'admin.html';
+                return;
+            }
+
+            const currentUsername = localStorage.getItem('currentUsername');
+            const currentDisplayName = localStorage.getItem('currentUser');
+            const currentLevel = localStorage.getItem('currentUserLevel') || 'beginner';
+
+            const levelNames = {
+                'beginner': 'Beginner',
+                'elementary': 'Elementary',
+                'preintermediate': 'Pre-intermediate'
+            };
+            document.getElementById('currentLevel').textContent = levelNames[currentLevel];
+
+            if (window.eduSupabase && (currentUsername || currentDisplayName)) {
+                try {
+                    let query = window.eduSupabase
+                        .from('submissions')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (currentUsername && currentDisplayName) {
+                        query = query.or(`student_username.eq.${currentUsername},student_name.eq.${currentDisplayName}`);
+                    } else if (currentUsername) {
+                        query = query.eq('student_username', currentUsername);
+                    } else {
+                        query = query.eq('student_name', currentDisplayName);
+                    }
+
+                    const { data: submissions, error } = await query;
+
+                    if (!error && submissions && submissions.length > 0) {
+                        studentSubmissions = submissions;
+                        updateStats(submissions);
+                        renderSubmissions(submissions);
+                    } else {
+                        document.getElementById('submissionsBody').innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">No test submissions yet</td></tr>';
+                    }
+                    if (typeof window.eduVaultRetrySync === 'function') window.eduVaultRetrySync();
+                } catch (e) {
+                    document.getElementById('submissionsBody').innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">Failed to load test history</td></tr>';
+                }
+            }
+        });
+
+        function updateStats(submissions) {
+            document.getElementById('totalTests').textContent = submissions.length;
+
+            if (submissions.length > 0) {
+                const percentages = submissions.map(getSubmissionPercentage);
+                const avgScore = percentages.reduce((a, b) => a + b, 0) / percentages.length;
+                const bestScore = Math.max(...percentages);
+
+                let totalScore = 0;
+                let totalMax = 0;
+                submissions.forEach(sub => {
+                    totalScore += parseFloat(sub.score) || 0;
+                    totalMax += getSubmissionMaxPoints(sub);
+                });
+
+                let bestSub = submissions[0];
+                submissions.forEach(sub => {
+                    if (getSubmissionPercentage(sub) >= getSubmissionPercentage(bestSub)) {
+                        bestSub = sub;
+                    }
+                });
+                const bestPoints = parseFloat(bestSub.score) || 0;
+                const bestMax = getSubmissionMaxPoints(bestSub);
+
+                document.getElementById('avgScore').textContent = `${Math.round(avgScore)}%`;
+                document.getElementById('avgScoreDetail').textContent = `${Math.round(totalScore)} / ${Math.round(totalMax)}`;
+                document.getElementById('avgProgress').style.width = `${Math.min(100, avgScore)}%`;
+                document.getElementById('bestScore').textContent = `${Math.round(bestScore)}%`;
+                document.getElementById('bestScoreDetail').textContent = `${Math.round(bestPoints)} / ${Math.round(bestMax)}`;
+            }
+        }
+
+        function renderSubmissions(submissions) {
+            const tbody = document.getElementById('submissionsBody');
+
+            if (submissions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">No test submissions yet</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = submissions.map((sub, index) => {
+                const totalPoints = parseFloat(sub.score) || 0;
+                const maxPoints = getSubmissionMaxPoints(sub);
+                const percentage = getSubmissionPercentage(sub);
+                const scoreColor = getSubmissionScoreColor(percentage);
+
+                const date = new Date(sub.created_at);
+                const formattedDate = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                return `
+                    <tr>
+                        <td>${formattedDate}</td>
+                        <td>${escapeHtml(sub.test_type) || 'Unknown Test'}</td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap: wrap;">
+                                <span class="badge-score" style="background:${scoreColor}20; color:${scoreColor}; border: 1px solid ${scoreColor}40;">
+                                    ${totalPoints} / ${maxPoints}
+                                </span>
+                                <span style="color:${scoreColor}; font-weight:700;">${percentage}%</span>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="view-btn" type="button" onclick="viewDetails(${index})">
+                                <i class="fa-solid fa-eye"></i> View
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function viewDetails(index) {
+            const sub = studentSubmissions[index];
+            if (!sub) return;
+
+            const totalPoints = parseFloat(sub.score) || 0;
+            const maxPoints = getSubmissionMaxPoints(sub);
+            const percentage = getSubmissionPercentage(sub);
+            const scoreColor = getSubmissionScoreColor(percentage);
+
+            document.getElementById('modalTestName').textContent = sub.test_type || 'Test Result';
+            document.getElementById('modalTestMeta').textContent = new Date(sub.created_at).toLocaleString();
+
+            let completion = sub.section_completion || {};
+            const rawAnswers = sub.raw_answers || {};
+            let hasValidCompletion = Object.values(completion).some(v => v && v.total > 0);
+
+            if (!hasValidCompletion) {
+                const testType = sub.test_type || '';
+                const isProgressTest = testType.includes('Progress') || testType === 'Placement Test';
+                const ratio = maxPoints > 0 ? Math.max(0, Math.min(1, totalPoints / maxPoints)) : 0;
+
+                if (isProgressTest) {
+                    completion = {
+                        grammar: { answered: Math.round(ratio * 40), total: 40 },
+                        vocabulary: { answered: Math.round(ratio * 40), total: 40 },
+                        pronunciation: { answered: Math.round(ratio * 20), total: 20 },
+                        reading: { answered: Math.round(ratio * 15), total: 15 },
+                        listening: { answered: Math.round(ratio * 10), total: 10 }
+                    };
+                } else {
+                    completion = {
+                        grammar: { answered: Math.round(ratio * 40), total: 40 },
+                        reading: { answered: Math.round(ratio * 30), total: 30 },
+                        listening: { answered: Math.round(ratio * 30), total: 30 }
+                    };
+                }
+
+                Object.keys(completion).forEach(k => {
+                    const sec = completion[k];
+                    sec.percent = sec.total ? Math.round((sec.answered / sec.total) * 100) : 0;
+                });
+                hasValidCompletion = true;
+            }
+
+            let completionRows = '';
+            if (hasValidCompletion) {
+                completionRows = Object.entries(completion)
+                    .filter(([, v]) => v && v.total > 0)
+                    .map(([k, v]) => {
+                        const title = k.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase());
+                        const p = typeof v.percent === 'number' ? v.percent : (v.total ? Math.round((v.answered / v.total) * 100) : 0);
+                        let advice = 'Weak';
+                        let adviceClass = 'risk';
+                        if (p > 90) { advice = 'Excellent'; adviceClass = 'good'; }
+                        else if (p > 75) { advice = 'Good'; adviceClass = 'good'; }
+                        else if (p > 50) { advice = 'Average'; adviceClass = 'warn'; }
+
+                        return `
+                            <div class="completion-row">
+                                <span style="font-weight:600;">${escapeHtml(title)}</span>
+                                <div style="display:flex; align-items:center; gap: 1rem;">
+                                    <span style="font-weight:600; min-width: 60px; text-align:right;">${v.answered} / ${v.total}</span>
+                                    <span class="completion-advice ${adviceClass}" style="width: 80px; text-align:center; font-size: 0.75rem;">${advice}</span>
+                                </div>
+                            </div>`;
+                    }).join('');
+            }
+
+            let html = `
+                <div class="detail-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <small style="color: var(--text-muted); text-transform: uppercase; font-weight: 700; font-size: 0.7rem;">Total Score</small>
+                        <p style="font-weight: 700; margin-top: 0.4rem; font-size: 1.1rem; color: ${scoreColor};">
+                            ${totalPoints} / ${maxPoints} (${percentage}%)
+                        </p>
+                    </div>
+                    <div>
+                        <small style="color: var(--text-muted); text-transform: uppercase; font-weight: 700; font-size: 0.7rem;">Group</small>
+                        <p style="font-weight: 600; margin-top: 0.4rem;">${escapeHtml(sub.group_name || sub.group || 'N/A')}</p>
+                    </div>
+                </div>
+            `;
+
+            if (completionRows) {
+                html += `
+                    <h3 style="margin-top: 1rem; font-size: 1.1rem; border-left: 3px solid var(--primary); padding-left: 0.75rem;">
+                        <i class="fa-solid fa-chart-pie"></i> Section Breakdown
+                    </h3>
+                    <div class="analysis-box">${completionRows}</div>
+                `;
+            }
+
+            const writingText = rawAnswers.w1 || rawAnswers.writingText || rawAnswers.writing;
+            if (writingText) {
+                html += `
+                    <h3 style="margin-top: 1rem; font-size: 1.1rem; border-left: 3px solid #059669; padding-left: 0.75rem;">
+                        <i class="fa-solid fa-pen-nib"></i> Writing Section
+                    </h3>
+                    <div class="answer-box">${escapeHtml(writingText)}</div>
+                `;
+            }
+
+            const speakingText = rawAnswers.speakingText || rawAnswers.speaking;
+            if (speakingText) {
+                html += `
+                    <h3 style="margin-top: 1rem; font-size: 1.1rem; border-left: 3px solid #D97706; padding-left: 0.75rem;">
+                        <i class="fa-solid fa-microphone"></i> Speaking Section
+                    </h3>
+                    <div class="answer-box">${escapeHtml(speakingText)}</div>
+                `;
+            }
+
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('detailsModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+    </script>
+</body>
+
+</html>
