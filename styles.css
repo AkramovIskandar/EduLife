@@ -2883,6 +2883,8 @@ label {
 
 input[type="radio"],
 input[type="checkbox"] {
+    min-width: unset;
+    min-height: unset;
     width: 20px;
     height: 20px;
     cursor: pointer;
