@@ -661,23 +661,63 @@
                 }
             }
 
+            const studentUsername = localStorage.getItem('currentUsername') || ('guest_' + Date.now());
+            const testKey = 'elementary_progress_2';
+            const level = 'elementary';
+            const percentage = Math.round((score / 125) * 100);
+
             if (window.eduSupabase) {
-                await window.eduSupabase.from('submissions').insert([{
-                    student_name: `${firstName} ${lastName}`,
-                    test_type: 'Elementary Progress Test 2',
-                    score: score,
-                    group_name: group,
-                    phone: phone,
-                    raw_answers: Object.fromEntries(answers.entries()),
-                    section_completion: {
-                        grammar: { answered: sectionScores.grammar, total: 40, percent: Math.round(sectionScores.grammar/40*100) },
-                        vocabulary: { answered: sectionScores.vocabulary, total: 40, percent: Math.round(sectionScores.vocabulary/40*100) },
-                        pronunciation: { answered: sectionScores.pronunciation, total: 20, percent: Math.round(sectionScores.pronunciation/20*100) },
-                        reading: { answered: sectionScores.reading, total: 15, percent: Math.round(sectionScores.reading/15*100) },
-                        listening: { answered: sectionScores.listening, total: 10, percent: Math.round(sectionScores.listening/10*100) },
-                        writing: { answered: 0, total: 10, percent: 0 }
+                try {
+                    const submissionPayload = {
+                        student_name: `${firstName} ${lastName}`,
+                        student_username: studentUsername,
+                        test_type: 'Elementary Progress Test 2',
+                        test_key: testKey,
+                        level: level,
+                        score: score,
+                        percentage: percentage,
+                        group_name: group,
+                        phone: phone,
+                        raw_answers: Object.fromEntries(answers.entries()),
+                        section_completion: {
+                            grammar: { answered: sectionScores.grammar, total: 40, percent: Math.round(sectionScores.grammar/40*100) },
+                            vocabulary: { answered: sectionScores.vocabulary, total: 40, percent: Math.round(sectionScores.vocabulary/40*100) },
+                            pronunciation: { answered: sectionScores.pronunciation, total: 20, percent: Math.round(sectionScores.pronunciation/20*100) },
+                            reading: { answered: sectionScores.reading, total: 15, percent: Math.round(sectionScores.reading/15*100) },
+                            listening: { answered: sectionScores.listening, total: 10, percent: Math.round(sectionScores.listening/10*100) },
+                            writing: { answered: 0, total: 10, percent: 0 }
+                        }
+                    };
+
+                    const progressPayload = studentUsername ? {
+                        student_username: studentUsername,
+                        level: level,
+                        test_key: testKey,
+                        test_name: 'Elementary Progress Test 2',
+                        completed: true,
+                        score: score,
+                        percentage: percentage,
+                        completed_at: new Date().toISOString()
+                    } : null;
+
+                    const operations = [window.eduSupabase.from('submissions').insert([submissionPayload])];
+                    if (progressPayload) operations.push(window.eduSupabase.from('student_progress').upsert([progressPayload]));
+
+                    const results = await Promise.all(operations);
+                    const insertError = results[0].error;
+
+                    if (insertError) {
+                        console.error("Supabase error:", insertError);
+                        alert("Error saving results: " + insertError.message);
+                        if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Finish & Submit My Test'; }
+                        return;
                     }
-                }]);
+                } catch (e) {
+                    console.error("Submission crash:", e);
+                    alert("Connection error. Please check your internet.");
+                    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Finish & Submit My Test'; }
+                    return;
+                }
             }
 
             document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));

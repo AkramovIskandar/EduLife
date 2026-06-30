@@ -544,7 +544,7 @@ async function submitTest() {
     // Final Submission Object
     const submission = {
         studentName: studentName,
-        studentUsername: localStorage.getItem('currentUsername') || null,
+        studentUsername: localStorage.getItem('currentUsername') || ('guest_' + Date.now()),
         testType: document.querySelector('.test-header h1')?.innerText?.trim() || 'Unit Test',
         score: totalAutoScore,
         group: group,

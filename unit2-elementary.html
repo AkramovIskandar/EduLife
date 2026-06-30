@@ -561,6 +561,7 @@
             if (window.eduSupabase) {
                 await window.eduSupabase.from('submissions').insert([{
                     student_name: `${firstName} ${lastName}`,
+                    student_username: localStorage.getItem("currentUsername") || ("guest_" + Date.now()),
                     test_type: 'Elementary Unit Test 2',
                     score: score,
                     group_name: group,

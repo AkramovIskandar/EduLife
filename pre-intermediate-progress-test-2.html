@@ -438,15 +438,55 @@
                 if (checkAnswer(userVal, answerKey[id])) score++;
             }
 
+            const studentUsername = localStorage.getItem('currentUsername') || ('guest_' + Date.now());
+            const testKey = 'preint_progress_2';
+            const level = 'preintermediate';
+            const percentage = Math.round((score / 125) * 100);
+
             if (window.eduSupabase) {
-                await window.eduSupabase.from('submissions').insert([{
-                    student_name: firstName + ' ' + lastName,
-                    test_type: "Pre-intermediate Progress Test 2",
-                    score: score,
-                    group_name: group,
-                    phone: phone,
-                    raw_answers: Object.fromEntries(answers.entries())
-                }]);
+                try {
+                    const submissionPayload = {
+                        student_name: firstName + ' ' + lastName,
+                        student_username: studentUsername,
+                        test_type: "Pre-intermediate Progress Test 2",
+                        test_key: testKey,
+                        level: level,
+                        score: score,
+                        percentage: percentage,
+                        group_name: group,
+                        phone: phone,
+                        raw_answers: Object.fromEntries(answers.entries())
+                    };
+
+                    const progressPayload = studentUsername ? {
+                        student_username: studentUsername,
+                        level: level,
+                        test_key: testKey,
+                        test_name: "Pre-intermediate Progress Test 2",
+                        completed: true,
+                        score: score,
+                        percentage: percentage,
+                        completed_at: new Date().toISOString()
+                    } : null;
+
+                    const operations = [window.eduSupabase.from('submissions').insert([submissionPayload])];
+                    if (progressPayload) operations.push(window.eduSupabase.from('student_progress').upsert([progressPayload]));
+
+                    const results = await Promise.all(operations);
+                    const insertError = results[0].error;
+
+                    if (insertError) {
+                        console.error("Supabase error:", insertError);
+                        alert("Error saving results: " + insertError.message);
+                        if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Finish & Submit My Test'; }
+                        return;
+                    }
+                } catch (e) {
+                    console.error("Submission crash:", e);
+                    alert("Connection error. Please check your internet.");
+                    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Finish & Submit My Test'; }
+                    return;
+                }
             }
 
             document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));

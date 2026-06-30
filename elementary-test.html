@@ -781,12 +781,21 @@
                 }
             }
             
+            const studentUsername = localStorage.getItem('currentUsername') || ('guest_' + Date.now());
+            const testKey = 'elementary';
+            const level = 'elementary';
+            const percentage = Math.round((score / 100) * 100);
+
             if (window.eduSupabase) {
                 try {
-                    const { error } = await window.eduSupabase.from('submissions').insert([{
+                    const submissionPayload = {
                         student_name: `${firstName} ${lastName}`,
+                        student_username: studentUsername,
                         test_type: 'Elementary End of Course',
+                        test_key: testKey,
+                        level: level,
                         score: score,
+                        percentage: percentage,
                         group_name: group,
                         phone: phone,
                         raw_answers: rawAnswers,
@@ -799,11 +808,28 @@
                             writing: { answered: 0, total: 10, percent: 0 },
                             speaking: { answered: speakingText ? 1 : 0, total: 1, percent: speakingText ? 100 : 0 }
                         }
-                    }]);
+                    };
 
-                    if (error) {
-                        console.error("Supabase error:", error);
-                        alert("Error saving results: " + error.message);
+                    const progressPayload = studentUsername ? {
+                        student_username: studentUsername,
+                        level: level,
+                        test_key: testKey,
+                        test_name: 'Elementary End of Course',
+                        completed: true,
+                        score: score,
+                        percentage: percentage,
+                        completed_at: new Date().toISOString()
+                    } : null;
+
+                    const operations = [window.eduSupabase.from('submissions').insert([submissionPayload])];
+                    if (progressPayload) operations.push(window.eduSupabase.from('student_progress').upsert([progressPayload]));
+
+                    const results = await Promise.all(operations);
+                    const insertError = results[0].error;
+
+                    if (insertError) {
+                        console.error("Supabase error:", insertError);
+                        alert("Error saving results: " + insertError.message);
                         btn.disabled = false;
                         btn.innerHTML = originalBtnText;
                         return;

@@ -373,6 +373,7 @@
             if (window.eduSupabase) {
                 await window.eduSupabase.from('submissions').insert([{
                     student_name: firstName + ' ' + lastName,
+                    student_username: localStorage.getItem('currentUsername') || ('guest_' + Date.now()),
                     test_type: "Pre-intermediate Unit Test 3",
                     score: score,
                     group_name: group,
