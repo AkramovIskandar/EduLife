@@ -687,17 +687,6 @@
             nextElementarySection(idx);
         }
 
-        function normalize(s) {
-            if (!s) return '';
-            return s.toString().trim().toLowerCase()
-                .replace(/'m\b/g, ' am')
-                .replace(/'re\b/g, ' are')
-                .replace(/'s\b/g, ' is')
-                .replace(/n't\b/g, ' not')
-                .replace(/[?!.,;:'"()]/g, '')
-                .replace(/\s+/g, ' ');
-        }
-
         function updateElementaryProgress(idx) {
             const bar = document.getElementById('progressBar');
             const txt = document.getElementById('progressText');
@@ -757,19 +746,7 @@
             for (let id in key) {
                 let userVal = answers.get(id);
                 if (userVal) {
-                    userVal = normalize(userVal);
-                    let correctVal = normalize(key[id]);
-                    let isCorrect = false;
-
-                    if (userVal === correctVal) {
-                        isCorrect = true;
-                    } else if (id.startsWith('r2_')) {
-                        if (userVal.includes(correctVal) || correctVal.includes(userVal)) isCorrect = true;
-                    } else if (correctVal.includes('...')) {
-                        const parts = correctVal.split('...').map(p => normalize(p));
-                        if (parts.every(p => userVal.includes(p))) isCorrect = true;
-                    }
-
+                    let isCorrect = checkAnswer(answers.get(id), key[id]);
                     if (isCorrect) {
                         score++;
                         if (id.startsWith('g')) sectionScores.grammar++;
@@ -848,6 +825,9 @@
             resultSec.style.display = 'block';
             resultSec.classList.add('active');
             document.getElementById('resultFeedback').innerText = `Congratulations ${firstName}! Your score: ${score} / 100. Redirecting to homepage...`;
+            
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             
             setTimeout(() => { window.location.href = 'index.html'; }, 5000);
         }

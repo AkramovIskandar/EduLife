@@ -484,17 +484,6 @@
             if (txt) txt.innerText = `Step ${idx + 1} of ${unitSections.length}`;
         }
 
-        function normalize(s) {
-            if (!s) return '';
-            return s.toString().trim().toLowerCase()
-                .replace(/'m\b/g, ' am')
-                .replace(/'re\b/g, ' are')
-                .replace(/'s\b/g, ' is')
-                .replace(/n't\b/g, ' not')
-                .replace(/[?!.,;:'"()]/g, '')
-                .replace(/\s+/g, ' ');
-        }
-
         async function submitTest() {
             const firstName = document.getElementById('regFirstName').value.trim();
             const lastName = document.getElementById('regLastName').value.trim();
@@ -553,6 +542,8 @@
             document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
             document.getElementById('section-result').classList.add('active');
             document.getElementById('resultFeedback').innerText = `Congratulations ${firstName}! You completed Unit Test 8.`;
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'index.html'; }, 5000);
         }
     </script>

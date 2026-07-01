@@ -434,12 +434,7 @@
                         actual = field[0].value;
                     }
 
-                    const normalizedActual = normalize(actual);
-                    if (Array.isArray(expected)) {
-                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
-                    } else if (normalizedActual === normalize(expected)) {
-                        score++;
-                    }
+                                        if (checkAnswer(actual, expected)) score++;
                 }
             }
 
@@ -468,6 +463,8 @@
             res.querySelector('h2').innerText = `${sub.type} Submitted Successfully!`;
             res.querySelector('p').innerText = `Congratulations! Your objective score: ${autoScore} / 125. Redirecting to homepage in 5 seconds...`;
             document.querySelector('.test-progress').style.display='none'; document.querySelector('.test-header').style.display='none'; window.scrollTo(0,0);
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
         }
         document.addEventListener('DOMContentLoaded', ()=>{ updateU1(0); const p=document.getElementById('u1Phone'); p.addEventListener('input', function(){ if(!this.value.startsWith('+998 ')) this.value='+998 '; }); });

@@ -700,6 +700,8 @@
             document.querySelector('.test-progress').style.display = 'none';
             document.querySelector('.test-header').style.display = 'none';
             window.scrollTo(0, 0);
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
         }
 

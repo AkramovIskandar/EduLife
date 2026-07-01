@@ -946,6 +946,8 @@
         const endExamMode = localStorage.getItem('edu_exam_mode_final');
         if (endExamMode === 'off') {
             alert('This test is currently disabled by Admin.');
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
         }
 

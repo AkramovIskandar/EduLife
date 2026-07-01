@@ -13,6 +13,335 @@
     else setTimeout(run, 1500);
 })();
 
+// ============================================================
+// TEST LEAVE GUARD — Testdan chiqib ketishdan himoya
+// ============================================================
+(function initTestLeaveGuard() {
+    'use strict';
+
+    function isTestPage() {
+        return !!(
+            document.getElementById('unitTestForm') ||
+            document.getElementById('elementaryTestForm') ||
+            document.getElementById('progressTestForm') ||
+            document.querySelector('form[id$="TestForm"]') ||
+            document.querySelector('.test-container')
+        );
+    }
+
+    function isAdminPage() {
+        var loc = window.location.pathname.toLowerCase();
+        return loc.indexOf('admin') !== -1 || loc.indexOf('dashboard') !== -1 || loc.indexOf('students') !== -1;
+    }
+
+    var guardActive = false;
+    var testSubmitted = false;
+    var hasInteracted = false;
+
+    function vibrateDevice() {
+        try {
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        } catch (e) { /* ignored */ }
+    }
+
+    function playWarningBeep() {
+        try {
+            var ctx = new (window.AudioContext || window.webkitAudioContext)();
+            var osc = ctx.createOscillator();
+            var gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.value = 660;
+            gain.gain.value = 0.3;
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.25);
+            setTimeout(function () {
+                var osc2 = ctx.createOscillator();
+                var gain2 = ctx.createGain();
+                osc2.type = 'square';
+                osc2.frequency.value = 440;
+                gain2.gain.value = 0.3;
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.start();
+                osc2.stop(ctx.currentTime + 0.35);
+            }, 300);
+        } catch (e) { /* ignored */ }
+    }
+
+    function createWarningModal() {
+        if (document.getElementById('testLeaveModal')) return;
+
+        var overlay = document.createElement('div');
+        overlay.id = 'testLeaveModal';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:99999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:tlgFadeIn .2s ease;';
+
+        var box = document.createElement('div');
+        box.id = 'tlgBox';
+        box.style.cssText = 'background:rgba(26,26,46,0.65);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.1);border-top:1px solid rgba(255,255,255,0.2);border-left:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:2rem 2.5rem;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(231,76,60,.3);animation:tlgBounce .35s cubic-bezier(.36,1.1,.5,1);';
+
+        box.innerHTML = ''
+            + '<div style="font-size:3.5rem;margin-bottom:0.8rem;animation:tlgShake .5s ease;">⚠️</div>'
+            + '<h2 id="tlgTitle" style="color:#e74c3c;font-family:Outfit,sans-serif;font-size:1.5rem;margin:0 0 .6rem;">Testni tark etmoqchimisiz?</h2>'
+            + '<p id="tlgDesc" style="color:#cdd6e0;font-size:1rem;line-height:1.5;margin:0 0 1.5rem;">Agar sahifani tark etsangiz, <strong style="color:#ff6b6b;">barcha javoblaringiz yo\'qoladi</strong> va testni qaytadan ishlashga to\'g\'ri keladi!</p>'
+            + '<div id="tlgBtns" style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">'
+            + '  <button id="tlgStayBtn" style="padding:.75rem 1.5rem;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#00b894,#00cec9);color:#fff;box-shadow:0 4px 15px rgba(0,184,148,.4);transition:transform .15s,box-shadow .15s;display:flex;align-items:center;justify-content:center;gap:0.5rem;"><i class="fa-solid fa-check"></i> Testga qaytish</button>'
+            + '  <button id="tlgLeaveBtn" style="padding:.75rem 1.5rem;border:2px solid #e74c3c;border-radius:12px;font-size:.9rem;font-weight:600;cursor:pointer;background:transparent;color:#e74c3c;transition:transform .15s,background .15s;display:flex;align-items:center;justify-content:center;gap:0.5rem;"><i class="fa-solid fa-door-open"></i> Chiqish</button>'
+            + '</div>';
+
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        var style = document.createElement('style');
+        style.textContent = ''
+            + '@keyframes tlgFadeIn{from{opacity:0}to{opacity:1}}'
+            + '@keyframes tlgBounce{0%{transform:scale(.7);opacity:0}100%{transform:scale(1);opacity:1}}'
+            + '@keyframes tlgShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-15deg)}40%{transform:rotate(15deg)}60%{transform:rotate(-10deg)}80%{transform:rotate(10deg)}}'
+            + '#tlgStayBtn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(0,184,148,.5)}'
+            + '#tlgLeaveBtn:hover{background:#e74c3c;color:#fff;transform:scale(1.05)}'
+            + 'body.dark-theme #endTestBtn{background:rgba(231,76,60,0.15);border-color:rgba(231,76,60,0.3);}'
+            + 'body.dark-theme #tlgBox{background:rgba(15,23,42,0.75);border-color:rgba(255,255,255,0.08);}'
+            + '@media(max-width:480px){'
+            + '  #tlgBox{padding:1.25rem 1rem !important;width:94% !important;}'
+            + '  #tlgTitle{font-size:1.15rem !important;}'
+            + '  #tlgDesc{font-size:0.9rem !important;}'
+            + '  #tlgBtns{flex-direction:column;gap:0.5rem !important;}'
+            + '  #tlgStayBtn,#tlgLeaveBtn{width:100%;padding:0.8rem 1rem !important;font-size:0.95rem !important;justify-content:center;}'
+            + '}';
+        document.head.appendChild(style);
+    }
+
+    function showWarningModal(leaveCb, stayCb, remainingCount) {
+        var modal = document.getElementById('testLeaveModal');
+        if (!modal) return;
+
+        var isEndTest = typeof remainingCount === 'number';
+        var titleElem = document.getElementById('tlgTitle');
+        var descElem = document.getElementById('tlgDesc');
+        var leaveBtnElem = document.getElementById('tlgLeaveBtn');
+
+        if (titleElem && descElem && leaveBtnElem) {
+            if (isEndTest) {
+                titleElem.textContent = 'Testni rostdan ham yakunlamoqchimisiz?';
+                if (remainingCount > 0) {
+                    descElem.innerHTML = '⚠️ E\'tibor bering, sizda hali <strong style="color:#ff6b6b;">' + remainingCount + ' ta savol belgilanmagan</strong> qolib ketyapti!';
+                } else {
+                    descElem.innerHTML = 'Barakalla! Barcha savollarga javob bergansiz. Yakunlaymizmi?';
+                }
+                leaveBtnElem.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Ha, yakunlash';
+            } else {
+                titleElem.textContent = 'Testni tark etmoqchimisiz?';
+                descElem.innerHTML = 'Agar sahifani tark etsangiz, <strong style="color:#ff6b6b;">barcha javoblaringiz yo\'qoladi</strong> va testni qaytadan ishlashga to\'g\'ri keladi!';
+                leaveBtnElem.innerHTML = '<i class="fa-solid fa-door-open"></i> Chiqish';
+            }
+        }
+
+        modal.style.display = 'flex';
+        vibrateDevice();
+        playWarningBeep();
+
+        var stayBtn = document.getElementById('tlgStayBtn');
+        var leaveBtn = document.getElementById('tlgLeaveBtn');
+
+        var newStay = stayBtn.cloneNode(true);
+        stayBtn.parentNode.replaceChild(newStay, stayBtn);
+        var newLeave = leaveBtn.cloneNode(true);
+        leaveBtn.parentNode.replaceChild(newLeave, leaveBtn);
+
+        newStay.addEventListener('click', function () {
+            modal.style.display = 'none';
+            if (stayCb) stayCb();
+        });
+
+        newLeave.addEventListener('click', function () {
+            testSubmitted = true;
+            guardActive = false;
+            hasInteracted = false;
+            modal.style.display = 'none';
+            window.removeEventListener('beforeunload', onBeforeUnload);
+            if (leaveCb) leaveCb();
+        });
+    }
+
+    function onBeforeUnload(e) {
+        if (testSubmitted || !guardActive || !hasInteracted) return;
+        e.preventDefault();
+        e.returnValue = 'Testdagi javoblaringiz saqlanmagan! Rostdan ham chiqmoqchimisiz?';
+        return e.returnValue;
+    }
+
+    function onPopState(e) {
+        if (testSubmitted || !guardActive || !hasInteracted) return;
+        
+        showWarningModal(
+            function onLeave() {
+                testSubmitted = true;
+                guardActive = false;
+                history.back();
+            },
+            function onStay() {
+                history.pushState({ testGuard: true }, null, window.location.href);
+            }
+        );
+    }
+
+    function interceptLinks() {
+        document.addEventListener('click', function (e) {
+            if (testSubmitted || !guardActive || !hasInteracted) return;
+            var link = e.target.closest('a[href]');
+            if (!link) return;
+            var href = link.getAttribute('href');
+            if (!href || href === '#' || href.startsWith('#') || href.startsWith('javascript:')) return;
+            if (link.hostname === window.location.hostname && link.pathname === window.location.pathname) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            var targetUrl = link.href;
+            
+            showWarningModal(
+                function leave() { window.location.href = targetUrl; },
+                function stay() { }
+            );
+        }, true);
+    }
+
+    function markInteracted() {
+        if (hasInteracted || testSubmitted || !guardActive) return;
+        hasInteracted = true;
+        history.pushState({ testGuard: true }, null, window.location.href);
+    }
+
+    function getTestProgress() {
+        var forms = document.querySelectorAll('form');
+        var textTotal = 0;
+        var textAnswered = 0;
+        var radioNames = {};
+        var checkedRadios = {};
+
+        forms.forEach(function(f) {
+            var inputs = f.querySelectorAll('input[type="radio"], input[type="text"], input[type="email"], textarea');
+            inputs.forEach(function(input) {
+                if (input.closest('.reg-form-container') || (input.id && input.id.startsWith('reg')) || (input.name && input.name.startsWith('reg'))) return;
+                
+                if (input.type === 'radio') {
+                    if (input.name) {
+                        radioNames[input.name] = true;
+                        if (input.checked) checkedRadios[input.name] = true;
+                    }
+                } else {
+                    textTotal++;
+                    if (input.value && input.value.trim() !== '') textAnswered++;
+                }
+            });
+        });
+
+        var radioTotalCount = Object.keys(radioNames).length;
+        var radioAnsweredCount = Object.keys(checkedRadios).length;
+
+        var total = radioTotalCount + textTotal;
+        var answered = radioAnsweredCount + textAnswered;
+        return { total: total, answered: answered, remaining: total - answered };
+    }
+
+    function addEndTestButton() {
+        var navLinks = document.getElementById('navLinks');
+        if (!navLinks) return;
+        if (document.getElementById('endTestBtn')) return;
+
+        // Separator line
+        var sep = document.createElement('li');
+        sep.style.cssText = 'list-style:none;border-top:1px solid rgba(231,76,60,0.15);margin:0.3rem 0;padding:0;';
+        navLinks.appendChild(sep);
+
+        var li = document.createElement('li');
+        li.style.cssText = 'list-style:none;';
+
+        var btn = document.createElement('button');
+        btn.id = 'endTestBtn';
+        btn.innerHTML = '<i class="fa-solid fa-flag-checkered" style="margin-right:0.5rem;"></i> Testni yakunlash';
+        btn.style.cssText = 'width:100%;background:rgba(231,76,60,0.08);color:#e74c3c;border:1.5px solid rgba(231,76,60,0.2);border-radius:10px;padding:0.65rem 1rem;font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.2s ease;display:flex;align-items:center;justify-content:center;gap:0.4rem;font-family:Inter,sans-serif;';
+
+        btn.onmouseover = function() {
+            btn.style.background = '#e74c3c';
+            btn.style.color = '#fff';
+            btn.style.borderColor = '#e74c3c';
+            btn.style.boxShadow = '0 4px 12px rgba(231,76,60,0.3)';
+        };
+        btn.onmouseout = function() {
+            btn.style.background = 'rgba(231,76,60,0.08)';
+            btn.style.color = '#e74c3c';
+            btn.style.borderColor = 'rgba(231,76,60,0.2)';
+            btn.style.boxShadow = 'none';
+        };
+
+        btn.onclick = function(e) {
+            e.preventDefault();
+            var prog = getTestProgress();
+
+            showWarningModal(
+                function leave() {
+                    if (typeof window.submitTest === 'function') {
+                        window.submitTest();
+                    } else {
+                        var submitBtn = document.querySelector('button[onclick="submitTest()"]') || document.querySelector('button[type="submit"]');
+                        if (submitBtn) submitBtn.click();
+                    }
+                },
+                function stay() {},
+                prog.remaining
+            );
+        };
+
+        li.appendChild(btn);
+        navLinks.appendChild(li);
+    }
+
+    function activateGuard() {
+        if (guardActive) return;
+        guardActive = true;
+        testSubmitted = false;
+        hasInteracted = false;
+
+        createWarningModal();
+
+        window.addEventListener('beforeunload', onBeforeUnload);
+        window.addEventListener('popstate', onPopState);
+        interceptLinks();
+
+        // Listen for interactions to enable the trap correctly
+        document.addEventListener('input', markInteracted, {once: true, capture: true});
+        document.addEventListener('change', markInteracted, {once: true, capture: true});
+        document.addEventListener('click', function(e) {
+            if (!hasInteracted && (e.target.closest('form') || e.target.closest('.test-container'))) {
+                markInteracted();
+            }
+        }, {capture: true});
+    }
+
+    window.disableTestLeaveGuard = function () {
+        testSubmitted = true;
+        guardActive = false;
+        hasInteracted = false;
+        window.removeEventListener('beforeunload', onBeforeUnload);
+        var modal = document.getElementById('testLeaveModal');
+        if (modal) modal.style.display = 'none';
+    };
+
+    function init() {
+        if (isAdminPage()) return;
+        if (!isTestPage()) return;
+        activateGuard();
+        addEndTestButton();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -324,12 +653,42 @@ function prevSection(currentSectionIndex) {
 function normalize(s) {
     if (!s) return '';
     return s.toString().trim().toLowerCase()
+        .replace(/['']/g, "'")
         .replace(/'m\b/g, ' am')
         .replace(/'re\b/g, ' are')
         .replace(/'s\b/g, ' is')
         .replace(/n't\b/g, ' not')
         .replace(/[?!.,;:'"()]/g, '')
         .replace(/\s+/g, ' ');
+}
+
+// Global robust checking function
+function checkAnswer(userVal, accepted) {
+    const u = normalize(userVal);
+    if (!u) return false;
+    let arr = Array.isArray(accepted) ? accepted : [accepted];
+    return arr.some((a) => {
+        const c = normalize(a);
+        if (u === c) return true;
+        if (c.length === 1 && u === c) return true; // for single letter answers
+        const parts = a.replace(/…/g, '...').split(/\s*\.\.\.\s*/).map((p) => normalize(p)).filter(Boolean);
+        if (parts.length >= 2 && parts.every((p) => {
+            const esc = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            return new RegExp('\\b' + esc + '\\b').test(u);
+        })) return true;
+        
+        if (c.length >= 4) {
+            const escC = c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const escU = u.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            try {
+                if (new RegExp('\\b' + escC + '\\b').test(u)) return true;
+                if (u.length >= 4 && new RegExp('\\b' + escU + '\\b').test(c)) return true;
+            } catch(e) {
+                if (u.includes(c) || c.includes(u)) return true;
+            }
+        }
+        return false;
+    });
 }
 
 // Helper: check radio answers against an answer key object
@@ -341,13 +700,8 @@ function gradeRadios(sectionSelector, answerKey) {
     Object.keys(answerKey).forEach(name => {
         const checked = section.querySelector(`input[name="${name}"]:checked`);
         const expected = answerKey[name];
-        if (checked) {
-            const actual = checked.value;
-            if (Array.isArray(expected)) {
-                if (expected.some(e => normalize(e) === normalize(actual))) score++;
-            } else if (normalize(actual) === normalize(expected)) {
-                score++;
-            }
+        if (checked && checkAnswer(checked.value, expected)) {
+            score++;
         }
     });
     return score;
@@ -359,26 +713,16 @@ function gradeTextInputs(inputs, answers, startIndex, endIndex) {
     if (Array.isArray(answers)) {
         for (let i = startIndex; i < endIndex; i++) {
             if (!inputs[i]) continue;
-            const val = normalize(inputs[i].value);
             const expected = answers[i - startIndex];
-            if (Array.isArray(expected)) {
-                if (expected.some(e => normalize(e) === val)) score++;
-            } else if (val === normalize(expected)) {
-                score++;
-            }
+            if (checkAnswer(inputs[i].value, expected)) score++;
         }
     } else {
         // If answers is an object mapping name to expected value
         Object.keys(answers).forEach(name => {
             const input = document.getElementsByName(name)[0];
             if (input) {
-                const val = normalize(input.value);
                 const expected = answers[name];
-                if (Array.isArray(expected)) {
-                    if (expected.some(e => normalize(e) === val)) score++;
-                } else if (val === normalize(expected)) {
-                    score++;
-                }
+                if (checkAnswer(input.value, expected)) score++;
             }
         });
     }
@@ -673,6 +1017,8 @@ async function submitTest() {
 
     const progressContainer = document.querySelector('.test-progress');
     if (progressContainer) progressContainer.style.display = 'none';
+    if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
     setTimeout(() => {
         window.location.href = 'dashboard.html';
     }, 5000);

@@ -440,17 +440,11 @@
                         const checked = document.querySelector(`input[name="${key}"]:checked`);
                         if (checked) actual = checked.value;
                     } else if (field[0].type === 'text') {
-                        actual = field[0].value.trim().toLowerCase();
+                        actual = field[0].value;
                     }
                 }
 
-                if (Array.isArray(expected)) {
-                    if (expected.some(e => actual === e.toLowerCase())) score++;
-                } else if (typeof expected === 'string' && actual === (key.includes('u7g2') || key.includes('u7e6') ? expected : expected.toLowerCase())) {
-                    // Case handling for long sentences/dates
-                    if (key.includes('u7g2') || key.includes('u7e6') || key.includes('u7s2')) {
-                        if (actual === expected.toLowerCase()) score++;
-                    } else {
+                if (checkAnswer(actual, expected)) score++; else {
                         score++;
                     }
                 }
@@ -506,6 +500,8 @@
             if (progress) progress.style.display = 'none';
             if (header) header.style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
         }
 

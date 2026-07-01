@@ -449,15 +449,11 @@
                         const checked = document.querySelector(`input[name="${key}"]:checked`);
                         if (checked) actual = checked.value;
                     } else if (field[0].type === 'text') {
-                        actual = field[0].value.trim().toLowerCase();
+                        actual = field[0].value;
                     }
                 }
 
-                if (Array.isArray(expected)) {
-                    if (expected.some(e => actual === e.toLowerCase())) score++;
-                } else if (typeof expected === 'string' && actual === (key.includes('u8r2') || key.includes('u8s2') ? expected.toLowerCase() : expected.toLowerCase())) {
-                   score++;
-                }
+                if (checkAnswer(actual, expected)) score++;
             }
 
             const autoScore = Math.round((score / totalPossible) * 125);
@@ -510,6 +506,8 @@
             if (progress) progress.style.display = 'none';
             if (header) header.style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
         }
 

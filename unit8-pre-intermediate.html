@@ -317,26 +317,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function normalize(s) {
-            if (!s) return '';
-            return s.toString().trim().toLowerCase()
-                .replace(/['']/g, "'").replace(/[?!.,;:"()]/g, '').replace(/\s+/g, ' ');
-        }
-
-        function checkAnswer(userVal, accepted) {
-            const u = normalize(userVal);
-            if (!u) return false;
-            return accepted.some((a) => {
-                const c = normalize(a);
-                if (u === c) return true;
-                if (/^[a-gtflh]$/.test(c) && u === c) return true;
-                const parts = a.replace(/…/g, '...').split(/\s*\.\.\.\s*/).map((p) => normalize(p)).filter(Boolean);
-                if (parts.length >= 2 && parts.every((p) => u.includes(p))) return true;
-                if (c.length >= 4 && (u.includes(c) || c.includes(u))) return true;
-                return false;
-            });
-        }
-
         async function submitTest() {
             const firstName = document.getElementById('regFirstName').value.trim();
             const lastName = document.getElementById('regLastName').value.trim();
@@ -369,6 +349,8 @@
             document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
             document.getElementById('section-result').classList.add('active');
             document.getElementById('resultFeedback').innerText = 'Thank you, ' + firstName + '! Auto-graded score: ' + score + ' points (writing reviewed separately).';
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
         }
     </script>

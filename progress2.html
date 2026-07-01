@@ -533,6 +533,8 @@
             res.classList.add('active');
             res.querySelector('h2').innerText = `${submission.type} Submitted!`;
             res.querySelector('p').innerText = `Your objective score: ${finalScore} / 125. Redirecting...`;
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
         }
         document.addEventListener('DOMContentLoaded', ()=>{ updateP2Progress(0); const p=document.getElementById('p2Phone'); p.addEventListener('input', function(){ if(!this.value.startsWith('+998 ')) this.value='+998 '; }); });

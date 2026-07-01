@@ -445,12 +445,7 @@
                         actual = field[0].value;
                     }
 
-                    const normalizedActual = normalize(actual);
-                    if (Array.isArray(expected)) {
-                        if (expected.some(e => normalize(e) === normalizedActual)) score++;
-                    } else if (normalizedActual === normalize(expected)) {
-                        score++;
-                    }
+                                        if (checkAnswer(actual, expected)) score++;
                 }
             }
 
@@ -504,6 +499,8 @@
             if (progress) progress.style.display = 'none';
             if (header) header.style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.disableTestLeaveGuard) window.disableTestLeaveGuard();
+
             setTimeout(() => { window.location.href = 'tests.html'; }, 5000);
         }
 
