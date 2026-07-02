@@ -52,15 +52,7 @@ async function loginViaApi(username, password) {
 
 /** @deprecated Legacy fallback when API routes are unavailable (statik server) */
 async function findUserByCredentialsLegacy(username, password) {
-    if (username === 'admin123' && password === 'admin') {
-        return { 
-            username: 'admin123', 
-            role: 'admin', 
-            displayName: 'EduLife Admin', 
-            token: 'local_admin_dummy_token' 
-        };
-    }
-    return null;
+    return null; // Admin credentials removed for security
 }
 
 async function loginUser(e) {
@@ -93,14 +85,6 @@ async function loginUser(e) {
                 } else {
                     window.location.href = 'dashboard.html';
                 }
-                userFound = true;
-            } else if (userEmail === 'admin123' && pass === 'admin') {
-                setEduSession('', {
-                    username: 'admin123',
-                    displayName: 'Admin',
-                    role: 'admin'
-                });
-                window.location.href = 'admin.html';
                 userFound = true;
             }
         } catch (e) {

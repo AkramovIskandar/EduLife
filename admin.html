@@ -162,6 +162,32 @@
             background: var(--white);
         }
     </style>
+    <script>
+        (async function checkAdminAccess() {
+            const token = localStorage.getItem('edu_token');
+            const role = localStorage.getItem('currentUserRole');
+            if (role !== 'admin') {
+                window.location.href = 'index.html';
+                return;
+            }
+            if (token) {
+                try {
+                    const apiBase = window.EDU_API_BASE || (window.location.origin.includes('localhost') ? 'http://localhost:3000' : '');
+                    if (apiBase || window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+                        const res = await fetch(`${apiBase}/api/verify`, {
+                            headers: { 'Authorization': `Bearer ${token}` }
+                        });
+                        const data = await res.json();
+                        if (!data.valid || data.user.role !== 'admin') {
+                            window.location.href = 'index.html';
+                        }
+                    }
+                } catch(e) {
+                    console.warn('Verify failed, fallback to local role check');
+                }
+            }
+        })();
+    </script>
 </head>
 
 <body class="bg-light admin-perf">

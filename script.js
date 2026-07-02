@@ -44,9 +44,14 @@
         } catch (e) { /* ignored */ }
     }
 
+    let sharedAudioCtx = null;
     function playWarningBeep() {
         try {
-            var ctx = new (window.AudioContext || window.webkitAudioContext)();
+            if (!sharedAudioCtx) {
+                sharedAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (sharedAudioCtx.state === 'suspended') sharedAudioCtx.resume();
+            var ctx = sharedAudioCtx;
             var osc = ctx.createOscillator();
             var gain = ctx.createGain();
             osc.type = 'square';
@@ -457,7 +462,10 @@ async function enforceExamSecurity() {
             }
 
             // 2. Real-time security: Kick out if disabled while on page
-            window.eduSupabase
+            if (window.eduStatusChannel) {
+                window.eduSupabase.removeChannel(window.eduStatusChannel);
+            }
+            window.eduStatusChannel = window.eduSupabase
                 .channel('test_status_check')
                 .on('postgres_changes', { 
                     event: 'UPDATE', 
@@ -960,8 +968,9 @@ async function submitTest() {
     }
 
     // 2. Save locally for fallback
-    const existing = JSON.parse(localStorage.getItem('edu_submissions')) || [];
+    let existing = JSON.parse(localStorage.getItem('edu_submissions')) || [];
     existing.push({ ...submission, timestamp: new Date().toISOString(), submissionId: `sub_${Date.now()}` });
+    if (existing.length > 50) existing = existing.slice(-50);
     localStorage.setItem('edu_submissions', JSON.stringify(existing));
     if (window.eduSupabase && submission.studentUsername) {
         await Promise.all([
